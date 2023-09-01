@@ -142,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">乘积运算</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%98%E7%A7%AF%E8%BF%90%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">乘积运算</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -303,7 +303,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h2><span id="乘积运算">乘积运算</span></h2><p>在CocosCreator升级3.x版本后，对2.x的一些乘积运算API进行了改动，在3.x乘积运算使用了静态方法，以下是一些写法上的差异：</p>
+    <div class="post-body" itemprop="articleBody"><h2 id="乘积运算"><a href="#乘积运算" class="headerlink" title="乘积运算"></a>乘积运算</h2><p>在CocosCreator升级3.x版本后，对2.x的一些乘积运算API进行了改动，在3.x乘积运算使用了静态方法，以下是一些写法上的差异：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//向量相减</span><br><span class="line">p1.sub(p2) ==&gt; let newtag = new Vec2(Vec2.ZERO)</span><br><span class="line">        Vec2.subtract(newtag, p1, p2); p1 = newtag</span><br><span class="line"></span><br><span class="line">计算向量长度</span><br><span class="line">nv2.mag() ==&gt; Vec2.len(nv2)</span><br><span class="line"></span><br><span class="line">//向量除法</span><br><span class="line">let a = p1.divide(p2.mag());==&gt;let a= new Vec2(Vec2.Zero);  Vec2.divide(a,p1,new Vec2(Vec2.len(p2),Vec2.len(p2)))</span><br><span class="line"></span><br><span class="line">//缩放向量</span><br><span class="line">p1.mul(10) ==&gt;let a= new Vec2(Vec2.Zero);   Vec2.multiplyScalar(a,p1,10); //p1 = a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//向量加法</span><br><span class="line">p1.addSelf(v2) ==&gt; let a= new Vec2(Vec2.Zero); Vec2.add(a, p1,v2);</span><br><span class="line">     </span><br></pre></td></tr></table></figure>
 <span id="more"></span>
     </div>
