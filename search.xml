@@ -25,6 +25,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git clone https://github.com/next-theme/hexo-theme-next themes/nextUp231107</span><br></pre></td></tr></table></figure>
 <p>跟加载主题一样的操作，复制nextUp231107下的_config.yml到博客根目录即CrfBlog文件夹下,重命名为<code> _config.nextUp231107.yml</code></p>
 <p>找到根目录下的配置文件<code>_config.yml</code>搜索关键词<code>theme</code>修改主题为<code>theme: nextUp231107</code></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>复制主题文件<code>_config.[theme].yml</code>是为了方便升级，同样的道理该文件下会用到<code>images/</code>路径来存放资源文件，这个文件夹是在主题文件夹目录下，因此建议在根目录下也创建个<code>images</code>文件夹备份用到的图片，这样每次升级时就不用怕资源丢失又要重新去找素材了。</p>
 <h3 id="必备插件"><a href="#必备插件" class="headerlink" title="必备插件"></a>必备插件</h3><h4 id="生成当前页文章目录"><a href="#生成当前页文章目录" class="headerlink" title="生成当前页文章目录"></a>生成当前页文章目录</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装：</span><br><span class="line">    npm install hexo-toc --save</span><br><span class="line">卸载：</span><br><span class="line">    npm remove hexo-toc --save</span><br></pre></td></tr></table></figure>
 <h4 id="本地搜索插件"><a href="#本地搜索插件" class="headerlink" title="本地搜索插件"></a>本地搜索插件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.安装插件，用于生成博客索引数据（在博客根目录下执行下列命令）：</span><br><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line"></span><br><span class="line">2.编辑站点配置文件_config.yml(不是主题配置文件)，新增以下内容到任意位置：</span><br><span class="line"># 搜索</span><br><span class="line">search:</span><br><span class="line">  path: search.xml //假如xml文件报错可试下 search.json</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br><span class="line"></span><br><span class="line">3.编辑主题配置文件_config.yml(在主题目录下)，启用本地搜索功能：</span><br><span class="line">  找到local_search，把enable: false 改为 enable: true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -169,7 +170,7 @@
     <url>/posts/d95dc0b0.html</url>
     <content><![CDATA[<h2 id="Git配置仓库公钥"><a href="#Git配置仓库公钥" class="headerlink" title="Git配置仓库公钥"></a>Git配置仓库公钥</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>打开<a href="https://git-scm.com/downloads">《Git工具下载地址》</a>,下载并完成安装</p>
 <span id="more"></span>
-<h3 id="获取远程仓库地址SSH"><a href="#获取远程仓库地址SSH" class="headerlink" title="获取远程仓库地址SSH"></a>获取远程仓库地址SSH</h3><p>这里如果是Gitee可以看<a href="bd5b3fbb">《Hexo搭建笔记》</a>里的<strong>Gitee部署</strong>的<strong>创建仓库</strong> 章节,最终获取SSH地址 <a href="mailto:&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#116;&#101;&#101;&#46;&#x63;&#111;&#x6d;">&#x67;&#x69;&#x74;&#64;&#x67;&#105;&#116;&#101;&#101;&#46;&#x63;&#111;&#x6d;</a>:name&#x2F;仓库名.git，如在<strong>创建仓库</strong> 章节里最终获取地址</p>
+<h3 id="获取远程仓库地址SSH"><a href="#获取远程仓库地址SSH" class="headerlink" title="获取远程仓库地址SSH"></a>获取远程仓库地址SSH</h3><p>这里如果是Gitee可以看<a href="bd5b3fbb">《Hexo搭建笔记》</a>里的<strong>Gitee部署</strong>的<strong>创建仓库</strong> 章节,最终获取SSH地址 <a href="mailto:&#x67;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x65;&#101;&#x2e;&#x63;&#x6f;&#x6d;">&#x67;&#x69;&#x74;&#64;&#x67;&#x69;&#116;&#x65;&#101;&#x2e;&#x63;&#x6f;&#x6d;</a>:name&#x2F;仓库名.git，如在<strong>创建仓库</strong> 章节里最终获取地址</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git@gitee.com:Aoce888/Aoce888.git</span><br></pre></td></tr></table></figure>
 
 <p>其他也都大同小异如阿里云：在阿里云创建项目，获取SSH地址 ***.git（示例地址，每个项目SSH地址不同）</p>
@@ -179,7 +180,7 @@
 
 <p>用户信息配好后获取公钥：</p>
 <ul>
-<li>(方法一) 输入ssh-keygen -t rsa -C “<a href="mailto:&#x75;&#x73;&#x65;&#114;&#x65;&#109;&#x61;&#105;&#108;&#x40;&#113;&#113;&#46;&#x63;&#111;&#x6d;">&#x75;&#x73;&#x65;&#114;&#x65;&#109;&#x61;&#105;&#108;&#x40;&#113;&#113;&#46;&#x63;&#111;&#x6d;</a>“  （这里的邮箱是你配置用户的邮箱，回车全部按enter）；</li>
+<li>(方法一) 输入ssh-keygen -t rsa -C “<a href="mailto:&#117;&#x73;&#101;&#114;&#x65;&#x6d;&#x61;&#105;&#x6c;&#x40;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;">&#117;&#x73;&#101;&#114;&#x65;&#x6d;&#x61;&#105;&#x6c;&#x40;&#113;&#x71;&#46;&#x63;&#x6f;&#x6d;</a>“  （这里的邮箱是你配置用户的邮箱，回车全部按enter）；</li>
 </ul>
 <p>操作完成后SSH密钥默默认储存在帐户的主目录下的 ~&#x2F;.ssh</p>
 <ul>
