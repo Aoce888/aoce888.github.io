@@ -21,6 +21,10 @@
 <p>附：主题配置映射，复制主题文件夹下的_config.yml文件重命名为_config.主题命名.yml，移动到博客根目录即CrfBlog文件夹下</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hexo 在合并主题配置时，根目录下的_config.yml 配置项的优先级最高</span><br><span class="line">其次是 _config.[theme].yml 文件，最后是位于主题目录下的 _config.yml 文件。</span><br><span class="line">(！！这里要特别注意复制出来主题配置文件的存放路径和命名)</span><br></pre></td></tr></table></figure>
 <p>这样做的好处是不会直接修改到主题文件夹下的_config.yml，在后面进行主题更新时，不会影响到已经修改好的样式</p>
+<h3 id="主题升级"><a href="#主题升级" class="headerlink" title="主题升级"></a>主题升级</h3><p>设置新的主题目录，nextUp+日期，如：nextUp231107</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ git clone https://github.com/next-theme/hexo-theme-next themes/nextUp231107</span><br></pre></td></tr></table></figure>
+<p>跟加载主题一样的操作，复制nextUp231107下的_config.yml到博客根目录即CrfBlog文件夹下,重命名为<code> _config.nextUp231107.yml</code></p>
+<p>找到根目录下的配置文件<code>_config.yml</code>搜索关键词<code>theme</code>修改主题为<code>theme: nextUp231107</code></p>
 <h3 id="必备插件"><a href="#必备插件" class="headerlink" title="必备插件"></a>必备插件</h3><h4 id="生成当前页文章目录"><a href="#生成当前页文章目录" class="headerlink" title="生成当前页文章目录"></a>生成当前页文章目录</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">安装：</span><br><span class="line">    npm install hexo-toc --save</span><br><span class="line">卸载：</span><br><span class="line">    npm remove hexo-toc --save</span><br></pre></td></tr></table></figure>
 <h4 id="本地搜索插件"><a href="#本地搜索插件" class="headerlink" title="本地搜索插件"></a>本地搜索插件</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1.安装插件，用于生成博客索引数据（在博客根目录下执行下列命令）：</span><br><span class="line">npm install hexo-generator-searchdb --save</span><br><span class="line"></span><br><span class="line">2.编辑站点配置文件_config.yml(不是主题配置文件)，新增以下内容到任意位置：</span><br><span class="line"># 搜索</span><br><span class="line">search:</span><br><span class="line">  path: search.xml //假如xml文件报错可试下 search.json</span><br><span class="line">  field: post</span><br><span class="line">  format: html</span><br><span class="line">  limit: 10000</span><br><span class="line"></span><br><span class="line">3.编辑主题配置文件_config.yml(在主题目录下)，启用本地搜索功能：</span><br><span class="line">  找到local_search，把enable: false 改为 enable: true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -41,15 +45,18 @@
 <p>完成后，依次进行如下操作：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g  //解析成静态网页形式</span><br><span class="line">$ hexo d  //部署至仓库</span><br></pre></td></tr></table></figure>
 
+
+
+<h3 id="获取预览链接"><a href="#获取预览链接" class="headerlink" title="获取预览链接"></a>获取预览链接</h3><p>打开创建好的仓库，确认为开源仓库，选择-服务-Gitee Pages-强制使用https-更新,成功开启后会显示获取的链接，后面每次<code>hexo d</code>后都要更新一次</p>
 <h2 id="Git拉取后初始化"><a href="#Git拉取后初始化" class="headerlink" title="Git拉取后初始化"></a>Git拉取后初始化</h2><p>有时换新电脑，需要从git仓库拉取项目并重新初始化</p>
 <p>完成Node环境和Git环境的配置后，拉取原CrfBlog文件并打开，右键 git bash依次输入</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ hexo init </span><br></pre></td></tr></table></figure>
 
-
-<h2 id="添加域名"><a href="#添加域名" class="headerlink" title="添加域名"></a>添加域名</h2><h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><h3 id="页底添加备案号"><a href="#页底添加备案号" class="headerlink" title="页底添加备案号"></a>页底添加备案号</h3><p>打开自己的域名备案后台，找到备案主体号,例如我的是<code> 粤ICP备20000717号</code><br>然后修改hexo主题文件, 打开<code>_config.next.yml</code>搜索<code>icp</code>添加备案号：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">footer:</span><br><span class="line"></span><br><span class="line">  # Beian ICP and gongan information for Chinese users. See: https://beian.miit.gov.cn, http://www.beian.gov.cn</span><br><span class="line"></span><br><span class="line">  beian:</span><br><span class="line"></span><br><span class="line">    enable: true</span><br><span class="line"></span><br><span class="line">    icp: 粤ICP备20000717号</span><br><span class="line"></span><br><span class="line">    # The digit in the num of gongan beian.</span><br><span class="line"></span><br><span class="line">    gongan_id:</span><br><span class="line"></span><br><span class="line">    # The full num of gongan beian.</span><br><span class="line"></span><br><span class="line">    gongan_num:</span><br><span class="line"></span><br><span class="line">    # The icon for gongan beian. See: http://www.beian.gov.cn/portal/download</span><br><span class="line"></span><br><span class="line">    gongan_icon_url: https://beian.miit.gov.cn/</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h2><h3 id="主题添加备案水印"><a href="#主题添加备案水印" class="headerlink" title="主题添加备案水印"></a>主题添加备案水印</h3><p>打开域名备案的后台，找到备案主体号，例如我的是：<code>粤ICP备20000717号</code>,获取备案跳转链接,国内备案都会有跳转链接要求，这个可以问客服要,放在下面的<code>gongan_icon_url</code>处,获取到这信息后,具体操作如下：</p>
+<p>打开主题复制文件，_config.next.yml,搜索关键词<code>beian</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">beian:</span><br><span class="line">  enable: true</span><br><span class="line">  icp: 粤ICP备20000717号</span><br><span class="line">  # The digit in the num of gongan beian.</span><br><span class="line">  gongan_id:</span><br><span class="line">  # The full num of gongan beian.</span><br><span class="line">  gongan_num:</span><br><span class="line">  # The icon for gongan beian. See: http://www.beian.gov.cn/portal/download</span><br><span class="line">  gongan_icon_url: https://beian.miit.gov.cn/</span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
@@ -160,10 +167,9 @@
   <entry>
     <title>Git配置仓库公钥及使用</title>
     <url>/posts/d95dc0b0.html</url>
-    <content><![CDATA[<h2 id="Git配置仓库公钥"><a href="#Git配置仓库公钥" class="headerlink" title="Git配置仓库公钥"></a>Git配置仓库公钥</h2><p>方便协助完成同个项目，网上的方法有很多但可能杂，这里分享个我总结了个详细步骤方法</p>
-<h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>打开<a href="https://git-scm.com/downloads">《Git工具下载地址》</a>,下载并完成安装</p>
+    <content><![CDATA[<h2 id="Git配置仓库公钥"><a href="#Git配置仓库公钥" class="headerlink" title="Git配置仓库公钥"></a>Git配置仓库公钥</h2><h3 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h3><p>打开<a href="https://git-scm.com/downloads">《Git工具下载地址》</a>,下载并完成安装</p>
 <span id="more"></span>
-<h3 id="获取远程仓库地址SSH"><a href="#获取远程仓库地址SSH" class="headerlink" title="获取远程仓库地址SSH"></a>获取远程仓库地址SSH</h3><p>这里如果是Gitee可以看<a href="bd5b3fbb">《Hexo搭建笔记》</a>里的<strong>Gitee部署</strong>的<strong>创建仓库</strong> 章节,最终获取SSH地址 <a href="mailto:&#x67;&#105;&#x74;&#x40;&#x67;&#x69;&#x74;&#101;&#101;&#46;&#99;&#x6f;&#109;">&#x67;&#105;&#x74;&#x40;&#x67;&#x69;&#x74;&#101;&#101;&#46;&#99;&#x6f;&#109;</a>:name&#x2F;仓库名.git，如在<strong>创建仓库</strong> 章节里最终获取地址</p>
+<h3 id="获取远程仓库地址SSH"><a href="#获取远程仓库地址SSH" class="headerlink" title="获取远程仓库地址SSH"></a>获取远程仓库地址SSH</h3><p>这里如果是Gitee可以看<a href="bd5b3fbb">《Hexo搭建笔记》</a>里的<strong>Gitee部署</strong>的<strong>创建仓库</strong> 章节,最终获取SSH地址 <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#105;&#x74;&#x65;&#x65;&#46;&#x63;&#111;&#x6d;">&#x67;&#x69;&#116;&#64;&#x67;&#105;&#x74;&#x65;&#x65;&#46;&#x63;&#111;&#x6d;</a>:name&#x2F;仓库名.git，如在<strong>创建仓库</strong> 章节里最终获取地址</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git@gitee.com:Aoce888/Aoce888.git</span><br></pre></td></tr></table></figure>
 
 <p>其他也都大同小异如阿里云：在阿里云创建项目，获取SSH地址 ***.git（示例地址，每个项目SSH地址不同）</p>
@@ -173,7 +179,7 @@
 
 <p>用户信息配好后获取公钥：</p>
 <ul>
-<li>(方法一) 输入ssh-keygen -t rsa -C “<a href="mailto:&#117;&#x73;&#101;&#x72;&#101;&#x6d;&#97;&#105;&#x6c;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;">&#117;&#x73;&#101;&#x72;&#101;&#x6d;&#97;&#105;&#x6c;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#x6d;</a>“  （这里的邮箱是你配置用户的邮箱，回车全部按enter）；</li>
+<li>(方法一) 输入ssh-keygen -t rsa -C “<a href="mailto:&#x75;&#x73;&#101;&#114;&#101;&#x6d;&#97;&#105;&#x6c;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#109;">&#x75;&#x73;&#101;&#114;&#101;&#x6d;&#97;&#105;&#x6c;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#109;</a>“  （这里的邮箱是你配置用户的邮箱，回车全部按enter）；</li>
 </ul>
 <p>操作完成后SSH密钥默默认储存在帐户的主目录下的 ~&#x2F;.ssh</p>
 <ul>
@@ -285,6 +291,9 @@
     <url>/posts/c28eec2f.html</url>
     <content><![CDATA[<h2 id="站点配置"><a href="#站点配置" class="headerlink" title="站点配置"></a>站点配置</h2><h3 id="去掉强力驱动"><a href="#去掉强力驱动" class="headerlink" title="去掉强力驱动"></a>去掉强力驱动</h3><p>找到主题文件夹下layout&#x2F;partials&#x2F;footer.njk，将其包含的的以下代码注释掉或删除：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;% if theme.footer.powered %&#125;</span><br><span class="line">&lt;div class=&quot;powered-by&quot;&gt;&#123;# #&#125;&#123;&#123; __(&#x27;footer.powered&#x27;, &#x27;&lt;a class=&quot;theme-link&quot; target=&quot;_blank&quot; href=&quot;https://hexo.io&quot;&gt;Hexo&lt;/a&gt;&#x27;) &#125;&#125;&#123;# #&#125;&lt;/div&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+<p>新版的可以尝试下，在主题配置文件搜索<code>powered</code><br>如果关键词存在，设置为如下即可</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Powered by Hexo &amp; NexT</span><br><span class="line">powered: false</span><br></pre></td></tr></table></figure>
+
 <span id="more"></span>
 <h3 id="创建菜单栏页面"><a href="#创建菜单栏页面" class="headerlink" title="创建菜单栏页面"></a>创建菜单栏页面</h3><p>菜单显示对应标签，在主题配置文件_configy.yml找到menu关键词去掉需要显示的标签注释,默认只显示home，如下我们就是把about标签的注释去掉了:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">home: / || fa fa-home</span><br><span class="line">about: /about/ || fa fa-user</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
