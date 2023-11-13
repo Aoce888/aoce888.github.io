@@ -76,13 +76,14 @@
 
 <p>—&gt;记录值选择你购买的服务器地址, 确定</p>
 <h3 id="部署证书"><a href="#部署证书" class="headerlink" title="部署证书"></a>部署证书</h3><p>登录宝塔面板–&gt;选择左侧栏<code>网站</code>选项–&gt;添加站点–&gt;写上解释时完整的域名(例如：abc.rfcodetop)，点击对应域名的SSL证书下的未部署或是选择–&gt;设置–&gt;SSL证书，然后选择Let’s Encrypt,点击申请证书，等待申请成功保存就可以了(Let’s Encrypt默认续签且免费)</p>
-<p>解析域名后，如我的：blog.rfcode.top，然后在宝塔后台创建站点，或者服务器后台添加站点，找到站点根目录root&#x2F;blog.rfcode.top&#x2F;上次资源内容。</p>
+<p>解析域名后，如我的：blog.rfcode.top，然后在宝塔后台创建站点，或者服务器后台添加站点，找到站点根目录root&#x2F;blog.rfcode.top&#x2F;上传资源内容。</p>
 <span id="more"></span>
 
 <h2 id="GiteePages绑定域名"><a href="#GiteePages绑定域名" class="headerlink" title="GiteePages绑定域名"></a>GiteePages绑定域名</h2><p>记录下，要用自己的域名绑定GiteePage生成的链接(例如：<a href="https://aoce888.gitee.io/">Crf’s Blog</a>),几乎所有的方法都在解析时隐性url指向该地址或者在<code>cmd</code>通过<code>ping aoce888.gitee.io</code>获取CNAME记录值来解析，但这两个方式都存在缺点。没法用HTTPS协议，因为没法申请SSL证书，会验证失败！</p>
 <p>最后我想到的的方式是在<code>blog.rfcode.top</code>根目录创建index.html,套个个iframe嵌入跳转链接，代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;html&gt; </span><br><span class="line">&lt;head&gt; </span><br><span class="line">&lt;meta http-equiv=&quot;Content-Language&quot; content=&quot;zh-CN&quot;&gt; </span><br><span class="line">&lt;meta HTTP-EQUIV=&quot;Content-Type&quot; CONTENT=&quot;text/html; charset=utf-8&quot;&gt; </span><br><span class="line">&lt;title&gt;Crf’s Blog&lt;/title&gt;</span><br><span class="line">&lt;meta name=&quot;keywords&quot; content=&quot;Crf’s Blog&quot;&gt;</span><br><span class="line">&lt;meta name=&quot;description&quot; content=&quot;Crf’s Blog&quot;&gt;&lt;/head&gt; </span><br><span class="line">&lt;frameset framespacing=&quot;0&quot; border=&quot;0&quot; rows=&quot;0&quot; frameborder=&quot;0&quot;&gt; </span><br><span class="line">&lt;frame name=&quot;main&quot; src=&quot;https://aoce888.gitee.io/&quot; scrolling=&quot;auto&quot; noresize&gt; </span><br><span class="line">&lt;/frameset&gt; </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 <p>其中<code>src=&quot;https://aoce888.gitee.io/&quot;</code>中的链接就是自己GiteePages生成博客的链接，这样可以避免申请证书时验证失败等系列问题。</p>
+<p>顺便记录下一开始自己用的一种笨方法哈哈，生成GiteePages的一般项目不是有public目录嘛，例如<code>Hexo博客</code>会在<code>hexo d</code>后把构建文件放在public目录下。直接把这个目录拉到站点根目录root&#x2F;blog.rfcode.top&#x2F;上,ok。</p>
 <h2 id="其他相关"><a href="#其他相关" class="headerlink" title="其他相关"></a>其他相关</h2><ul>
 <li>Gitee Pages发布的网址用CNAME指定跳转可以通过<code>ping 生成链接的方式</code>获取记录值(IP地址)</li>
 </ul>
