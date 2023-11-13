@@ -70,19 +70,22 @@
   <entry>
     <title>关于域名部署与SSL证书</title>
     <url>/posts/d95dc0b0.html</url>
-    <content><![CDATA[<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ul>
-<li>Gitee Pages发布的网址没法用CNAME指定跳转</li>
-</ul>
-<h2 id="最简单的网址部署方式"><a href="#最简单的网址部署方式" class="headerlink" title="最简单的网址部署方式"></a>最简单的网址部署方式</h2><h3 id="选择服务器"><a href="#选择服务器" class="headerlink" title="选择服务器"></a>选择服务器</h3><p>这里我用的是阿里云的轻量服务器，打开阿里云–&gt;搜索<code>轻量服务器</code>–&gt;选择配置(镜像选择宝塔面板)，其他的根据自己需求来，购买成功后打开轻量服务器后台选择就会看到购买的实例，在里面可以登录宝塔面板。</p>
+    <content><![CDATA[<h2 id="简单的网址部署方式"><a href="#简单的网址部署方式" class="headerlink" title="简单的网址部署方式"></a>简单的网址部署方式</h2><h3 id="选择服务器"><a href="#选择服务器" class="headerlink" title="选择服务器"></a>选择服务器</h3><p>这里我用的是阿里云的轻量服务器，打开阿里云–&gt;搜索<code>轻量服务器</code>–&gt;选择配置(镜像选择宝塔面板)，其他的根据自己需求来，购买成功后打开轻量服务器后台选择就会看到购买的实例，在里面可以登录宝塔面板。</p>
 <h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>阿里云申请域名，选择域名解析–&gt;添加记录–&gt;设置主机名(域名备案是必要的，否则会影响网址的正常访问，搜索<code>阿里云搜索ICP备案，有时间都可以提前备好</code>)</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">主机记录就是域名前缀，常用主机记录及含义如下:</span><br><span class="line">www 表示域名 www.rfcode.top</span><br><span class="line">@ 表示主域名 rfcode.topa</span><br><span class="line">* 泛解析，表示满足格式*rfcodetop 的所有域名(记录类型为“显性URL“时，不允许设置泛解析)</span><br><span class="line">mail 表示域名mail.rfcode.top，常用于邮箱业务的解析设置</span><br><span class="line">m 表示域名 mrfcode.top，常用于手机网站m</span><br><span class="line">二级域名如 abc.rfcode.top ，则填写 abc</span><br><span class="line">多级域名如 ab.cd.ef.rfcode.top ，则填写 ab.cd.ef</span><br></pre></td></tr></table></figure>
 
 <p>—&gt;记录值选择你购买的服务器地址, 确定</p>
 <h3 id="部署证书"><a href="#部署证书" class="headerlink" title="部署证书"></a>部署证书</h3><p>登录宝塔面板–&gt;选择左侧栏<code>网站</code>选项–&gt;添加站点–&gt;写上解释时完整的域名(例如：abc.rfcodetop)，点击对应域名的SSL证书下的未部署或是选择–&gt;设置–&gt;SSL证书，然后选择Let’s Encrypt,点击申请证书，等待申请成功保存就可以了(Let’s Encrypt默认续签且免费)</p>
-<h2 id="GiteePages绑定域名"><a href="#GiteePages绑定域名" class="headerlink" title="GiteePages绑定域名"></a>GiteePages绑定域名</h2><p>要用自己的域名绑定GiteePage生成的链接(例如：<a href="https://aoce888.gitee.io/">Crf’s Blog</a>),很多人都在解析时隐性url指向该地址，但该方式存在缺点。没法用HTTPS协议，因为没法申请SSL证书，会验证失败！</p>
-<p>我用的方式是直接申请证书，直接解析出自己想要的域名，如我的：<code>blog.rfcode.top</code>，然后在宝塔后台创建站点，或者服务器后台添加站点，找到站点根目录<code>root/blog.rfcode.top/</code>创建index,加个iframe嵌入跳转链接，代码如下：</p>
+<p>解析域名后，如我的：blog.rfcode.top，然后在宝塔后台创建站点，或者服务器后台添加站点，找到站点根目录root&#x2F;blog.rfcode.top&#x2F;上次资源内容。</p>
+<span id="more"></span>
+
+<h2 id="GiteePages绑定域名"><a href="#GiteePages绑定域名" class="headerlink" title="GiteePages绑定域名"></a>GiteePages绑定域名</h2><p>记录下，要用自己的域名绑定GiteePage生成的链接(例如：<a href="https://aoce888.gitee.io/">Crf’s Blog</a>),几乎所有的方法都在解析时隐性url指向该地址或者在<code>cmd</code>通过<code>ping aoce888.gitee.io</code>获取CNAME记录值来解析，但这两个方式都存在缺点。没法用HTTPS协议，因为没法申请SSL证书，会验证失败！</p>
+<p>最后我想到的的方式是在<code>blog.rfcode.top</code>根目录创建index.html,套个个iframe嵌入跳转链接，代码如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;html&gt; </span><br><span class="line">&lt;head&gt; </span><br><span class="line">&lt;meta http-equiv=&quot;Content-Language&quot; content=&quot;zh-CN&quot;&gt; </span><br><span class="line">&lt;meta HTTP-EQUIV=&quot;Content-Type&quot; CONTENT=&quot;text/html; charset=utf-8&quot;&gt; </span><br><span class="line">&lt;title&gt;Crf’s Blog&lt;/title&gt;</span><br><span class="line">&lt;meta name=&quot;keywords&quot; content=&quot;Crf’s Blog&quot;&gt;</span><br><span class="line">&lt;meta name=&quot;description&quot; content=&quot;Crf’s Blog&quot;&gt;&lt;/head&gt; </span><br><span class="line">&lt;frameset framespacing=&quot;0&quot; border=&quot;0&quot; rows=&quot;0&quot; frameborder=&quot;0&quot;&gt; </span><br><span class="line">&lt;frame name=&quot;main&quot; src=&quot;https://aoce888.gitee.io/&quot; scrolling=&quot;auto&quot; noresize&gt; </span><br><span class="line">&lt;/frameset&gt; </span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 <p>其中<code>src=&quot;https://aoce888.gitee.io/&quot;</code>中的链接就是自己GiteePages生成博客的链接，这样可以避免申请证书时验证失败等系列问题。</p>
+<h2 id="其他相关"><a href="#其他相关" class="headerlink" title="其他相关"></a>其他相关</h2><ul>
+<li>Gitee Pages发布的网址用CNAME指定跳转可以通过<code>ping 生成链接的方式</code>获取记录值(IP地址)</li>
+</ul>
 ]]></content>
       <categories>
         <category>服务器相关</category>
