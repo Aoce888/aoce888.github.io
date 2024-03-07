@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="小球瞄准线在2D小游戏开发中是常用的功能，找了好久发现网上都是CocosCreator2.x相关的教程,如白玉无冰老师的《反复横跳的瞄准线！…》、《creator 反复横跳瞄准线的实现》From飞猪001，刚好第一份实习时有个3.x项目需要小球瞄准功能，但是当时由于3.x更新了系列2.x的API一直没弄懂做不出来，今天解决了就做个记录（这里要特别感谢键兴哥哥的指导）。 基本准备： 创建2D项目&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CocosCreator3.x发射瞄准线">
+<meta property="og:url" content="https://aoce888.github.io/posts/ddf07759.html">
+<meta property="og:site_name" content="Crf&#39;s Blog">
+<meta property="og:description" content="小球瞄准线在2D小游戏开发中是常用的功能，找了好久发现网上都是CocosCreator2.x相关的教程,如白玉无冰老师的《反复横跳的瞄准线！…》、《creator 反复横跳瞄准线的实现》From飞猪001，刚好第一份实习时有个3.x项目需要小球瞄准功能，但是当时由于3.x更新了系列2.x的API一直没弄懂做不出来，今天解决了就做个记录（这里要特别感谢键兴哥哥的指导）。 基本准备： 创建2D项目&amp;#">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-05-30T07:42:07.000Z">
+<meta property="article:modified_time" content="2023-08-31T08:30:07.829Z">
+<meta property="article:author" content="Crf&#39;s Blog">
+<meta property="article:tag" content="Cocos Creator">
+<meta property="article:tag" content="3.x">
+<meta property="article:tag" content="TypeScript">
+<meta property="article:tag" content="游戏引擎">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aoce888.github.io/posts/ddf07759.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CocosCreator3.x发射瞄准线 | Crf's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Crf's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">15</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">22</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/ddf07759.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CocosCreator3.x发射瞄准线
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-30 15:42:07" itemprop="dateCreated datePublished" datetime="2023-05-30T15:42:07+08:00">2023-05-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-31 16:30:07" itemprop="dateModified" datetime="2023-08-31T16:30:07+08:00">2023-08-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CocosCreator/" itemprop="url" rel="index"><span itemprop="name">CocosCreator</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>805</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>小球瞄准线在2D小游戏开发中是常用的功能，找了好久发现网上都是CocosCreator2.x相关的教程,如白玉无冰老师的<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45686592/article/details/103567500">《反复横跳的瞄准线！…》</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_63275099/article/details/121316113">《creator 反复横跳瞄准线的实现》From飞猪001</a>，刚好第一份实习时有个3.x项目需要小球瞄准功能，但是当时由于3.x更新了系列2.x的API一直没弄懂做不出来，今天解决了就做个记录（这里要特别感谢键兴哥哥的指导）。</p>
+<p>基本准备： 创建2D项目&#x3D;&#x3D;&gt;新建场景&#x3D;&#x3D;&gt;设置项目的设计宽高：宽540高960</p>
+<ul>
+<li>在Canvas画布下创建Sprite节点名称为touch_node和Graphics节点名为graphic_line</li>
+<li>新建脚本Test.ts挂到Canvas节点上,复制以下下代码(保存Canvas节点上找到Test组件挂上touch_node和graphic_line节点):</li>
+<li><span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line">import &#123; _decorator, BoxCollider2D, Component, EPhysics2DDrawFlags, ERaycast2DType, ERigidBody2DType, Node, PhysicsSystem2D, RigidBody2D, UITransform, Vec2, Vec3, RigidBody, Graphics &#125; from &#x27;cc&#x27;;</span><br><span class="line">const &#123; ccclass, property &#125; = _decorator;</span><br><span class="line"></span><br><span class="line">@ccclass(&#x27;Test&#x27;)</span><br><span class="line">export class Test extends Component &#123;</span><br><span class="line"></span><br><span class="line">    line_height = 2000</span><br><span class="line">    @property(Graphics)</span><br><span class="line">    graphic_line: Graphics = null</span><br><span class="line"></span><br><span class="line">    @property(Node)</span><br><span class="line">    private touch_node: Node = null;</span><br><span class="line"></span><br><span class="line">    protected onLoad(): void &#123;</span><br><span class="line">        PhysicsSystem2D.instance.enable = true;</span><br><span class="line">        PhysicsSystem2D.instance.debugDrawFlags = EPhysics2DDrawFlags.Aabb |</span><br><span class="line">            EPhysics2DDrawFlags.Pair |</span><br><span class="line">            EPhysics2DDrawFlags.CenterOfMass |</span><br><span class="line">            EPhysics2DDrawFlags.Joint |</span><br><span class="line">            EPhysics2DDrawFlags.Shape;</span><br><span class="line"></span><br><span class="line">        this.initModule()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected start(): void &#123;</span><br><span class="line">        this.touch_node.on(Node.EventType.TOUCH_START, (event) =&gt; &#123;</span><br><span class="line">            console.log(&#x27;true&#x27;)</span><br><span class="line">            this.resetLine(event.getLocation())</span><br><span class="line">        &#125;, this)</span><br><span class="line">        this.touch_node.on(Node.EventType.TOUCH_MOVE, (event) =&gt; &#123;</span><br><span class="line">            this.resetLine(event.getLocation())</span><br><span class="line">        &#125;, this)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    update(deltaTime: number) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">  * 刷新线</span><br><span class="line">  * @param touch_point </span><br><span class="line">  */</span><br><span class="line">    resetLine(touch_point: Vec2) &#123;</span><br><span class="line">        this.graphic_line.clear();</span><br><span class="line">        let temp = this.graphic_line.node.getComponent(UITransform).convertToWorldSpaceAR(Vec3.ZERO);</span><br><span class="line">        let start_point = new Vec2(temp.x, temp.y)</span><br><span class="line"></span><br><span class="line">        let sub_vec = new Vec2(Vec2.ZERO)</span><br><span class="line">        Vec2.subtract(sub_vec, touch_point, start_point)</span><br><span class="line">        // let sub_vec = touch_point.sub(start_point);</span><br><span class="line"></span><br><span class="line">        let end_point = new Vec2(Vec2.ZERO)</span><br><span class="line">        let a = new Vec2(Vec2.ZERO);</span><br><span class="line">        Vec2.divide(a, sub_vec, new Vec2(Vec2.len(sub_vec), Vec2.len(sub_vec)))</span><br><span class="line">        let b = new Vec2()</span><br><span class="line">        Vec2.multiplyScalar(b, a, this.line_height)</span><br><span class="line">        end_point = b.add(start_point)</span><br><span class="line">        // let end_point = sub_vec.div(sub_vec.mag()).mul(this.line_height).add(start_point);</span><br><span class="line">        this.physicalRayCast(start_point, end_point, this.line_height);</span><br><span class="line"></span><br><span class="line">        this.graphic_line.stroke();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">         * 射线检查</span><br><span class="line">         * @param p1 </span><br><span class="line">         * @param p2 </span><br><span class="line">         * @param line_mag </span><br><span class="line">         */</span><br><span class="line">    physicalRayCast(p1: Vec2, p2: Vec2, line_mag: number) &#123;</span><br><span class="line">        //射线检测</span><br><span class="line">        var results = PhysicsSystem2D.instance.raycast(p1, p2,</span><br><span class="line">            ERaycast2DType.Closest)[0];</span><br><span class="line">        let sub_vec: Vec2 = new Vec2();</span><br><span class="line">        if (results) &#123;</span><br><span class="line">            Vec2.subtract(sub_vec, results.point, p1)</span><br><span class="line">            // sub_vec = results.point.sub(p1);</span><br><span class="line">            //计算长度</span><br><span class="line">            let draw_mag = Vec2.len(sub_vec);</span><br><span class="line">            //得到入射向量单位</span><br><span class="line">            Vec2.divide(sub_vec, sub_vec, new Vec2(draw_mag, draw_mag));</span><br><span class="line">            if (line_mag - draw_mag &gt; 0) &#123;</span><br><span class="line">                let temp = this.node.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(p1.x, p1.y, 0))</span><br><span class="line">                this.drawLine(new Vec2(temp.x, temp.y), sub_vec, draw_mag);</span><br><span class="line">                //法向量</span><br><span class="line">                p1 = results.point;</span><br><span class="line">                //反射法向量</span><br><span class="line">                let mul = new Vec2()</span><br><span class="line">                Vec2.multiply(mul, results.normal, new Vec2(2 * sub_vec.dot(results.normal), 2 * sub_vec.dot(results.normal)))</span><br><span class="line">                Vec2.subtract(p2, sub_vec, mul)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                // p2 = sub_vec.sub(results.normal.mul(2*sub_vec.dot(results.normal)));</span><br><span class="line">                p2.multiply(new Vec2(line_mag - draw_mag, line_mag - draw_mag))</span><br><span class="line">                // p2.mul(line_mag - draw_mag, p2);</span><br><span class="line">                //反射点</span><br><span class="line">                p2.add(p1)</span><br><span class="line">                this.physicalRayCast(p1, p2, line_mag - draw_mag);</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                let temp = this.node.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(p1.x, p1.y, 0))</span><br><span class="line">                this.drawLine(new Vec2(temp.x, temp.y), sub_vec, line_mag);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            Vec2.subtract(sub_vec, p2, p1)</span><br><span class="line">            // sub_vec = p2.sub(p1);</span><br><span class="line">            let draw_mag = Vec2.len(sub_vec);</span><br><span class="line">            Vec2.divide(sub_vec, sub_vec, new Vec2(draw_mag, draw_mag));</span><br><span class="line">            // sub_vec.divSelf(sub_vec.mag());</span><br><span class="line"></span><br><span class="line">            let temp = this.node.getComponent(UITransform).convertToNodeSpaceAR(new Vec3(p1.x, p1.y, 0))</span><br><span class="line">            this.drawLine(new Vec2(temp.x, temp.y), sub_vec, line_mag);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 画线</span><br><span class="line">     * @param start_point </span><br><span class="line">     * @param sub_vec </span><br><span class="line">     * @param line_mag </span><br><span class="line">     */</span><br><span class="line">    drawLine(start_point: Vec2, sub_vec: Vec2, line_mag: number) &#123;</span><br><span class="line">        let a = new Vec2()</span><br><span class="line">        Vec2.multiplyScalar(a, sub_vec, 20)</span><br><span class="line">        let end_point = new Vec2()</span><br><span class="line">        Vec2.add(end_point, start_point, a)</span><br><span class="line">        this.graphic_line.moveTo(start_point.x, start_point.y);</span><br><span class="line">        this.graphic_line.lineTo(end_point.x, end_point.y);</span><br><span class="line">        line_mag -= 30;</span><br><span class="line">        if (line_mag &gt; 0) &#123;</span><br><span class="line">            let t = new Vec2()</span><br><span class="line">            Vec2.multiplyScalar(t, sub_vec, 10)</span><br><span class="line">            this.drawLine(end_point.add(t), sub_vec, line_mag);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    initModule() &#123;</span><br><span class="line">        let width = this.node.getComponent(UITransform).width</span><br><span class="line">        let height = this.node.getComponent(UITransform).height;</span><br><span class="line"></span><br><span class="line">        let node = new Node();</span><br><span class="line"></span><br><span class="line">        let body = node.addComponent(RigidBody2D);</span><br><span class="line">        body.type = ERigidBody2DType.Static;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        this._addBound(node, 0, height / 2, width, 20);</span><br><span class="line">        this._addBound(node, 0, -height / 2, width, 20);</span><br><span class="line">        this._addBound(node, -width / 2, 0, 20, height);</span><br><span class="line">        this._addBound(node, width / 2, 0, 20, height);</span><br><span class="line"></span><br><span class="line">        node.parent = this.node;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    _addBound(node, x, y, width, height) &#123;</span><br><span class="line">        let collider = node.addComponent(BoxCollider2D); //PhysicsBoxCollider</span><br><span class="line">        collider.offset.x = x;</span><br><span class="line">        collider.offset.y = y;</span><br><span class="line">        collider.size.width = width;</span><br><span class="line">        collider.size.height = height;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>这样一条基本的反复横跳瞄准线就完成了，当触摸touch_node时瞄准线就会随着手指的移动而发生变化。在自己的项目中也可以对这条线进行系列美化。具体后面会放在后面的升级代码中。</p>
+
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Crf's Blog 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/paypal.png" alt="Crf's Blog 微信">
+        <p>微信</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/bitcoin.png" alt="Crf's Blog BTC">
+        <p>BTC</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Crf's Blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://aoce888.github.io/posts/ddf07759.html" title="CocosCreator3.x发射瞄准线">https://aoce888.github.io/posts/ddf07759.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cocos-Creator/" rel="tag"># Cocos Creator</a>
+              <a href="/tags/3-x/" rel="tag"># 3.x</a>
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+              <a href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E/" rel="tag"># 游戏引擎</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/2e201bd.html" rel="prev" title="CocosCreator升级3.x进阶API">
+      <i class="fa fa-chevron-left"></i> CocosCreator升级3.x进阶API
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/posts/a983e6df.html" rel="next" title="Git配置仓库公钥及使用">
+      Git配置仓库公钥及使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+     
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Crf's Blog"
+      src="/images/touxiang.gif">
+  <p class="site-author-name" itemprop="name">Crf's Blog</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:3303538033@qq.com" title="E-Mail → mailto:3303538033@qq.com" rel="noopener" target="_self"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_44209860/article/details/126509442?spm=1001.2014.3001.5502" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44209860&#x2F;article&#x2F;details&#x2F;126509442?spm&#x3D;1001.2014.3001.5502" rel="noopener" target="_self"><i class="fa csdn fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/Aoce888" title="GITEE → https:&#x2F;&#x2F;gitee.com&#x2F;Aoce888" rel="noopener" target="_self"><i class="fa gitee fa-fw"></i>GITEE</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_self"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      相关链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://yp.rfcode.top/" title="https:&#x2F;&#x2F;yp.rfcode.top&#x2F;" rel="noopener" target="_self">第一份实习简历</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://playable.rfcode.top/" title="https:&#x2F;&#x2F;playable.rfcode.top&#x2F;" rel="noopener" target="_self">Playable</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/duli/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;duli&#x2F;" rel="noopener" target="_self">独立小游戏</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/bepic_h5tools/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;bepic_h5tools&#x2F;" rel="noopener" target="_self">bepic_h5tools</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+    <div>
+
+   <!--网易云音乐插件-->
+    <div>
+    <!-- require APlayer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <!-- require MetingJS-->
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script> 
+    <!--网易云playlist外链地址-->   
+    <meting-js
+        server="netease"
+        type="playlist" 
+        id="8425659719"
+        mini="false"
+        fixed="false"
+        list-folded="true"
+        autoplay="false"
+        volume="0.4"
+        theme="#FADFA3"
+        order="list"
+        loop="all"
+        preload="auto"
+        mutex="true">
+    </meting-js></div>
+    </div>
+    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_self">粤ICP备20000717号 </a>
+      <img src="/images/beian.png" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crf's Blog</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">11k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">41 分钟</span>
+</div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("08/10/2020 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>
