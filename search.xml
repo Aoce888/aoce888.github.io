@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>报错日志记录</title>
+    <url>/posts/971aed10.html</url>
+    <content><![CDATA[<h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><p>在添加<code>openssh</code>成功后,<code>hexo d</code>报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh: Could not resolve hostname github.com: \262\273\326\252\265\300\325\342\321\371\265\304\326\367\273\372\241\243</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line"></span><br><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">FATAL Something&#x27;s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span><br><span class="line">Error: Spawn failed</span><br><span class="line">    at ChildProcess.&lt;anonymous&gt; (D:\Hexo\CrfBlog\node_modules\hexo-util\lib\spawn.js:51:21)</span><br><span class="line">    at ChildProcess.emit (node:events:513:28)</span><br><span class="line">    at ChildProcess.cp.emit (D:\Hexo\CrfBlog\node_modules\cross-spawn\lib\enoent.js:34:29)</span><br><span class="line">    at Process.ChildProcess._handle.onexit (node:internal/child_process:293:12)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>报错时间：2024.03.08</p>
+<span id="more"></span>
+
+<p><strong>解决方案</strong></p>
+<p>尝试<code>ssh -T git@github.com</code>或用小乌龟推送项目到github，报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git.exe push --progress &quot;private&quot; master:master</span><br><span class="line">kex_exchange_identification: Connection closed by remote host</span><br><span class="line">Connection closed by 140.82.114.3 port 22</span><br><span class="line">fatal: Could not read from remote repository.</span><br></pre></td></tr></table></figure>
+<p>想起来昨天测试openssh时把config文件删除，重新在私钥文件夹<code>~/.ssh/</code>下创建config文件<br>，并添加规则开放443端口：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Host github.com</span><br><span class="line">    Hostname ssh.github.com</span><br><span class="line">    Port 443</span><br></pre></td></tr></table></figure>
+
+<p>再次测试推送<code>ssh -T git@github.com</code>，输入<code>yes</code>，成功:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">The authenticity of host &#x27;[ssh.github.com]:443 ([140.82.112.35]:443)&#x27; can&#x27;t be established.</span><br><span class="line">ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.</span><br><span class="line">This key is not known by any other names.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="line">Warning: Permanently added &#x27;[ssh.github.com]:443&#x27; (ED25519) to the list of known hosts.</span><br><span class="line">Hi Aoce888! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2>]]></content>
+      <categories>
+        <category>其他技术</category>
+      </categories>
+      <tags>
+        <tag>报错日志</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>windows系统ssh连接服务器(免密+私钥)</title>
     <url>/posts/2dc012bc.html</url>
     <content><![CDATA[<p><strong>准备条件：</strong></p>

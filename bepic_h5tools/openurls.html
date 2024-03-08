@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>批量打开网址</title><script defer="defer" src="./openurls/js/1668b9f8ab10f9827c671b7b48d1617c.js"></script><link href="./openurls/css/c4c569f9bf776d659c86.css" rel="stylesheet"></head><body><div class="view"><h2 for="urlInput">输入网址：</h2><textarea id="urlInput" placeholder="https://example1.com&#10;https://example2.com&#10;https://example3.com" oninput="formatURLs()"></textarea> <button onclick="openURLs()">打开</button><script>function formatURLs() {
+        var urlInput = document.getElementById('urlInput');
+        var formattedValue = urlInput.value.replace(/\s+/g, '\n');
+        urlInput.value = formattedValue;
+      }
+
+      function openURLs() {
+        var urlInput = document.getElementById('urlInput');
+        var urls = urlInput.value.split('\n');
+
+        urls.forEach(function (url) {
+          if (url.trim() !== "") {
+            if (/^https?:\/\//.test(url)) {
+              window.open(url.trim(), '_blank');
+            } else {
+              window.open('https://' + url.trim(), '_blank');
+            }
+          }
+        });
+      }</script></div></body></html>
