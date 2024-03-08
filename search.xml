@@ -3,7 +3,7 @@
   <entry>
     <title>报错日志记录</title>
     <url>/posts/971aed10.html</url>
-    <content><![CDATA[<h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><p>在添加<code>openssh</code>成功后,<code>hexo d</code>报错：</p>
+    <content><![CDATA[<h2 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h2><p>在添加<code>openssh</code>成功后,<code>hexo d</code>报错：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh: Could not resolve hostname github.com: \262\273\326\252\265\300\325\342\321\371\265\304\326\367\273\372\241\243</span><br><span class="line">fatal: Could not read from remote repository.</span><br><span class="line"></span><br><span class="line">Please make sure you have the correct access rights</span><br><span class="line">and the repository exists.</span><br><span class="line">FATAL Something&#x27;s wrong. Maybe you can find the solution here: https://hexo.io/docs/troubleshooting.html</span><br><span class="line">Error: Spawn failed</span><br><span class="line">    at ChildProcess.&lt;anonymous&gt; (D:\Hexo\CrfBlog\node_modules\hexo-util\lib\spawn.js:51:21)</span><br><span class="line">    at ChildProcess.emit (node:events:513:28)</span><br><span class="line">    at ChildProcess.cp.emit (D:\Hexo\CrfBlog\node_modules\cross-spawn\lib\enoent.js:34:29)</span><br><span class="line">    at Process.ChildProcess._handle.onexit (node:internal/child_process:293:12)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>报错时间：2024.03.08</p>
 <span id="more"></span>
@@ -19,7 +19,8 @@
 
 <p>重新<code>hexo d</code>，问题解决。</p>
 <p>归因：误删<code>~/.ssh/</code>下config，导致github配置错误，无法ssh链接到git服务器。</p>
-<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2>]]></content>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p>~</p>
+]]></content>
       <categories>
         <category>其他技术</category>
       </categories>

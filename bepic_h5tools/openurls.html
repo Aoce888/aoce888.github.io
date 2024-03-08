@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>批量打开网址</title><script defer="defer" src="./openurls/js/1668b9f8ab10f9827c671b7b48d1617c.js"></script><link href="./openurls/css/c4c569f9bf776d659c86.css" rel="stylesheet"></head><body><div class="view"><h2 for="urlInput">输入网址：</h2><textarea id="urlInput" placeholder="https://example1.com&#10;https://example2.com&#10;https://example3.com" oninput="formatURLs()"></textarea> <button onclick="openURLs()">打开</button><script>function formatURLs() {
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>批量打开网址</title><script defer="defer" src="./openurls/js/48955f9b0fa4681b83a965c10ac283cc.js"></script><link href="./openurls/css/3e664aac884e654ddcb1.css" rel="stylesheet"></head><body><div class="view"><h2 for="urlInput">输入网址：</h2><textarea id="urlInput" placeholder="https://example1.com&#10;https://example2.com&#10;https://example3.com" oninput="formatURLs()"></textarea> <button onclick="openURLs()">打开</button><script>function formatURLs() {
         var urlInput = document.getElementById('urlInput');
         var formattedValue = urlInput.value.replace(/\s+/g, '\n');
         urlInput.value = formattedValue;
@@ -17,4 +17,6 @@
             }
           }
         });
-      }</script></div></body></html>
+      }</script></div><div class="footer"><a>V1.0.2</a> © from <a id="sitenametxt" href="javascript:void(0)" onclick="goToHomePage()"></a></div><script>let sitename = document.getElementById('sitenametxt')
+    sitename.textContent = window.location.host;
+    sitename.href = window.location.origin;</script></body></html>
