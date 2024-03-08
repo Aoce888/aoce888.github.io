@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Midway-Vue3框架使用笔记</title>
+    <url>/posts/becb1b11.html</url>
+    <content><![CDATA[<h2 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h2><p>框架地址: <a href="http://midway-vue3-ssr.liqingsong.cc/"><strong>Midway-Vue3-SSR</strong></a></p>
+<p>基于 Midway、Vue 3 组装的 SSR 框架<br>简单、易学易用、方便扩展、集成Midway框架，您一直想要的Vue SSR 框架。</p>
+<p>使用系统：Windows</p>
+<p>安装:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 克隆项目</span><br><span class="line">git clone https://github.com/lqsong/midway-vue3-ssr.git</span><br><span class="line"></span><br><span class="line"># 进入项目目录</span><br><span class="line">cd midway-vue3-ssr</span><br><span class="line"></span><br><span class="line"># 复制文件</span><br><span class="line">copy src/config/config.default.ts  src/config/config.local.ts # 启用或修改里面的参数</span><br><span class="line">copy src/config/config.default.ts  src/config/config.prod.ts # 启用或修改里面的参数</span><br><span class="line">copy web/.env.development  web/.env.development.local # 启用或修改里面的参数</span><br><span class="line"></span><br><span class="line"># 全局安装pnpm：</span><br><span class="line">npm install pnpm -g</span><br><span class="line"></span><br><span class="line"># 安装环境依赖</span><br><span class="line">pnpm i </span><br><span class="line"></span><br><span class="line"># 启动默认项目</span><br><span class="line">pnpm dev</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<p>设置源:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 查看源</span><br><span class="line">pnpm config get registry </span><br><span class="line"># 切换淘宝源</span><br><span class="line">pnpm config set registry http://registry.npm.taobao.org </span><br></pre></td></tr></table></figure>
+
+<p>pnpm安装好后，有安装yarn的也可以用yarn，不过有的指令用不了</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>vscode打开克隆下来的项目，ctrl+tab打开终端，前提准备 进入项目目录里后的操作也可也在这里完成。</p>
+<h3 id="创建总的文件夹"><a href="#创建总的文件夹" class="headerlink" title="创建总的文件夹"></a>创建总的文件夹</h3><p>初始化后，创建projpath_name文件夹来存放多个工程项目</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建</span><br><span class="line">mkdir projpath_name</span><br><span class="line"># 进入</span><br><span class="line">cd projpath_name</span><br></pre></td></tr></table></figure>
+<h3 id="创建工程项目"><a href="#创建工程项目" class="headerlink" title="创建工程项目"></a>创建工程项目</h3><p>然后创建名为aaa的项目，执行以下命令回车：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pnpm create vite aaa --template vue-ts</span><br></pre></td></tr></table></figure>
+
+<p>创建完<code>cd aaa</code>进入工程项目文件夹<code>pnpm i</code>安装项目依赖项，完成后执行<code>pnpm run dev</code>启动项目，</p>
+<p>附：<code>cd projpath_name</code>后如果已经创建好了有多个项目可<code>ls查看</code>。</p>
+]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Midway</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>报错日志记录</title>
     <url>/posts/971aed10.html</url>
     <content><![CDATA[<h2 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h2><p>在添加<code>openssh</code>成功后,<code>hexo d</code>报错：</p>
