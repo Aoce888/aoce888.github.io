@@ -17,6 +17,8 @@
 <p>再次测试推送<code>ssh -T git@github.com</code>，输入<code>yes</code>，成功:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line">The authenticity of host &#x27;[ssh.github.com]:443 ([140.82.112.35]:443)&#x27; can&#x27;t be established.</span><br><span class="line">ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.</span><br><span class="line">This key is not known by any other names.</span><br><span class="line">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span><br><span class="line">Warning: Permanently added &#x27;[ssh.github.com]:443&#x27; (ED25519) to the list of known hosts.</span><br><span class="line">Hi Aoce888! You&#x27;ve successfully authenticated, but GitHub does not provide shell access.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<p>重新<code>hexo d</code>，问题解决。</p>
+<p>归因：误删<code>~/.ssh/</code>下config，导致github配置错误，无法ssh链接到git服务器。</p>
 <h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2>]]></content>
       <categories>
         <category>其他技术</category>
