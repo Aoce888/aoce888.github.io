@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">18</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -185,6 +185,105 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/a8f0cfef.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/a8f0cfef.html" class="post-title-link" itemprop="url">实现图片懒加载的JavaScript函数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-13 11:11:01 / 修改时间：11:18:57" itemprop="dateCreated datePublished" datetime="2024-03-13T11:11:01+08:00">2024-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML5/" itemprop="url" rel="index"><span itemprop="name">HTML5</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>413</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前言：在Web开发中，图片懒加载可以延迟加载页面上的图片，以提高页面加载性能和用户体验。用户在页面加载时不立即加载所有图片，而是等到图片即将进入用户视野时再进行加载。通过延迟加载图片，可以减少初始加载的资源数量，提高页面的加载速度，特别适用于包含大量图片的网页。</p>
+<p>以下是一个使用JavaScript实现的简单图片懒加载函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">let previousLoadCount = 0;</span><br><span class="line"></span><br><span class="line">function runLazyLoad(origin) &#123;</span><br><span class="line">    loadLazyLoadedImages(origin, 0);</span><br><span class="line">    window.addEventListener(&#x27;scroll&#x27;, function () &#123;</span><br><span class="line">        const scrollDistance = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;</span><br><span class="line">        if (scrollDistance &gt; 0) &#123;</span><br><span class="line">            const initialLoadCount = Math.floor(scrollDistance / 300) * 9 + 9;</span><br><span class="line">            const newLoadCount = initialLoadCount - previousLoadCount;</span><br><span class="line">            if (newLoadCount &gt; 0) &#123;</span><br><span class="line">                loadLazyLoadedImages(newLoadCount);</span><br><span class="line">                previousLoadCount = initialLoadCount;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function loadLazyLoadedImages(count) &#123;</span><br><span class="line">    const lazyImages = document.querySelectorAll(&#x27;[data-src]&#x27;);</span><br><span class="line">    let loadedCount = 0;</span><br><span class="line"></span><br><span class="line">    lazyImages.forEach(img =&gt; &#123;</span><br><span class="line">        if (loadedCount &gt;= count) &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        img.style.backgroundImage = `url($&#123;img.getAttribute(&#x27;data-src&#x27;)&#125;)`;</span><br><span class="line">        img.removeAttribute(&#x27;data-src&#x27;);</span><br><span class="line">        loadedCount++;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上述代码中，我们定义了一个名为runLazyLoad的函数，它通过监听滚动事件实现了图片的懒加载功能。当页面滚动时，函数会计算滚动距离，并根据一定规则加载新的图片。</p>
+<p>函数内部的loadLazyLoadedImages函数用于实际加载图片。它首先获取所有带有data-src属性的图片元素，然后逐个加载这些图片，直到达到指定的加载数量。</p>
+<p>如何该函数:</p>
+<p>将需要进行懒加载的图片元素添加data-src属性，并将其值设置为对应图片的URL。</p>
+<p>html</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img data-src=&quot;path/to/image.webp&quot; alt=&quot;Lazy-loaded Image&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>javascript</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node.setAttribute(&#x27;data-src&#x27;, &quot;path/to/image.webp&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>在需要启动的页面，调用runLazyLoad(0); &#x2F;&#x2F;0为默认需要加载的个数，可以根据需要进行调整。</p>
+
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1110,105 +1209,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/13206192.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.gif">
-      <meta itemprop="name" content="Crf's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Crf's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/13206192.html" class="post-title-link" itemprop="url">html部分css样式修改方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-06-29 16:08:57" itemprop="dateCreated datePublished" datetime="2023-06-29T16:08:57+08:00">2023-06-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-08 17:43:29" itemprop="dateModified" datetime="2023-12-08T17:43:29+08:00">2023-12-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTML5/" itemprop="url" rel="index"><span itemprop="name">HTML5</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>239</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基础知识点"><a href="#基础知识点" class="headerlink" title="基础知识点"></a>基础知识点</h2><h3 id="横竖屏样式适配"><a href="#横竖屏样式适配" class="headerlink" title="横竖屏样式适配"></a>横竖屏样式适配</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@charset &quot;utf-8&quot;;</span><br><span class="line">body&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">@media screen and (max-width:480px) &#123;</span><br><span class="line"></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/13206192.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1282,7 +1282,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1397,7 +1397,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">44 分钟</span>
+    <span title="站点阅读时长">45 分钟</span>
 </div>
 
 <div>
