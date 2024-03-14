@@ -20,15 +20,23 @@
     var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Crf&#39;s Blog">
-<meta property="og:url" content="https://aoce888.github.io/categories/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/index.html">
+  <meta name="description" content="问题描述在进行JSON序列化时，有时候会出现符号变化的问题，例如双引号或单引号被转义或丢失的情况。情况是这样的，我在作配置生成器过程中用到了默认配置, 属性用做内容填充对象。 12345678910111213141516171819202122# 默认配置const configsData &#x3D; &amp;#123;  &quot;1_minigame&quot;: &amp;#123;    host: &#96;ww">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修复JSON序列化后符号变化的方案">
+<meta property="og:url" content="https://aoce888.github.io/posts/afa5db47.html">
 <meta property="og:site_name" content="Crf&#39;s Blog">
+<meta property="og:description" content="问题描述在进行JSON序列化时，有时候会出现符号变化的问题，例如双引号或单引号被转义或丢失的情况。情况是这样的，我在作配置生成器过程中用到了默认配置, 属性用做内容填充对象。 12345678910111213141516171819202122# 默认配置const configsData &#x3D; &amp;#123;  &quot;1_minigame&quot;: &amp;#123;    host: &#96;ww">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-14T03:32:54.000Z">
+<meta property="article:modified_time" content="2024-03-14T05:04:25.212Z">
 <meta property="article:author" content="Crf&#39;s Blog">
+<meta property="article:tag" content="JSON">
+<meta property="article:tag" content="字符串">
+<meta property="article:tag" content="序列化">
+<meta property="article:tag" content="解决方案">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://aoce888.github.io/categories/%E5%85%B6%E4%BB%96%E6%8A%80%E6%9C%AF/">
+<link rel="canonical" href="https://aoce888.github.io/posts/afa5db47.html">
 
 
 <script id="page-configurations">
@@ -36,12 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类: 其他技术 | Crf's Blog</title>
+  <title>修复JSON序列化后符号变化的方案 | Crf's Blog</title>
   
 
 
@@ -117,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">18</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -127,12 +135,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">24</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">28</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -183,94 +191,182 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">其他技术
-          <small>分类</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/afa5db47.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          修复JSON序列化后符号变化的方案
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-14 11:32:54 / 修改时间：13:04:25" itemprop="dateCreated datePublished" datetime="2024-03-14T11:32:54+08:00">2024-03-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数据处理</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>596</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
-    </div>
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>在进行JSON序列化时，有时候会出现符号变化的问题，例如双引号或单引号被转义或丢失的情况。情况是这样的，我在作配置生成器过程中用到了默认配置, 属性用做内容填充对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 默认配置</span><br><span class="line">const configsData = &#123;</span><br><span class="line">  &quot;1_minigame&quot;: &#123;</span><br><span class="line">    host: `www.a0.com`,</span><br><span class="line">    data: &#123; name: `A0`, logo: `$&#123;templateName&#125;/a0` &#125;,</span><br><span class="line">    html: &#123;</span><br><span class="line">      htmlTest:``,</span><br><span class="line">      hd_index:``,</span><br><span class="line">      hd_details:``,</span><br><span class="line">      hd_category:``,</span><br><span class="line">      hd_play:``,</span><br><span class="line">      ad0_0:``,</span><br><span class="line">      ad0_1:``,</span><br><span class="line">      ad0_2:``,</span><br><span class="line">      ad0_3:``,</span><br><span class="line">      ad0_4:``,</span><br><span class="line">      ad1_0:``,</span><br><span class="line">      ad1_1:``,</span><br><span class="line">      ad1_2:``,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<p>期间我创建了原配置对象的深层副本，输出内容后，反引号变成了双引号，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const templateConfig = JSON.parse(JSON.stringify(configsData[templateName]));</span><br><span class="line">console.log(templateConfig)</span><br></pre></td></tr></table></figure>
+<p>于是在做填充内容时，双引号里面的内容要是包含双引号或单引号，放到编译器编译器就会报错。</p>
+<span id="more"></span>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-03-08T10:02:51+08:00"
-              content="2024-03-08">
-          03-08
-        </time>
-      </div>
+<h2 id="解决思路："><a href="#解决思路：" class="headerlink" title="解决思路："></a>解决思路：</h2><p>创建递归函数formatConfigObject，通过 Object.keys 方法获取配置对象的所有属性名称，并将其存储在 keys 数组中。<br>然后遍历 keys 数组中的每个属性，在遍历过程中，函数获取当前属性的值，并检查其类型。如果值的类型是对象，并且不为 null，则说明该属性的值是一个嵌套的配置对象。函数会递归调用 formatConfigObject 方法，将缩进级别加一，并将嵌套对象的字符串表示添加到 configString 中。<br>如果值的类型不是对象，或者为 null，则说明该属性的值是基本类型，函数会根据值的类型进行处理。如果值的类型是字符串，则在其外部添加反引号；否则，将值传递给 stringifyValue 方法进行处理。</p>
+<p>最后，函数根据当前属性的索引位置判断是否为最后一个属性，如果不是，则在 configString 的末尾添加换行符 \n。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function formatConfigObject(obj, indent = 1) &#123;</span><br><span class="line">  const tabs = &#x27;\t&#x27;.repeat(indent);</span><br><span class="line">  let configString = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  const keys = Object.keys(obj);</span><br><span class="line">  const lastKeyIndex = keys.length - 1;</span><br><span class="line"></span><br><span class="line">  keys.forEach(function (prop, index) &#123;</span><br><span class="line">    const value = obj[prop];</span><br><span class="line">    if (typeof value === &#x27;object&#x27; &amp;&amp; value !== null) &#123;</span><br><span class="line">      configString += tabs + prop + &#x27;: &#123;\n&#x27; + formatConfigObject(value, indent + 1) + tabs + &#x27;&#125;,&#x27;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      const formattedValue = typeof value === &#x27;string&#x27; ? &#x27;`&#x27; + value + &#x27;`&#x27; : stringifyValue(value);</span><br><span class="line">      configString += tabs + prop + &#x27;: &#x27; + formattedValue + &#x27;,&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (index !== lastKeyIndex) &#123;</span><br><span class="line">      configString += &#x27;\n&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  return configString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/971aed10.html" itemprop="url">
-            <span itemprop="name">报错日志记录</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-07-10T16:47:59+08:00"
-              content="2023-07-10">
-          07-10
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/badd29d6.html" itemprop="url">
-            <span itemprop="name">Windows下ossutil安装及常见错误解决方法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-06-01T15:14:21+08:00"
-              content="2023-06-01">
-          06-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/a983e6df.html" itemprop="url">
-            <span itemprop="name">Git配置仓库公钥及使用</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+<p>期间饶了两个弯，第一次的想法就是遍历将转换后的字符串双引号替为反引号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configString = configString.replace(/&quot;/g, &quot;`&quot;);</span><br></pre></td></tr></table></figure>
+<p>这样内容会被影响到。</p>
+<p>后面换了种想法直接修改要填充的内容的反引号和双引号为单引号，这样不仅会修改到内容，而且效率低麻烦。</p>
 
     </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Crf's Blog 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/paypal.png" alt="Crf's Blog 微信">
+        <p>微信</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/bitcoin.png" alt="Crf's Blog BTC">
+        <p>BTC</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Crf's Blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://aoce888.github.io/posts/afa5db47.html" title="修复JSON序列化后符号变化的方案">https://aoce888.github.io/posts/afa5db47.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JSON/" rel="tag"># JSON</a>
+              <a href="/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/" rel="tag"># 字符串</a>
+              <a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/" rel="tag"># 序列化</a>
+              <a href="/tags/%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" rel="tag"># 解决方案</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/a8f0cfef.html" rel="prev" title="实现图片懒加载的JavaScript函数">
+      <i class="fa fa-chevron-left"></i> 实现图片懒加载的JavaScript函数
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -323,6 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">2.</span> <span class="nav-text">解决思路：</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -340,20 +437,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">19</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -450,12 +547,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">12k</span>
+    <span title="站点总字数">13k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">45 分钟</span>
+    <span title="站点阅读时长">47 分钟</span>
 </div>
 
 <div>
