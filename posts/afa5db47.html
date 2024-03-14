@@ -28,7 +28,7 @@
 <meta property="og:description" content="问题描述在进行JSON序列化时，有时候会出现符号变化的问题，例如双引号或单引号被转义或丢失的情况。情况是这样的，我在作配置生成器过程中用到了默认配置, 属性用做内容填充对象。 12345678910111213141516171819202122# 默认配置const configsData &#x3D; &amp;#123;  &quot;1_minigame&quot;: &amp;#123;    host: &#96;ww">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-14T03:32:54.000Z">
-<meta property="article:modified_time" content="2024-03-14T05:04:25.212Z">
+<meta property="article:modified_time" content="2024-03-14T06:12:38.057Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="JSON">
 <meta property="article:tag" content="字符串">
@@ -222,7 +222,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-03-14 11:32:54 / 修改时间：13:04:25" itemprop="dateCreated datePublished" datetime="2024-03-14T11:32:54+08:00">2024-03-14</time>
+              <time title="创建时间：2024-03-14 11:32:54 / 修改时间：14:12:38" itemprop="dateCreated datePublished" datetime="2024-03-14T11:32:54+08:00">2024-03-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +247,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>596</span>
+              <span>591</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
 
 <h2 id="解决思路："><a href="#解决思路：" class="headerlink" title="解决思路："></a>解决思路：</h2><p>创建递归函数formatConfigObject，通过 Object.keys 方法获取配置对象的所有属性名称，并将其存储在 keys 数组中。<br>然后遍历 keys 数组中的每个属性，在遍历过程中，函数获取当前属性的值，并检查其类型。如果值的类型是对象，并且不为 null，则说明该属性的值是一个嵌套的配置对象。函数会递归调用 formatConfigObject 方法，将缩进级别加一，并将嵌套对象的字符串表示添加到 configString 中。<br>如果值的类型不是对象，或者为 null，则说明该属性的值是基本类型，函数会根据值的类型进行处理。如果值的类型是字符串，则在其外部添加反引号；否则，将值传递给 stringifyValue 方法进行处理。</p>
 <p>最后，函数根据当前属性的索引位置判断是否为最后一个属性，如果不是，则在 configString 的末尾添加换行符 \n。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function formatConfigObject(obj, indent = 1) &#123;</span><br><span class="line">  const tabs = &#x27;\t&#x27;.repeat(indent);</span><br><span class="line">  let configString = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  const keys = Object.keys(obj);</span><br><span class="line">  const lastKeyIndex = keys.length - 1;</span><br><span class="line"></span><br><span class="line">  keys.forEach(function (prop, index) &#123;</span><br><span class="line">    const value = obj[prop];</span><br><span class="line">    if (typeof value === &#x27;object&#x27; &amp;&amp; value !== null) &#123;</span><br><span class="line">      configString += tabs + prop + &#x27;: &#123;\n&#x27; + formatConfigObject(value, indent + 1) + tabs + &#x27;&#125;,&#x27;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      const formattedValue = typeof value === &#x27;string&#x27; ? &#x27;`&#x27; + value + &#x27;`&#x27; : stringifyValue(value);</span><br><span class="line">      configString += tabs + prop + &#x27;: &#x27; + formattedValue + &#x27;,&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (index !== lastKeyIndex) &#123;</span><br><span class="line">      configString += &#x27;\n&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  return configString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function formatConfigObject(obj, indent = 1) &#123;</span><br><span class="line">  const tabs = &#x27;\t&#x27;.repeat(indent);</span><br><span class="line">  let configString = &#x27;&#x27;;</span><br><span class="line"></span><br><span class="line">  const keys = Object.keys(obj);</span><br><span class="line">  const lastKeyIndex = keys.length - 1;</span><br><span class="line"></span><br><span class="line">  keys.forEach(function (prop, index) &#123;</span><br><span class="line">    const value = obj[prop];</span><br><span class="line">    if (typeof value === &#x27;object&#x27; &amp;&amp; value !== null) &#123;</span><br><span class="line">      configString += tabs + prop + &#x27;: &#123;\n&#x27; + formatConfigObject(value, indent + 1) + tabs + &#x27;&#125;,&#x27;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">      const formattedValue = &#x27;`&#x27; + value + &#x27;`&#x27;;</span><br><span class="line">      configString += tabs + prop + &#x27;: &#x27; + formattedValue + &#x27;,&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if (index !== lastKeyIndex) &#123;</span><br><span class="line">      configString += &#x27;\n&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  return configString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>期间饶了两个弯，第一次的想法就是遍历将转换后的字符串双引号替为反引号</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configString = configString.replace(/&quot;/g, &quot;`&quot;);</span><br></pre></td></tr></table></figure>
