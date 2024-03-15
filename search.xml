@@ -74,11 +74,22 @@
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>vscode打开克隆下来的项目，ctrl+tab打开终端，前提准备 进入项目目录里后的操作也可也在这里完成。</p>
 <h3 id="创建总的文件夹"><a href="#创建总的文件夹" class="headerlink" title="创建总的文件夹"></a>创建总的文件夹</h3><p>初始化后，创建projpath_name文件夹来存放多个工程项目</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建</span><br><span class="line">mkdir projpath_name</span><br><span class="line"># 进入</span><br><span class="line">cd projpath_name</span><br></pre></td></tr></table></figure>
-<h3 id="创建工程项目"><a href="#创建工程项目" class="headerlink" title="创建工程项目"></a>创建工程项目</h3><p>然后创建名为aaa的项目，执行以下命令回车：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pnpm create vite aaa --template vue-ts</span><br></pre></td></tr></table></figure>
-
+<h3 id="创建工程项目"><a href="#创建工程项目" class="headerlink" title="创建工程项目"></a>创建工程项目</h3><p>进入projpath_name创建项目，执行<code>pnpm create vite@latest</code>回车，输入项目名称aaa选择对应的框架：</p>
 <p>创建完<code>cd aaa</code>进入工程项目文件夹<code>pnpm i</code>安装项目依赖项，完成后执行<code>pnpm run dev</code>启动项目，</p>
 <p>附：<code>cd projpath_name</code>后如果已经创建好了有多个项目可<code>ls查看</code>。</p>
+<p>报错记录，创建项目<code>pnpm i</code>安装项目依赖项后, <code>vite-env.d.ts</code>和<code>main.ts</code>内容报红，<br>原因:扩展插件<code>ESlint</code>冲突了，我是卸载掉插件<code>ESlint</code>和<code>Vue - Official</code>后重装<code>Vue - Official</code>再次创建项目就没有问题了。</p>
+<p>单独卸载<code>ESlint</code>，保留<code>Vue - Official</code>，<code>import App from &#39;./App.vue&#39;</code>行依旧会报错。<br>在<code>vite-env.d.ts</code>引入:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">declare module &quot;*.vue&quot; &#123;</span><br><span class="line">    import &#123;  defineComponent &#125; from &quot;vue&quot;;</span><br><span class="line">    const component: ReturnType&lt;typeof defineComponent&gt; &amp; &#123;</span><br><span class="line">        install(app: App): void;</span><br><span class="line">    &#125;;</span><br><span class="line">    export default component;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="关于vite"><a href="#关于vite" class="headerlink" title="关于vite"></a>关于vite</h3><p>vite与webpack都是前端构建工具，只不过vite类似于项目懒加载，速度更快。</p>
+<p>命令<code>nmp create vite@latest</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#创建项目</span><br><span class="line">&lt;!-- pnpm create vite aaa --template vue-ts 舍弃--&gt;</span><br><span class="line"></span><br><span class="line">PS D:\Bepic_H5\midway-vue3-ssr&gt; pnpm create vite@latest</span><br><span class="line">../../.pnpm-store/v3/tmp/dlx-18316       | Progress: resolved 1, reuse../../.pnpm-store/v3/tmp/dlx-18316       |   +1 +</span><br><span class="line">../../.pnpm-store/v3/tmp/dlx-18316       | Progress: resolved 1, reuse../../.pnpm-store/v3/tmp/dlx-18316       | Progress: resolved 1, reused 1, downloaded 0, added 1, done</span><br><span class="line">√ Project name: ... test0</span><br><span class="line">√ Select a framework: » Vue</span><br><span class="line">√ Select a variant: » JavaScript</span><br><span class="line"></span><br><span class="line">Scaffolding project in D:\Bepic_H5\midway-vue3-ssr\test0...</span><br><span class="line"></span><br><span class="line">Done. Now run:</span><br><span class="line"></span><br><span class="line">  cd test0</span><br><span class="line">  pnpm install</span><br><span class="line">  pnpm run dev</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
 ]]></content>
       <categories>
         <category>笔记</category>
