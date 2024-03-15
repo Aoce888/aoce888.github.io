@@ -28,7 +28,7 @@
 <meta property="og:description" content="前提准备框架地址: Midway-Vue3-SSR 基于 Midway、Vue 3 组装的 SSR 框架简单、易学易用、方便扩展、集成Midway框架，您一直想要的Vue SSR 框架。 使用系统：Windows 安装: 12345678910111213141516171819# 克隆项目git clone https:&#x2F;&#x2F;github.com&#x2F;lqsong&#x2F;midway-vue3-ssr.gi">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-08T10:39:08.000Z">
-<meta property="article:modified_time" content="2024-03-15T09:31:04.744Z">
+<meta property="article:modified_time" content="2024-03-15T09:49:55.865Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="Midway">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-15 17:31:04" itemprop="dateModified" datetime="2024-03-15T17:31:04+08:00">2024-03-15</time>
+                <time title="修改时间：2024-03-15 17:49:55" itemprop="dateModified" datetime="2024-03-15T17:49:55+08:00">2024-03-15</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,7 +250,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>605</span>
+              <span>675</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -283,12 +283,18 @@
 <h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>vscode打开克隆下来的项目，ctrl+tab打开终端，前提准备 进入项目目录里后的操作也可也在这里完成。</p>
 <h3 id="创建总的文件夹"><a href="#创建总的文件夹" class="headerlink" title="创建总的文件夹"></a>创建总的文件夹</h3><p>初始化后，创建projpath_name文件夹来存放多个工程项目</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 创建</span><br><span class="line">mkdir projpath_name</span><br><span class="line"># 进入</span><br><span class="line">cd projpath_name</span><br></pre></td></tr></table></figure>
-<h3 id="创建工程项目"><a href="#创建工程项目" class="headerlink" title="创建工程项目"></a>创建工程项目</h3><p>进入projpath_name创建项目，执行<code>pnpm create vite@latest</code>回车，输入项目名称aaa选择对应的框架：</p>
+<h3 id="创建工程项目"><a href="#创建工程项目" class="headerlink" title="创建工程项目"></a>创建工程项目</h3><p>进入projpath_name创建项目，</p>
+<ul>
+<li>执行<code>pnpm create vite@latest</code>回车，输入项目名称aaa选择对应的框架和模块;</li>
+<li>执行<code>pnpm create vue@latest</code>回车，输入项目名称aaa选择需要的模块;</li>
+</ul>
 <p>创建完<code>cd aaa</code>进入工程项目文件夹<code>pnpm i</code>安装项目依赖项，完成后执行<code>pnpm run dev</code>启动项目，</p>
 <p>附：<code>cd projpath_name</code>后如果已经创建好了有多个项目可<code>ls查看</code>。</p>
-<p>报错记录，创建项目<code>pnpm i</code>安装项目依赖项后, <code>vite-env.d.ts</code>和<code>main.ts</code>内容报红，<br>原因:扩展插件<code>ESlint</code>冲突了，我是卸载掉插件<code>ESlint</code>和<code>Vue - Official</code>后重装<code>Vue - Official</code>再次创建项目就没有问题了。</p>
-<p>单独卸载<code>ESlint</code>，保留<code>Vue - Official</code>，<code>import App from &#39;./App.vue&#39;</code>行依旧会报错。<br>在<code>vite-env.d.ts</code>引入:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">declare module &quot;*.vue&quot; &#123;</span><br><span class="line">    import &#123;  defineComponent &#125; from &quot;vue&quot;;</span><br><span class="line">    const component: ReturnType&lt;typeof defineComponent&gt; &amp; &#123;</span><br><span class="line">        install(app: App): void;</span><br><span class="line">    &#125;;</span><br><span class="line">    export default component;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>报错记录，创建项目<code>pnpm i</code>安装项目依赖项后, <code>vite-env.d.ts</code>和<code>main.ts</code>内容报红，<br>原因:扩展插件<code>ESlint</code>冲突了，我是测试后才发现，在构建项目上有个选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">√ 是否引入 ESLint 用于代码质量检测？ ... 否 / 是</span><br></pre></td></tr></table></figure>
+<p>而我原来在VsCode中就安装了插件<code>ESlint</code>，操作卸载掉<code>ESlint</code>和<code>Vue - Official</code>后重装<code>Vue - Official</code>再次创建项目就没有问题了。</p>
+<p>单独卸载<code>ESlint</code>，保留<code>Vue - Official</code>，<code>import App from &#39;./App.vue&#39;</code>行依旧会报错。在<code>vite-env.d.ts</code>引入:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">declare module &quot;*.vue&quot; &#123;</span><br><span class="line">    import &#123;  defineComponent &#125; from &quot;vue&quot;;</span><br><span class="line">    const component: ReturnType&lt;typeof defineComponent&gt; &amp; &#123;</span><br><span class="line">        install(app: App): void;</span><br><span class="line">    &#125;;</span><br><span class="line">    export default component;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -569,7 +575,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">48 分钟</span>
+    <span title="站点阅读时长">49 分钟</span>
 </div>
 
 <div>
