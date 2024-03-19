@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Crf&#39;s Blog">
-<meta property="og:url" content="https://aoce888.github.io/tags/Midway/index.html">
+  <meta name="description" content="当您使用多个Node.js版本和多个包管理器时，管理和切换它们可能会变得复杂。为了解决这个问题，开发者社区提供了一些工具来帮助我们轻松地管理Node.js版本和包管理器。两个常用的工具是NVM（Node Version Manager）和NRM（NPM Registry Manager）。本文将介绍它们的使用方法和主要功能。 操作系统：Windows NVM（Node Version Manage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入了解 NVM 和 NRM">
+<meta property="og:url" content="https://aoce888.github.io/posts/f4df06a4.html">
 <meta property="og:site_name" content="Crf&#39;s Blog">
+<meta property="og:description" content="当您使用多个Node.js版本和多个包管理器时，管理和切换它们可能会变得复杂。为了解决这个问题，开发者社区提供了一些工具来帮助我们轻松地管理Node.js版本和包管理器。两个常用的工具是NVM（Node Version Manager）和NRM（NPM Registry Manager）。本文将介绍它们的使用方法和主要功能。 操作系统：Windows NVM（Node Version Manage">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-19T09:54:23.000Z">
+<meta property="article:modified_time" content="2024-03-19T10:07:04.241Z">
 <meta property="article:author" content="Crf&#39;s Blog">
+<meta property="article:tag" content="NVM, NRM, Node.js, 版本管理, 包管理">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://aoce888.github.io/tags/Midway/">
+<link rel="canonical" href="https://aoce888.github.io/posts/f4df06a4.html">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: Midway | Crf's Blog</title>
+  <title>深入了解 NVM 和 NRM | Crf's Blog</title>
   
 
 
@@ -183,51 +188,179 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Midway
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/f4df06a4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深入了解 NVM 和 NRM
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-19 17:54:23 / 修改时间：18:07:04" itemprop="dateCreated datePublished" datetime="2024-03-19T17:54:23+08:00">2024-03-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index"><span itemprop="name">开发工具</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>647</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
-    </div>
+        <p>当您使用多个Node.js版本和多个包管理器时，管理和切换它们可能会变得复杂。为了解决这个问题，开发者社区提供了一些工具来帮助我们轻松地管理Node.js版本和包管理器。两个常用的工具是NVM（Node Version Manager）和NRM（NPM Registry Manager）。本文将介绍它们的使用方法和主要功能。</p>
+<p>操作系统：Windows</p>
+<h2 id="NVM（Node-Version-Manager）"><a href="#NVM（Node-Version-Manager）" class="headerlink" title="NVM（Node Version Manager）"></a>NVM（Node Version Manager）</h2><h3 id="什么是NVM？"><a href="#什么是NVM？" class="headerlink" title="什么是NVM？"></a>什么是NVM？</h3><p>NVM是一个用于管理Node.js版本的工具。它允许开发者在同一台机器上同时安装和切换不同的Node.js版本。无论是在开发环境中测试不同版本的应用程序，还是在维护多个项目时，NVM都能提供便利。</p>
+<h3 id="安装NVM"><a href="#安装NVM" class="headerlink" title="安装NVM"></a>安装NVM</h3><p>在终端中执行以下命令下载安装nvm-windows</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/coreybutler/nvm-windows</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+<h3 id="使用NVM"><a href="#使用NVM" class="headerlink" title="使用NVM"></a>使用NVM</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 查看可用的Node.js版本</span><br><span class="line">nvm list available</span><br><span class="line"></span><br><span class="line">#安装Node.js版本：</span><br><span class="line">nvm install &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要安装Node.js的最新稳定版本，可以运行：</span><br><span class="line">nvm install stable</span><br><span class="line">#切换Node.js版本：</span><br><span class="line">nvm use &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要切换到Node.js的10.00.0版本</span><br><span class="line">nvm use 10.00.0</span><br><span class="line"></span><br><span class="line">#查看已安装的Node.js版本列表：</span><br><span class="line">nvm ls</span><br></pre></td></tr></table></figure>
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-03-08T18:39:08+08:00"
-              content="2024-03-08">
-          03-08
-        </time>
-      </div>
+<h2 id="NRM（NPM-Registry-Manager）"><a href="#NRM（NPM-Registry-Manager）" class="headerlink" title="NRM（NPM Registry Manager）"></a>NRM（NPM Registry Manager）</h2><h3 id="什么是NRM？"><a href="#什么是NRM？" class="headerlink" title="什么是NRM？"></a>什么是NRM？</h3><p>NRM是一个用于管理NPM注册表（Registry）的工具。它允许开发者轻松切换不同的NPM注册表，以便快速地下载和安装依赖包。</p>
+<h3 id="安装NRM"><a href="#安装NRM" class="headerlink" title="安装NRM"></a>安装NRM</h3><p>在终端中执行以下命令全局安装NRM：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g nrm</span><br></pre></td></tr></table></figure>
+<h3 id="使用NRM"><a href="#使用NRM" class="headerlink" title="使用NRM"></a>使用NRM</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 查看可用的NPM注册表列表：</span><br><span class="line">nrm ls</span><br><span class="line"># 切换到指定的NPM注册表：</span><br><span class="line">nrm use &lt;registry_name&gt;</span><br><span class="line"># 例如，要切换到淘宝NPM镜像，可以运行：</span><br><span class="line">nrm use taobao</span><br><span class="line"></span><br><span class="line"># 添加自定义的NPM注册表：</span><br><span class="line">nrm add &lt;registry_name&gt; &lt;registry_url&gt;</span><br><span class="line"># 例如，要添加一个名为&quot;my-registry&quot;的自定义注册表，可以运行：</span><br><span class="line">nrm add my-registry https://registry.example.com</span><br><span class="line"></span><br><span class="line"># 删除已添加的NPM注册表：</span><br><span class="line">nrm del &lt;registry_name&gt;</span><br><span class="line"># 例如，要删除名为&quot;my-registry&quot;的注册表，可以运行：</span><br><span class="line">nrm del my-registry</span><br><span class="line"></span><br><span class="line"># 测试NPM注册表的响应速度：</span><br><span class="line">nrm test &lt;registry_name&gt;</span><br><span class="line"># 例如，要测试淘宝NPM镜像的响应速度，可以运行：</span><br><span class="line">nrm test taobao</span><br></pre></td></tr></table></figure>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/becb1b11.html" itemprop="url">
-            <span itemprop="name">Midway-Vue3框架使用笔记</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+<p>结语</p>
+<p>NVM和NRM是两个非常有用的工具，它们使得在开发中管理和切换Node.js版本和NPM注册表变得更加便捷。NVM允许您在同一台机器上安装和切换不同版本的Node.js，而NRM则允许您轻松切换不同的NPM注册表。通过合理使用这两个工具，您可以更方便地管理您的开发环境和依赖包，提高工作效率。</p>
 
     </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Crf's Blog 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/paypal.png" alt="Crf's Blog 微信">
+        <p>微信</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/bitcoin.png" alt="Crf's Blog BTC">
+        <p>BTC</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Crf's Blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://aoce888.github.io/posts/f4df06a4.html" title="深入了解 NVM 和 NRM">https://aoce888.github.io/posts/f4df06a4.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NVM-NRM-Node-js-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86-%E5%8C%85%E7%AE%A1%E7%90%86/" rel="tag"># NVM, NRM, Node.js, 版本管理, 包管理</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/f5f2fbba.html" rel="prev" title="vue-成长笔记">
+      <i class="fa fa-chevron-left"></i> vue-成长笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -280,6 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NVM%EF%BC%88Node-Version-Manager%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">NVM（Node Version Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNVM%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是NVM？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85NVM"><span class="nav-number">1.2.</span> <span class="nav-text">安装NVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NVM"><span class="nav-number">1.3.</span> <span class="nav-text">使用NVM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NRM%EF%BC%88NPM-Registry-Manager%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">NRM（NPM Registry Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNRM%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">什么是NRM？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85NRM"><span class="nav-number">2.2.</span> <span class="nav-text">安装NRM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NRM"><span class="nav-number">2.3.</span> <span class="nav-text">使用NRM</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
