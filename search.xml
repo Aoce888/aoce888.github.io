@@ -31,7 +31,7 @@
     <title>vue-成长笔记</title>
     <url>/posts/f5f2fbba.html</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="d34e2a7e779d6983da72a258fb485854747fa17852b5e3e36a913c90f9933f1e">549bc84efa04e0d40e7977f397dfc9313da872a864512ad2075b9481402cd85f2fa4d61e523e22e2fda8ad7f37423325e8203869afd82ff3fff347053f8e5b449bd7646a6fe231f2a4d6316ec8621d9b5ca574ecfa0349584ae78d889bafd590999372de14479e0f1d8b08ab7d700146bd91f9dc86d89581cd14830d2755a7fb1f0cb12145c3e899ee27e15b18f5da0c6fea45b1d89c8b3bf3d075e37775a1e30768d448d36e51afca0876d475ba3ccf9cebe26e6a11860f30e21adbd4eee95da04659b7d1c8cebc31253144265ede2d</script>
+  <script id="hbeData" type="hbeData" data-hmacdigest="482b1c9c9181379700b806a07afc5f477f645a7fa68adff66e4784fe6c5a5159">549bc84efa04e0d40e7977f397dfc9313da872a864512ad2075b9481402cd85f2fa4d61e523e22e2fda8ad7f37423325e8203869afd82ff3fff347053f8e5b449bd7646a6fe231f2a4d6316ec8621d9bd249320878c35fd421a579912b31ab867bf5bf9e4bf6b8c069b31d6e648e0c6ca0f140cb7ccfc81cfe974306bf63adb1d823d4ce446df35fb0319f265f4e04bf</script>
   <div class="hbe hbe-content">
     <div class="hbe hbe-input hbe-input-default">
       <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
@@ -123,7 +123,7 @@
 <li>执行<code>pnpm create vue@latest</code>回车，输入项目名称aaa选择需要的模块;</li>
 </ul>
 <p>创建完<code>cd aaa</code>进入工程项目文件夹<code>pnpm i</code>安装项目依赖项，完成后执行<code>pnpm run dev</code>启动项目，</p>
-<p>附：<code>cd projpath_name</code>后如果已经创建好了有多个项目可<code>ls查看</code>。</p>
+<p>附：<code>cd projpath_name</code>后如果已经创建好了有多个项目可<code>ls</code>or<code>dir</code>查看。</p>
 <p>报错记录，创建项目<code>pnpm i</code>安装项目依赖项后, <code>vite-env.d.ts</code>和<code>main.ts</code>内容报红，<br>原因:扩展插件<code>ESlint</code>冲突了，我是测试后才发现，在构建项目上有个选项</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">√ 是否引入 ESLint 用于代码质量检测？ ... 否 / 是</span><br></pre></td></tr></table></figure>
 <p>而我原来在VsCode中就安装了插件<code>ESlint</code>，操作卸载掉<code>ESlint</code>和<code>Vue - Official</code>后重装<code>Vue - Official</code>再次创建项目就没有问题了。</p>
@@ -218,7 +218,10 @@
 
 <p>几乎找遍了所有问题的可能一直没解决，最后关掉vpn，关掉公司wifi，开启手机热点重启服务，发现公司网络问题。</p>
 <p>功夫不负有心人：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Last login: Thu Mar  7 17:24:13 2024 from 223.160.228.62</span><br><span class="line"></span><br><span class="line">Welcome to Alibaba Cloud Elastic Compute Service !</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Last login: Thu Mar  7 17:24:13 2024 from 223.160.228.62</span><br><span class="line"></span><br><span class="line">Welcome to Alibaba Cloud Elastic Compute Service !</span><br></pre></td></tr></table></figure>
+
+<p>2024:04.09 问题记录: 回家用了家里的网络，发现使用了<code>openssh</code>的<code>Tortoise</code>客户端推送<code>git</code>项目时又失败了，然后我切换和手机热点并关闭已链接的wifi。对比了下网络属性，发现家里的网络和公司的网络没有<code>ipv6</code>，目前看来是这个问题导致的，不过我用指令指定<code>ipv4</code>推送也没有成功，也没有其他更好的解决办法。</p>
+]]></content>
   </entry>
   <entry>
     <title>【阿里云】添加WebTracking采集html日志</title>
