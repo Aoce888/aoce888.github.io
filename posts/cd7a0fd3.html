@@ -20,19 +20,23 @@
     var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="该文章为私密文章，仅供个人学习记录暂不对外开放~">
+  <meta name="description" content="在Node.js中，fs模块提供了对文件系统的访问功能，我们可以利用它来实现配置文件的读取和写入操作。正好用到，就记录一下。 准备工作确保你的项目目录已经安装了做了npm或pnpm或yarn等node相关初始化，存在node_modules文件夹，这样就可以使用fs： 1const fs &#x3D; require(&amp;#x27;fs&amp;#x27;);  接下来就是定义路径，我是用到年月来定义路径，并放在当前">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vue-成长笔记">
-<meta property="og:url" content="https://aoce888.github.io/posts/f5f2fbba.html">
+<meta property="og:title" content="Node.js中fs模块实现配置文件的读写">
+<meta property="og:url" content="https://aoce888.github.io/posts/cd7a0fd3.html">
 <meta property="og:site_name" content="Crf&#39;s Blog">
-<meta property="og:description" content="该文章为私密文章，仅供个人学习记录暂不对外开放~">
+<meta property="og:description" content="在Node.js中，fs模块提供了对文件系统的访问功能，我们可以利用它来实现配置文件的读取和写入操作。正好用到，就记录一下。 准备工作确保你的项目目录已经安装了做了npm或pnpm或yarn等node相关初始化，存在node_modules文件夹，这样就可以使用fs： 1const fs &#x3D; require(&amp;#x27;fs&amp;#x27;);  接下来就是定义路径，我是用到年月来定义路径，并放在当前">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-19T03:40:19.000Z">
-<meta property="article:modified_time" content="2024-03-21T03:03:45.947Z">
+<meta property="article:published_time" content="2024-04-24T07:05:33.000Z">
+<meta property="article:modified_time" content="2024-04-24T07:13:59.367Z">
 <meta property="article:author" content="Crf&#39;s Blog">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="fs">
+<meta property="article:tag" content="读写操作">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://aoce888.github.io/posts/f5f2fbba.html">
+<link rel="canonical" href="https://aoce888.github.io/posts/cd7a0fd3.html">
 
 
 <script id="page-configurations">
@@ -45,7 +49,7 @@
   };
 </script>
 
-  <title>vue-成长笔记 | Crf's Blog</title>
+  <title>Node.js中fs模块实现配置文件的读写 | Crf's Blog</title>
   
 
 
@@ -194,7 +198,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/f5f2fbba.html">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/cd7a0fd3.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.gif">
@@ -207,7 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          vue-成长笔记
+          Node.js中fs模块实现配置文件的读写
         </h1>
 
         <div class="post-meta">
@@ -216,16 +220,19 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-03-19 11:40:19" itemprop="dateCreated datePublished" datetime="2024-03-19T11:40:19+08:00">2024-03-19</time>
+              <time title="创建时间：2024-04-24 15:05:33 / 修改时间：15:13:59" itemprop="dateCreated datePublished" datetime="2024-04-24T15:05:33+08:00">2024-04-24</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-03-21 11:03:45" itemprop="dateModified" datetime="2024-03-21T11:03:45+08:00">2024-03-21</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数据处理</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -240,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>14</span>
+              <span>593</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -259,18 +266,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="482b1c9c9181379700b806a07afc5f477f645a7fa68adff66e4784fe6c5a5159">549bc84efa04e0d40e7977f397dfc9313da872a864512ad2075b9481402cd85f2fa4d61e523e22e2fda8ad7f37423325e8203869afd82ff3fff347053f8e5b449bd7646a6fe231f2a4d6316ec8621d9bd249320878c35fd421a579912b31ab867bf5bf9e4bf6b8c069b31d6e648e0c6ca0f140cb7ccfc81cfe974306bf63adb1d823d4ce446df35fb0319f265f4e04bf</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+        <p>在Node.js中，<code>fs</code>模块提供了对文件系统的访问功能，我们可以利用它来实现配置文件的读取和写入操作。正好用到，就记录一下。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>确保你的项目目录已经安装了做了<code>npm</code>或<code>pnpm</code>或<code>yarn</code>等node相关初始化，存在<code>node_modules</code>文件夹，这样就可以使用<code>fs</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&#x27;fs&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>接下来就是定义路径，我是用到年月来定义路径，并放在当前路径的<code>storeConfigs</code>下:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line">const date = getDate();</span><br><span class="line"></span><br><span class="line">// 文件夹路径 ./storeConfigs/$&#123;date.year&#125;/$&#123;date.month&#125;</span><br><span class="line">const folderPath = path.resolve(__dirname, &#x27;storeConfigs&#x27;, `$&#123;date.year&#125;`, `$&#123;date.month&#125;`);</span><br><span class="line"></span><br><span class="line">// 用date.day来定义文件名  ./storeConfigs/$&#123;date.year&#125;/$&#123;date.month&#125;/$&#123;date.day&#125;</span><br><span class="line">const aFilePath = path.resolve(folderPath, `$&#123;date.day&#125;`);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 获取当前日期</span><br><span class="line">function getDate() &#123;</span><br><span class="line">    const currentDate = new Date();</span><br><span class="line">    const year = currentDate.getFullYear();</span><br><span class="line">    const month = currentDate.getMonth() + 1;</span><br><span class="line">    const day = currentDate.getDate();</span><br><span class="line">    return &#123; year: year, month: month, day: day &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<h2 id="读取配置"><a href="#读取配置" class="headerlink" title="读取配置"></a>读取配置</h2><p>要实现读取的逻辑，首先要做下文件夹排空报错处理，<code>!fs.existsSync(folderPath)</code>假如路径不存在，那代表文件也不存在，<code>mkdirp(folderPath);</code>根据路径创建文件夹，再<code> fs.writeFileSync(aFilePath, &#39;&#123;&#125;&#39;);</code>创建文件。假如存在路径,<code>!fs.existsSync(aFilePath)</code>文件不存在，创建文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">function CheckPathOrFiles() &#123;</span><br><span class="line">    if (!fs.existsSync(folderPath)) &#123;</span><br><span class="line">            mkdirp(folderPath);</span><br><span class="line">            fs.writeFileSync(aFilePath, &#x27;&#123;&#125;&#x27;);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            if (!fs.existsSync(aFilePath)) &#123;</span><br><span class="line">                console.log(`创建文件：$&#123;aFilePath&#125;`);</span><br><span class="line">                fs.writeFileSync(aFilePath, &#x27;&#123;&#125;&#x27;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line">function mkdirp(dir) &#123;</span><br><span class="line">    if (fs.existsSync(dir)) &#123; return true; &#125;</span><br><span class="line">    const dirname = path.dirname(dir);</span><br><span class="line">    mkdirp(dirname); // 递归创建父目录</span><br><span class="line">    fs.mkdirSync(dir);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上面的代码中，我重构了<code>mkdirp</code>函数来创建空文件夹，而没有使用<code>fs</code>自带的<code>mkdirSync()</code>，使用后报错<br><code>Error: ENOENT: no such file or directory.Object.fs.mkdirSync</code>,大致原因就是node.js低版本的漏洞吧，你也可以尝试直接使用下面代码代替<code>mkdirp(folderPath);</code>试试。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.mkdirSync(folderPath, &#123; recursive: true &#125;); // 递归创建路径</span><br></pre></td></tr></table></figure>
+
+
+<p>然后编写读取函数<code>getHostConfigs()</code>,通过<code>fs.readFileSync(aFilePath, &#39;utf8&#39;)</code>获取到<code>aFilePath</code>该文件路径下的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function getHostConfigs() &#123;</span><br><span class="line">    console.log(&#x27;进入读取环节..&#x27;)</span><br><span class="line">    try &#123;</span><br><span class="line">        CheckPathOrFiles()</span><br><span class="line">        // 读取文件配置</span><br><span class="line">        const data = fs.readFileSync(aFilePath, &#x27;utf8&#x27;);</span><br><span class="line">        const hostConfigs = JSON.parse(data);</span><br><span class="line">        console.log(&#x27;配置校验成功！！&#x27;);</span><br><span class="line">        return hostConfigs;</span><br><span class="line">    &#125; catch (error) &#123;</span><br><span class="line">        console.error(&#x27;读取失败:&#x27;, error);</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来是配置的更新写入，这部分可以根据自己需求来,比较重要的是<code>let hostConfigs = getHostConfigs();</code>读取配置，然后在这个函数里利用<code>fs.writeFile(aFilePath,data)</code>实现写入逻辑：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function updateHostConfigs(config) &#123;</span><br><span class="line">    let hostConfigs = getHostConfigs();</span><br><span class="line">    if (!hostConfigs) &#123;</span><br><span class="line">        hostConfigs = &#123;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    if (config.host) &#123;</span><br><span class="line">        hostConfigs[config.host] = config;</span><br><span class="line">    &#125;</span><br><span class="line">    // 写入配置</span><br><span class="line">    fs.writeFile(aFilePath, JSON.stringify(hostConfigs), (err) =&gt; &#123;</span><br><span class="line">        if (err) &#123;</span><br><span class="line">            console.error(&#x27;写入出错:&#x27;, err);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            console.log(&#x27;配置写入成功..&#x27;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    console.log(hostConfigs);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最后导出模块，方便其他脚本使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    updateHostConfigs,</span><br><span class="line">    getHostConfigs</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     <div>
@@ -320,7 +338,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://aoce888.github.io/posts/f5f2fbba.html" title="vue-成长笔记">https://aoce888.github.io/posts/f5f2fbba.html</a>
+    <a href="https://aoce888.github.io/posts/cd7a0fd3.html" title="Node.js中fs模块实现配置文件的读写">https://aoce888.github.io/posts/cd7a0fd3.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -331,6 +349,12 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+              <a href="/tags/fs/" rel="tag"># fs</a>
+              <a href="/tags/%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C/" rel="tag"># 读写操作</a>
+          </div>
 
         
 
@@ -338,13 +362,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/afa5db47.html" rel="prev" title="修复JSON序列化后符号变化的方案">
-      <i class="fa fa-chevron-left"></i> 修复JSON序列化后符号变化的方案
+    <a href="/posts/33a90f8b.html" rel="prev" title="Linux服务器部署API的方法">
+      <i class="fa fa-chevron-left"></i> Linux服务器部署API的方法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/f4df06a4.html" rel="next" title="深入了解 NVM 和 NRM">
-      深入了解 NVM 和 NRM <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
 
       </footer>
@@ -404,6 +425,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">读取配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

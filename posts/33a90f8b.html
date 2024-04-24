@@ -28,7 +28,7 @@
 <meta property="og:description" content="在构建应用程序时，部署API是一个关键的步骤。API部署允许其他应用程序或用户与您的服务进行交互，并访问所需的功能和数据。本文将介绍一个示例，展示如何使用Node.js和Express框架来部署一个简单的API。 准备工作 安装Node.js：用于运行JavaScript代码的运行时环境。12sudo apt updatesudo apt install nodejs 安装npm（Node Pac">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-18T09:57:40.000Z">
-<meta property="article:modified_time" content="2024-04-22T03:23:07.535Z">
+<meta property="article:modified_time" content="2024-04-24T02:24:04.458Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="Linux服务器">
 <meta property="article:tag" content="API部署">
@@ -123,7 +123,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">23</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -133,12 +133,12 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">31</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">34</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-22 11:23:07" itemprop="dateModified" datetime="2024-04-22T11:23:07+08:00">2024-04-22</time>
+                <time title="修改时间：2024-04-24 10:24:04" itemprop="dateModified" datetime="2024-04-24T10:24:04+08:00">2024-04-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,14 +251,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>898</span>
+              <span>990</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -275,8 +275,8 @@
 <li>安装Node.js：用于运行JavaScript代码的运行时环境。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install nodejs</span><br></pre></td></tr></table></figure></li>
 <li>安装npm（Node Package Manager）：用于管理和安装Node.js模块。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install npm</span><br></pre></td></tr></table></figure></li>
 </ul>
-<h2 id="创建API脚本"><a href="#创建API脚本" class="headerlink" title="创建API脚本"></a>创建API脚本</h2><h3 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h3><p>在服务器想要存放API脚本的目录下，创建API脚本(这里我用的是server.js):</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;);</span><br><span class="line">const &#123; exec &#125; = require(&#x27;child_process&#x27;);</span><br><span class="line"></span><br><span class="line">const app = express();</span><br><span class="line">const PORT = process.env.PORT || 3000;</span><br><span class="line"></span><br><span class="line">app.use(express.json());</span><br><span class="line"></span><br><span class="line">app.post(&#x27;/deploy&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    const &#123; TemplateName, site &#125; = req.body;</span><br><span class="line">    if (!TemplateName || !site) &#123;</span><br><span class="line">        console.log(&#123; message: &#x27;TemplateName或site未定义&#x27; &#125;);</span><br><span class="line">        res.status(200).json(&#123; message: &#x27;拒绝请求，缺乏必要参数！&#x27; &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 执行deploy.bat脚本的API端点</span><br><span class="line">        const command = `bash deploy.sh $&#123;TemplateName&#125; $&#123;site&#125;`;</span><br><span class="line">        console.log(`接收到请求指令：$&#123;command&#125;`);</span><br><span class="line">        exec(command, (error, stdout, stderr) =&gt; &#123;</span><br><span class="line">            if (error) &#123;</span><br><span class="line">                console.error(`执行命令时出错：$&#123;error.message&#125;`);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            console.log(`命令执行成功：$&#123;stdout&#125;`);</span><br><span class="line">            res.status(200).json(&#123; message: &#x27;部署脚本成功执行&#x27; &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 启动服务器</span><br><span class="line">app.listen(PORT, () =&gt; &#123;</span><br><span class="line">    console.log(`API服务器正在运行，监听端口：$&#123;PORT&#125;`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="创建API脚本"><a href="#创建API脚本" class="headerlink" title="创建API脚本"></a>创建API脚本</h2><h3 id="编写脚本"><a href="#编写脚本" class="headerlink" title="编写脚本"></a>编写脚本</h3><p>在服务器想要存放API脚本的目录下，创建API脚本(这里我用的是server.js)，其中<code>&#123; TemplateName, site &#125;</code>为请求API传递的json参数:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;);</span><br><span class="line">const cors = require(&#x27;cors&#x27;);</span><br><span class="line">const &#123; exec &#125; = require(&#x27;child_process&#x27;);</span><br><span class="line">const &#123; updateHostConfigs &#125; = require(&#x27;./configManager&#x27;);</span><br><span class="line"></span><br><span class="line">const app = express();</span><br><span class="line">const PORT = process.env.PORT || 3000;</span><br><span class="line"></span><br><span class="line">app.use(express.json());</span><br><span class="line">app.use(cors());</span><br><span class="line"></span><br><span class="line">app.post(&#x27;/deploy&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    const &#123; TemplateName, site &#125; = req.body;</span><br><span class="line">    if (!TemplateName || !site) &#123;</span><br><span class="line">        console.log(&#123; message: &#x27;TemplateName或site未定义&#x27; &#125;);</span><br><span class="line">        res.status(200).json(&#123; message: &#x27;拒绝请求，缺乏必要参数！&#x27; &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // 执行deploy.bat脚本的API端点</span><br><span class="line">        const command = `bash deploy.sh $&#123;TemplateName&#125; $&#123;site&#125;`;</span><br><span class="line">        console.log(`接收到请求指令：$&#123;command&#125;`);</span><br><span class="line">        exec(command, (error, stdout, stderr) =&gt; &#123;</span><br><span class="line">            if (error) &#123;</span><br><span class="line">                console.error(`执行命令时出错：$&#123;error.message&#125;`);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            console.log(`命令执行成功：$&#123;stdout&#125;`);</span><br><span class="line">            res.status(200).json(&#123; message: &#x27;部署脚本成功执行&#x27; &#125;);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 启动服务器</span><br><span class="line">app.listen(PORT, () =&gt; &#123;</span><br><span class="line">    console.log(`API服务器正在运行，监听端口：$&#123;PORT&#125;`);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 <p>我是在本地写完传到服务器指定目的了，在本地创建server.js的根目录，右键打开<code>Windows Powershell</code>终端，你要用vs code或者git bash，执行以下指令<code>scp server.js qianduan@124.0.0.0:~/H5/server/</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp server.js qianduan@112.124.59.167:~/H5/server/</span><br></pre></td></tr></table></figure>
@@ -284,7 +284,9 @@
 <p>另外假如linux批处理不是使用<code>.bat</code>而是<code>.sh</code>，假如有用到<code>deploy.sh</code>文件头要加上<code>#!/bin/bash</code>，然后再执行以下命令为deploy.sh剔除Window本地上传发生的格式冲突</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># sed -i -e &#x27;s/\r$//&#x27; scriptname.sh</span><br><span class="line">sed -i -e &#x27;s/\r$//&#x27; deploy.sh</span><br></pre></td></tr></table></figure>
 <h3 id="安装依赖项"><a href="#安装依赖项" class="headerlink" title="安装依赖项"></a>安装依赖项</h3><p>server.js脚本需要安装<code>express</code>依赖项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">npm install express</span><br><span class="line"></span><br><span class="line">## 相关代码行</span><br><span class="line">const express = require(&#x27;express&#x27;);</span><br><span class="line">const app = express();</span><br><span class="line">app.use(express.json());</span><br></pre></td></tr></table></figure>
+<p>安装<code>cors</code>依赖项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install cors</span><br><span class="line"></span><br><span class="line">## 相关代码行</span><br><span class="line">const cors = require(&#x27;cors&#x27;);</span><br><span class="line">app.use(cors());</span><br></pre></td></tr></table></figure>
 
 <h3 id="启动API服务器"><a href="#启动API服务器" class="headerlink" title="启动API服务器"></a>启动API服务器</h3><p>在存放API脚本目录下执行以下命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node server.js</span><br></pre></td></tr></table></figure>
@@ -296,9 +298,13 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invoke-RestMethod -Uri &#x27;http://localhost:3000/deploy&#x27; -Method Post -Body &#x27;&#123;&quot;TemplateName&quot;:&quot;YourTemplateName&quot;,&quot;site&quot;:&quot;YourSite&quot;&#125;&#x27; -ContentType &#x27;application/json&#x27;</span><br></pre></td></tr></table></figure>
 <p>如果启动成功，你会看的脚本返回的输出：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">message</span><br><span class="line">-------</span><br><span class="line">部署脚本成功执行</span><br></pre></td></tr></table></figure>
+
 <h4 id="使用公网IP测试"><a href="#使用公网IP测试" class="headerlink" title="使用公网IP测试"></a>使用公网IP测试</h4><p>假如我的公网IP是：<code>124.0.0.0</code>,示例cURL请求：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; -d &#x27;&#123;&quot;TemplateName&quot;: &quot;example&quot;, &quot;site&quot;: &quot;example.com&quot;&#125;&#x27; http://124.0.0.0:3000/deploy</span><br></pre></td></tr></table></figure>
 <p><strong>注意：</strong>使用公网IP需要在阿里云和腾讯云服务器后台添加安全组规则开放对应端口(如果你检查服务器内防火墙没问题后已经无法请求，检查安全组是否开放对应端口<code>例如server.js使用的3000端口</code>很重要)。</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p>javascript:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> fetch(http://124.0.0.0:3000/deploy, &#123;</span><br><span class="line">        method: &quot;POST&quot;,</span><br><span class="line">        headers: &#123;</span><br><span class="line">            &quot;Content-Type&quot;: &quot;application/json&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        body: JSON.stringify(&#123; TemplateName:AAA, site:BBB &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">        .then(response =&gt; &#123;</span><br><span class="line">            console.log(&quot;成功接收:&quot;, response);</span><br><span class="line">        &#125;)</span><br><span class="line">        .catch(error =&gt; &#123;</span><br><span class="line">            console.log(&quot;Error:&quot;, error);</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h2 id="其他Linux相关指令"><a href="#其他Linux相关指令" class="headerlink" title="其他Linux相关指令"></a>其他Linux相关指令</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">## 列出正在运行的所有网络连接和监听端口</span><br><span class="line">sudo netstat -tuln</span><br><span class="line"></span><br><span class="line">## 查看是否有其他进程正在使用端口3000</span><br><span class="line">sudo lsof -i :3000</span><br><span class="line"></span><br><span class="line">## 列出所有进程信息</span><br><span class="line">netstat -tuln</span><br><span class="line"></span><br><span class="line">## 列出正在使用指定端口的进程信息</span><br><span class="line">netstat -tuln | grep 3000</span><br><span class="line"></span><br><span class="line">## 查看使用端口3000的进程并关掉</span><br><span class="line">sudo lsof -i :3000</span><br><span class="line">## 假如存在进程IDS：00000 关闭进程</span><br><span class="line">kill 00000</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -375,7 +381,10 @@
     <a href="/posts/f4df06a4.html" rel="prev" title="深入了解 NVM 和 NRM">
       <i class="fa fa-chevron-left"></i> 深入了解 NVM 和 NRM
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/cd7a0fd3.html" rel="next" title="Node.js中fs模块实现配置文件的读写">
+      Node.js中fs模块实现配置文件的读写 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
 
       </footer>
@@ -435,7 +444,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAAPI%E8%84%9A%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">创建API脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">编写脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">安装依赖项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8API%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">启动API服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95API%E7%AB%AF%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">测试API端点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.1.</span> <span class="nav-text">使用本地测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%85%AC%E7%BD%91IP%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.2.</span> <span class="nav-text">使用公网IP测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96Linux%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">其他Linux相关指令</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAAPI%E8%84%9A%E6%9C%AC"><span class="nav-number">2.</span> <span class="nav-text">创建API脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E8%84%9A%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">编写脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E9%A1%B9"><span class="nav-number">2.2.</span> <span class="nav-text">安装依赖项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8API%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.3.</span> <span class="nav-text">启动API服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95API%E7%AB%AF%E7%82%B9"><span class="nav-number">2.4.</span> <span class="nav-text">测试API端点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%9C%AC%E5%9C%B0%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.1.</span> <span class="nav-text">使用本地测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%85%AC%E7%BD%91IP%E6%B5%8B%E8%AF%95"><span class="nav-number">2.4.2.</span> <span class="nav-text">使用公网IP测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.3.</span> <span class="nav-text">使用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96Linux%E7%9B%B8%E5%85%B3%E6%8C%87%E4%BB%A4"><span class="nav-number">3.</span> <span class="nav-text">其他Linux相关指令</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -453,20 +462,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -568,7 +577,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">57 分钟</span>
+    <span title="站点阅读时长">59 分钟</span>
 </div>
 
 <div>
