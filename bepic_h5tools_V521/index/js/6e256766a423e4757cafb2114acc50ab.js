@@ -1,0 +1,1 @@
+!function(){"use strict";(new Date).toLocaleDateString();const t="V1.0.3";document.getElementById("verson_txt").textContent=t}();
