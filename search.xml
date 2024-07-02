@@ -22,9 +22,9 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
 <p>找到 server 块并修改为如下内容,</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name your-ecs-ip;</span><br><span class="line"></span><br><span class="line">    root _;</span><br><span class="line">    index index.html;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri $uri/ =404;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">+ 默认资源存放路径为`/usr/share/nginx/html/`:</span><br><span class="line">+ 有域名时再用`server_name`没有不操作</span><br></pre></td></tr></table></figure>
-<p>保存并退出编辑器，然后重启Nginx以应用配置：</p>
+<p>保存并退出编辑器，重启Nginx以应用配置：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart nginx</span><br></pre></td></tr></table></figure>
-
+<p>然后开放80端口:到ecs服务控制台，找到网络与安全&gt;安全组&gt;管理规则&gt;快速添加&gt;HTTP-<code>所有IPv4(0.0.0.0/0)</code>，</p>
 <h3 id="绑定域名"><a href="#绑定域名" class="headerlink" title="绑定域名"></a>绑定域名</h3><p>绑定域名在启用API文章 <a href="33a90f8b">Linux服务器部署API的方法</a>小节有提到，这里记录下完成流程；<br>首先的有域名，自己去阿里云域名控制台购买一个，备案（很重要)！！<br>然后找点购买的域名信息，点击解析。添加一个A记录，使您的域名指向您的服务器IP地址。</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">主机名（Hostname）： @ 或www 及其他子域名</span><br><span class="line">类型（Type）： A</span><br><span class="line">值（Value）： 8.134.102.5:</span><br></pre></td></tr></table></figure>
 <p>我绑定的是 cdn.rfcode.top<br>编辑Nginx的配置文件：</p>
