@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">26</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">27</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -127,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">35</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">36</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -212,10 +212,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-07-02 15:32:18 / 修改时间：18:23:58" itemprop="dateCreated datePublished" datetime="2024-07-02T15:32:18+08:00">2024-07-02</time>
+              <time title="创建时间：2024-07-02 15:32:18" itemprop="dateCreated datePublished" datetime="2024-07-02T15:32:18+08:00">2024-07-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-07-08 15:49:21" itemprop="dateModified" datetime="2024-07-08T15:49:21+08:00">2024-07-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -268,6 +274,105 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/8207f50c.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/f448e903.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/f448e903.html" class="post-title-link" itemprop="url">批量重命名脚本-特例要求记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-07-08 15:32:20 / 修改时间：15:44:20" itemprop="dateCreated datePublished" datetime="2024-07-08T15:32:20+08:00">2024-07-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数据处理</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>680</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>记录一个批量重命名文件bat代码。该脚本主要功能是遍历当前目录中的所有文件，并将符合特定模式的文件名进行重命名，将类似 <code>ASMR Rainbow Jelly-720 X 1280-2024-07-04-930d17d3fe662399f0ca12104d604fa5</code> 重命名为 <code>ASMR Rainbow Jelly-720 X 1280</code>，舍弃<code>-2024-07-04-930d17d3fe662399f0ca12104d604fa5</code>日期和bash部分。</p>
+<h2 id="完整脚本内容"><a href="#完整脚本内容" class="headerlink" title="完整脚本内容"></a>完整脚本内容</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">chcp 65001 &gt; nul 2&gt;&amp;1</span><br><span class="line">setlocal enabledelayedexpansion</span><br><span class="line"></span><br><span class="line">REM 遍历当前目录中的所有文件</span><br><span class="line">for %%f in (*.*) do (</span><br><span class="line">    set &quot;filename=%%f&quot;</span><br><span class="line">    set &quot;extension=%%~xf&quot;</span><br><span class="line"></span><br><span class="line">    REM 判断是否为批处理文件，跳过</span><br><span class="line">    if /i &quot;!extension!&quot;==&quot;.bat&quot; (</span><br><span class="line">        echo 跳过批处理文件: !filename!</span><br><span class="line">    ) else (</span><br><span class="line">        REM 分割文件名</span><br><span class="line">        for /f &quot;tokens=1,2,3,4 delims=-&quot; %%a in (&quot;!filename!&quot;) do (</span><br><span class="line">            set &quot;part1=%%a&quot;</span><br><span class="line">            set &quot;part2=%%b&quot;</span><br><span class="line">            set &quot;part3=%%c&quot;</span><br><span class="line">            set &quot;part4=%%d&quot;</span><br><span class="line">            </span><br><span class="line">            REM 检查日期部分是否在指定年份范围内</span><br><span class="line">            if &quot;!part3!&quot; neq &quot;&quot; (</span><br><span class="line">                if &quot;!part3!&quot; gtr &quot;1900&quot; if &quot;!part3!&quot; lss &quot;2100&quot; (</span><br><span class="line">                    set &quot;new_filename=!part1!-!part2!&quot;</span><br><span class="line">                ) else (</span><br><span class="line">                    set &quot;new_filename=!filename!&quot;</span><br><span class="line">                )</span><br><span class="line">            ) else (</span><br><span class="line">                set &quot;new_filename=!filename!&quot;</span><br><span class="line">            )</span><br><span class="line">            </span><br><span class="line">            REM 如果新旧文件名相同，则输出无需重命名信息</span><br><span class="line">            if &quot;!filename!&quot;==&quot;!new_filename!&quot; (</span><br><span class="line">                echo !filename!:不需重命名</span><br><span class="line">            ) else (</span><br><span class="line">                REM 尝试重命名文件</span><br><span class="line">                ren &quot;!filename!&quot; &quot;!new_filename!&quot; &gt; nul 2&gt;&amp;1</span><br><span class="line">                if !errorlevel! equ 0 (</span><br><span class="line">                    echo !filename! 更名为 !new_filename!</span><br><span class="line">                ) else (</span><br><span class="line">                    echo !filename!重命名失败</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line">        )</span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">echo 批量更名完成，bat from CRF %TIME% ！！</span><br><span class="line">pause</span><br></pre></td></tr></table></figure>
+<h2 id="脚本解析"><a href="#脚本解析" class="headerlink" title="脚本解析"></a>脚本解析</h2><h3 id="初始化部分"><a href="#初始化部分" class="headerlink" title="初始化部分"></a>初始化部分</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">chcp 65001 &gt; nul 2&gt;&amp;1</span><br><span class="line">setlocal enabledelayedexpansion</span><br></pre></td></tr></table></figure>
+<ul>
+<li>@echo off：关闭命令回显。</li>
+<li>chcp 65001 &gt; nul 2&gt;&amp;1：将代码页设置为 UTF-8，防止出现乱码。</li>
+<li>setlocal enabledelayedexpansion：启用延迟变量扩展，允许在 for 循环中使用 ! 来引用变量。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/f448e903.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1098,109 +1203,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/becb1b11.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.gif">
-      <meta itemprop="name" content="Crf's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Crf's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/becb1b11.html" class="post-title-link" itemprop="url">Midway-Vue3框架使用笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-08 18:39:08" itemprop="dateCreated datePublished" datetime="2024-03-08T18:39:08+08:00">2024-03-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-26 14:15:26" itemprop="dateModified" datetime="2024-06-26T14:15:26+08:00">2024-06-26</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>677</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h2><p>框架地址: <a target="_blank" rel="noopener" href="http://midway-vue3-ssr.liqingsong.cc/"><strong>Midway-Vue3-SSR</strong></a></p>
-<p>基于 Midway、Vue 3 组装的 SSR 框架<br>简单、易学易用、方便扩展、集成Midway框架，您一直想要的Vue SSR 框架。</p>
-<p>使用系统：Windows</p>
-<p>安装:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 克隆项目</span><br><span class="line">git clone https://github.com/lqsong/midway-vue3-ssr.git</span><br><span class="line"></span><br><span class="line"># 进入项目目录</span><br><span class="line">cd midway-vue3-ssr</span><br><span class="line"></span><br><span class="line"># 复制文件</span><br><span class="line">copy src/config/config.default.ts  src/config/config.local.ts # 启用或修改里面的参数</span><br><span class="line">copy src/config/config.default.ts  src/config/config.prod.ts # 启用或修改里面的参数</span><br><span class="line">copy web/.env.development  web/.env.development.local # 启用或修改里面的参数</span><br><span class="line"></span><br><span class="line"># 全局安装pnpm：</span><br><span class="line">npm install pnpm -g</span><br><span class="line"></span><br><span class="line"># 安装环境依赖</span><br><span class="line">pnpm i </span><br><span class="line"></span><br><span class="line"># 启动默认项目</span><br><span class="line">pnpm dev</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/becb1b11.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1274,7 +1276,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-count">27</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1287,7 +1289,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1390,12 +1392,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">20k</span>
+    <span title="站点总字数">21k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:12</span>
+    <span title="站点阅读时长">1:15</span>
 </div>
 
 <div>
