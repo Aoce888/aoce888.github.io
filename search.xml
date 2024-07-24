@@ -11,7 +11,7 @@
 <li>your-ecs-ip 是你的ECS服务器的IP地址。</li>
 <li>&#x2F;path&#x2F;to&#x2F;server&#x2F;directory 是你希望在ECS服务器上存放文件的路径。</li>
 </ul>
-<h2 id="安装和配置Web服务器"><a href="#安装和配置Web服务器" class="headerlink" title="安装和配置Web服务器"></a>安装和配置Web服务器</h2><p>(使用root配置！！！这个弯也是饶了很久，可能是myecs没有终极权限，我明明设置了sudo可能还有其他操作。)<br>在ECS服务器上安装一个Web服务器，比如Nginx或Apache。我是基于CentOS的Nginx：</p>
+<h2 id="安装和配置Web服务器"><a href="#安装和配置Web服务器" class="headerlink" title="安装和配置Web服务器"></a>安装和配置Web服务器</h2><p>在ECS服务器上使用有sudo权限的用户进行操作，安装一个Web服务器，比如Nginx或Apache。这里我是基于CentOS的Nginx：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo yum install epel-release</span><br><span class="line">sudo yum install nginx</span><br></pre></td></tr></table></figure>
 <p>启动Nginx并设置其开机自启动：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl start nginx</span><br><span class="line">sudo systemctl enable nginx</span><br></pre></td></tr></table></figure>
