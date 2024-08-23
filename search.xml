@@ -127,21 +127,33 @@
 <p>查看sshd日志排除问题</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo grep sshd /var/log/secure</span><br></pre></td></tr></table></figure>
 
-<h3 id="创建用户，关闭root"><a href="#创建用户，关闭root" class="headerlink" title="创建用户，关闭root"></a>创建用户，关闭root</h3><p>修改前确保sshd_config密码验证开启：</p>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p>修改前确保sshd_config密码验证开启：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vi /etc/ssh/sshd_config</span><br><span class="line"># 更改以下选项</span><br><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure>
 <p>查看当前用户名：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">whoami</span><br></pre></td></tr></table></figure>
-<p><strong>创建新用户并切换</strong><br>假设创建名为myecs的新用户：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo adduser myecs</span><br><span class="line"># 设置密码</span><br><span class="line">sudo passwd myecs</span><br></pre></td></tr></table></figure>
-<p>添加sudo权限：</p>
+<p><strong>创建新用户</strong><br>假设创建名为myecs的新用户：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo adduser myecs</span><br><span class="line"># 设置密码</span><br><span class="line">sudo passwd myecs(回车输入)</span><br></pre></td></tr></table></figure>
+<p>添加sudo权限，执行：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
-<p>在&#x2F;etc&#x2F;sudoers文件中，找到以下内容：</p>
+<p>在打开的文件内容中，找到并修正以下代码：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line"></span><br><span class="line">## 添加新的myecs sudo权限</span><br><span class="line">myecs    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
-<p>切换用户</p>
+<p>最后切换用户</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">su - myecs</span><br><span class="line"></span><br><span class="line"># 验证sudo权限 回车有输出testfile即验证成功</span><br><span class="line">whoami</span><br><span class="line">sudo touch /root/testfile</span><br><span class="line">sudo ls /root</span><br></pre></td></tr></table></figure>
 
 <p><strong>为新用户添加公钥</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建.ssh目录和authorized_keys文件（如果不存在）</span><br><span class="line">mkdir -p ~/.ssh</span><br><span class="line">touch ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 设置权限</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 将公钥添加到authorized_keys文件</span><br><span class="line">echo &quot;ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvLJ... your_public_key_here&quot; &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 确认公钥添加是否成功</span><br><span class="line">cat ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>如果还是验证失败，可以考虑目录的所有权或权限设置不正确问题<br>使用以下命令查看日志（需要 root 权限），没关闭root的建议用root终端执行更直接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo tail -f /var/log/secure</span><br></pre></td></tr></table></figure>
+<p>如果日志有如下类似报错，则表明(用户路径)&#x2F;home&#x2F;myecs 目录的所有权或权限设置不正确, 服务器拒绝了公钥认证。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Authentication refused: bad ownership or modes for directory /home/myecs(某某路径)</span><br></pre></td></tr></table></figure>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>修正目录的所有权，确保 &#x2F;home&#x2F;myecs 目录的所有者是 myecs 用户：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chown myecs:myecs /home/myecs</span><br></pre></td></tr></table></figure>
+<p>接着执行目录权限修正操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo chmod 700 /home/myecs</span><br><span class="line">sudo chmod 700 /home/myecs/.ssh</span><br><span class="line">sudo chmod 600 /home/myecs/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>最后重启SSH服务:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
 
 ]]></content>
       <categories>

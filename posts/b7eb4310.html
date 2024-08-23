@@ -28,7 +28,7 @@
 <meta property="og:description" content="ECS服务配置服务器配置：i-7xvatqiyl3pikzz7pz2t运行中（2核(vCPU) 2GiB） AliyunLinux 添加私钥在本地电脑使用以下命令查看并公钥内容： 1cat ~&#x2F;.ssh&#x2F;id_rsa.pub 执行以下1或2完成添加公钥操作。1.打开ECS后台远程链接，编辑 authorized_keys 文件： 1编辑 authorized_keys 文件。 按Esc建输入:wq">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-07-01T06:13:04.000Z">
-<meta property="article:modified_time" content="2024-07-02T07:17:12.138Z">
+<meta property="article:modified_time" content="2024-08-23T04:23:26.392Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="Linux服务器">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-07-02 15:17:12" itemprop="dateModified" datetime="2024-07-02T15:17:12+08:00">2024-07-02</time>
+                <time title="修改时间：2024-08-23 12:23:26" itemprop="dateModified" datetime="2024-08-23T12:23:26+08:00">2024-08-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>574</span>
+              <span>785</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -299,21 +299,33 @@
 <p>查看sshd日志排除问题</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grep sshd /var/log/secure</span><br></pre></td></tr></table></figure>
 
-<h3 id="创建用户，关闭root"><a href="#创建用户，关闭root" class="headerlink" title="创建用户，关闭root"></a>创建用户，关闭root</h3><p>修改前确保sshd_config密码验证开启：</p>
+<h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p>修改前确保sshd_config密码验证开启：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /etc/ssh/sshd_config</span><br><span class="line"># 更改以下选项</span><br><span class="line">PasswordAuthentication yes</span><br></pre></td></tr></table></figure>
 <p>查看当前用户名：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br></pre></td></tr></table></figure>
-<p><strong>创建新用户并切换</strong><br>假设创建名为myecs的新用户：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser myecs</span><br><span class="line"># 设置密码</span><br><span class="line">sudo passwd myecs</span><br></pre></td></tr></table></figure>
-<p>添加sudo权限：</p>
+<p><strong>创建新用户</strong><br>假设创建名为myecs的新用户：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo adduser myecs</span><br><span class="line"># 设置密码</span><br><span class="line">sudo passwd myecs(回车输入)</span><br></pre></td></tr></table></figure>
+<p>添加sudo权限，执行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo visudo</span><br></pre></td></tr></table></figure>
-<p>在&#x2F;etc&#x2F;sudoers文件中，找到以下内容：</p>
+<p>在打开的文件内容中，找到并修正以下代码：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">## Allow root to run any commands anywhere</span><br><span class="line">root    ALL=(ALL)       ALL</span><br><span class="line"></span><br><span class="line">## 添加新的myecs sudo权限</span><br><span class="line">myecs    ALL=(ALL)       ALL</span><br></pre></td></tr></table></figure>
-<p>切换用户</p>
+<p>最后切换用户</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">su - myecs</span><br><span class="line"></span><br><span class="line"># 验证sudo权限 回车有输出testfile即验证成功</span><br><span class="line">whoami</span><br><span class="line">sudo touch /root/testfile</span><br><span class="line">sudo ls /root</span><br></pre></td></tr></table></figure>
 
 <p><strong>为新用户添加公钥</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 创建.ssh目录和authorized_keys文件（如果不存在）</span><br><span class="line">mkdir -p ~/.ssh</span><br><span class="line">touch ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 设置权限</span><br><span class="line">chmod 700 ~/.ssh</span><br><span class="line">chmod 600 ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 将公钥添加到authorized_keys文件</span><br><span class="line">echo &quot;ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAvLJ... your_public_key_here&quot; &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line"></span><br><span class="line"># 确认公钥添加是否成功</span><br><span class="line">cat ~/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+
+<h3 id="报错日志"><a href="#报错日志" class="headerlink" title="报错日志"></a>报错日志</h3><h4 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h4><p>如果还是验证失败，可以考虑目录的所有权或权限设置不正确问题<br>使用以下命令查看日志（需要 root 权限），没关闭root的建议用root终端执行更直接：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tail -f /var/log/secure</span><br></pre></td></tr></table></figure>
+<p>如果日志有如下类似报错，则表明(用户路径)&#x2F;home&#x2F;myecs 目录的所有权或权限设置不正确, 服务器拒绝了公钥认证。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authentication refused: bad ownership or modes for directory /home/myecs(某某路径)</span><br></pre></td></tr></table></figure>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>修正目录的所有权，确保 &#x2F;home&#x2F;myecs 目录的所有者是 myecs 用户：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chown myecs:myecs /home/myecs</span><br></pre></td></tr></table></figure>
+<p>接着执行目录权限修正操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod 700 /home/myecs</span><br><span class="line">sudo chmod 700 /home/myecs/.ssh</span><br><span class="line">sudo chmod 600 /home/myecs/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>最后重启SSH服务:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
 
 
     </div>
@@ -452,7 +464,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ECS%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">ECS服务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%A7%81%E9%92%A5"><span class="nav-number">1.1.</span> <span class="nav-text">添加私钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%B9%B6%E5%90%AF%E5%8A%A8SSH%E6%9C%8D%E5%8A%A1-ECS"><span class="nav-number">1.2.</span> <span class="nav-text">检查并启动SSH服务(ECS)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%EF%BC%8C%E5%85%B3%E9%97%ADroot"><span class="nav-number">1.3.</span> <span class="nav-text">创建用户，关闭root</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ECS%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">ECS服务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E7%A7%81%E9%92%A5"><span class="nav-number">1.1.</span> <span class="nav-text">添加私钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%B9%B6%E5%90%AF%E5%8A%A8SSH%E6%9C%8D%E5%8A%A1-ECS"><span class="nav-number">1.2.</span> <span class="nav-text">检查并启动SSH服务(ECS)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7"><span class="nav-number">1.3.</span> <span class="nav-text">创建用户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E6%97%A5%E5%BF%97"><span class="nav-number">1.4.</span> <span class="nav-text">报错日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.4.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.4.2.</span> <span class="nav-text">解决方案</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -594,7 +606,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:15</span>
+    <span title="站点阅读时长">1:16</span>
 </div>
 
 <div>
