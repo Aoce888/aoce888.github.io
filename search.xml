@@ -41,6 +41,16 @@
 <p>Certbot会自动设置证书续期任务。可以手动测试下：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo certbot renew --dry-run</span><br></pre></td></tr></table></figure>
 <p>证书步骤完成后，到ecs服务控制台，找到网络与安全&gt;安全组&gt;管理规则&gt;快速添加&gt;HTTPS-<code>所有IPv4(0.0.0.0/0)</code>，开放443端口。<br>验证,打开您的浏览器并访问您的域名<a href="https://cdn.rfcode.top/">https://cdn.rfcode.top</a>。</p>
+<h3 id="允许跨区"><a href="#允许跨区" class="headerlink" title="允许跨区"></a>允许跨区</h3><p>后期启用api请求时，需要开启允许跨域否则会报错:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Access to fetch at &#x27;https://cdn.rfcode.top/getarticles&#x27; from origin &#x27;http://192.168.100.106:6002&#x27; has been blocked by CORS policy: Response to preflight request doesn&#x27;t pass access control check: No &#x27;Access-Control-Allow-Origin&#x27; header is present on the requested resource. If an opaque response serves your needs, set the request&#x27;s mode to &#x27;no-cors&#x27; to fetch the resource with CORS disabled.</span><br></pre></td></tr></table></figure>
+<p>打开nginx配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+<p>修改配置server部分代码添加代理设置，其中<code>http://localhost:3000; </code>是你写好的api的接口:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        ...</span><br><span class="line">        server_name  cdn.rfcode.top;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        # 添加代理设置</span><br><span class="line">        location / &#123;</span><br><span class="line">        proxy_pass http://localhost:3000; </span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<p>重新加载 NGINX 配置使更改生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<p><strong>相关文章:<a href="33a90f8b">Linux服务器部署API的方法</a></strong></p>
 ]]></content>
       <categories>
         <category>服务器</category>
@@ -244,7 +254,7 @@
 <p>重启且更新环节变量</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pm2 restart --update-env server.js</span><br></pre></td></tr></table></figure>
 <p>定个时，每天凌晨0.30重启：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 添加定时任务</span><br><span class="line">crontab -e</span><br><span class="line">## 写入</span><br><span class="line">30 0 * * * pm2 restart server.js</span><br><span class="line">## ctrl+X后Y保存</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">## 添加定时任务</span><br><span class="line">crontab -e</span><br><span class="line">## 写入</span><br><span class="line">30 0 * * * pm2 restart --update-env server.js</span><br><span class="line">## ctrl+X后Y保存</span><br></pre></td></tr></table></figure>
 <p>重启主要时为了防止长时间启用api写入进程被关闭问题。</p>
 <h3 id="测试API端点"><a href="#测试API端点" class="headerlink" title="测试API端点"></a>测试API端点</h3><h4 id="使用本地测试"><a href="#使用本地测试" class="headerlink" title="使用本地测试"></a>使用本地测试</h4><p>要测试API的&#x2F;deploy端点，您可以使用工具如cURL或Postman发送POST请求。确保请求体中包含必要的参数TemplateName和site。<br>示例cURL请求：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -X POST -H &quot;Content-Type: application/json&quot; -d &#x27;&#123;&quot;TemplateName&quot;: &quot;example&quot;, &quot;site&quot;: &quot;example.com&quot;&#125;&#x27; http://localhost:3000/deploy</span><br></pre></td></tr></table></figure>
