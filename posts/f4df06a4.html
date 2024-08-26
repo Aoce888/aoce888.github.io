@@ -28,7 +28,7 @@
 <meta property="og:description" content="当您使用多个Node.js版本和多个包管理器时，管理和切换它们可能会变得复杂。为了解决这个问题，开发者社区提供了一些工具来帮助我们轻松地管理Node.js版本和包管理器。两个常用的工具是NVM（Node Version Manager）和NRM（NPM Registry Manager）。本文将介绍它们的使用方法和主要功能。 操作系统：Windows NVM（Node Version Manage">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-03-19T09:54:23.000Z">
-<meta property="article:modified_time" content="2024-03-19T10:07:04.241Z">
+<meta property="article:modified_time" content="2024-08-26T02:29:27.249Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="NVM, NRM, Node.js, 版本管理, 包管理">
 <meta name="twitter:card" content="summary">
@@ -217,10 +217,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-03-19 17:54:23 / 修改时间：18:07:04" itemprop="dateCreated datePublished" datetime="2024-03-19T17:54:23+08:00">2024-03-19</time>
+              <time title="创建时间：2024-03-19 17:54:23" itemprop="dateCreated datePublished" datetime="2024-03-19T17:54:23+08:00">2024-03-19</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-26 10:29:27" itemprop="dateModified" datetime="2024-08-26T10:29:27+08:00">2024-08-26</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -244,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>647</span>
+              <span>773</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -266,11 +272,18 @@
         <p>当您使用多个Node.js版本和多个包管理器时，管理和切换它们可能会变得复杂。为了解决这个问题，开发者社区提供了一些工具来帮助我们轻松地管理Node.js版本和包管理器。两个常用的工具是NVM（Node Version Manager）和NRM（NPM Registry Manager）。本文将介绍它们的使用方法和主要功能。</p>
 <p>操作系统：Windows</p>
 <h2 id="NVM（Node-Version-Manager）"><a href="#NVM（Node-Version-Manager）" class="headerlink" title="NVM（Node Version Manager）"></a>NVM（Node Version Manager）</h2><h3 id="什么是NVM？"><a href="#什么是NVM？" class="headerlink" title="什么是NVM？"></a>什么是NVM？</h3><p>NVM是一个用于管理Node.js版本的工具。它允许开发者在同一台机器上同时安装和切换不同的Node.js版本。无论是在开发环境中测试不同版本的应用程序，还是在维护多个项目时，NVM都能提供便利。</p>
-<h3 id="安装NVM"><a href="#安装NVM" class="headerlink" title="安装NVM"></a>安装NVM</h3><p>在终端中执行以下命令下载安装nvm-windows</p>
+<h3 id="Windows安装NVM"><a href="#Windows安装NVM" class="headerlink" title="Windows安装NVM"></a>Windows安装NVM</h3><p>在终端中执行以下命令下载安装nvm-windows</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/coreybutler/nvm-windows</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
 
-<h3 id="使用NVM"><a href="#使用NVM" class="headerlink" title="使用NVM"></a>使用NVM</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 查看可用的Node.js版本</span><br><span class="line">nvm list available</span><br><span class="line"></span><br><span class="line">#安装Node.js版本：</span><br><span class="line">nvm install &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要安装Node.js的最新稳定版本，可以运行：</span><br><span class="line">nvm install stable</span><br><span class="line">#切换Node.js版本：</span><br><span class="line">nvm use &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要切换到Node.js的10.00.0版本</span><br><span class="line">nvm use 10.00.0</span><br><span class="line"></span><br><span class="line">#查看已安装的Node.js版本列表：</span><br><span class="line">nvm ls</span><br></pre></td></tr></table></figure>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 查看可用的Node.js版本</span><br><span class="line">nvm list available</span><br><span class="line"></span><br><span class="line">#安装Node.js版本：</span><br><span class="line">nvm install &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要安装Node.js的最新稳定版本，可以运行：</span><br><span class="line">nvm install stable</span><br><span class="line">#切换Node.js版本：</span><br><span class="line">nvm use &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要切换到Node.js的10.00.0版本</span><br><span class="line">nvm use 10.00.0</span><br><span class="line"></span><br><span class="line">#查看已安装的Node.js版本列表：</span><br><span class="line">nvm ls</span><br></pre></td></tr></table></figure>
+
+<h3 id="Linux服务端安装NVM"><a href="#Linux服务端安装NVM" class="headerlink" title="Linux服务端安装NVM"></a>Linux服务端安装NVM</h3><p>执行以下命令下载安装:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash</span><br></pre></td></tr></table></figure>
+<p>加载 nvm: 安装完成后，重新加载 shell 环境来激活 nvm，或者你可以执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bashrc</span><br><span class="line"></span><br><span class="line"># 查看版本</span><br><span class="line">nvm --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="使用方法-1"><a href="#使用方法-1" class="headerlink" title="使用方法"></a>使用方法</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># 查看可用的Node.js版本</span><br><span class="line">nvm ls-remote --lts</span><br><span class="line"></span><br><span class="line">#安装Node.js版本：</span><br><span class="line">nvm install &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#切换Node.js版本：</span><br><span class="line">nvm use &lt;node_version&gt;</span><br><span class="line"></span><br><span class="line">#例如，要切换到Node.js的10.00.0版本</span><br><span class="line">nvm use 10.00.0</span><br><span class="line"></span><br><span class="line">#查看已安装的Node.js版本列表：</span><br><span class="line">nvm ls</span><br></pre></td></tr></table></figure>
 
 <h2 id="NRM（NPM-Registry-Manager）"><a href="#NRM（NPM-Registry-Manager）" class="headerlink" title="NRM（NPM Registry Manager）"></a>NRM（NPM Registry Manager）</h2><h3 id="什么是NRM？"><a href="#什么是NRM？" class="headerlink" title="什么是NRM？"></a>什么是NRM？</h3><p>NRM是一个用于管理NPM注册表（Registry）的工具。它允许开发者轻松切换不同的NPM注册表，以便快速地下载和安装依赖包。</p>
 <h3 id="安装NRM"><a href="#安装NRM" class="headerlink" title="安装NRM"></a>安装NRM</h3><p>在终端中执行以下命令全局安装NRM：</p>
@@ -416,7 +429,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NVM%EF%BC%88Node-Version-Manager%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">NVM（Node Version Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNVM%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是NVM？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85NVM"><span class="nav-number">1.2.</span> <span class="nav-text">安装NVM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NVM"><span class="nav-number">1.3.</span> <span class="nav-text">使用NVM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NRM%EF%BC%88NPM-Registry-Manager%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">NRM（NPM Registry Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNRM%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">什么是NRM？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85NRM"><span class="nav-number">2.2.</span> <span class="nav-text">安装NRM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NRM"><span class="nav-number">2.3.</span> <span class="nav-text">使用NRM</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#NVM%EF%BC%88Node-Version-Manager%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">NVM（Node Version Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNVM%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是NVM？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows%E5%AE%89%E8%A3%85NVM"><span class="nav-number">1.2.</span> <span class="nav-text">Windows安装NVM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.1.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%AE%89%E8%A3%85NVM"><span class="nav-number">1.3.</span> <span class="nav-text">Linux服务端安装NVM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NRM%EF%BC%88NPM-Registry-Manager%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">NRM（NPM Registry Manager）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFNRM%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">什么是NRM？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85NRM"><span class="nav-number">2.2.</span> <span class="nav-text">安装NRM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NRM"><span class="nav-number">2.3.</span> <span class="nav-text">使用NRM</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -558,7 +571,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:16</span>
+    <span title="站点阅读时长">1:17</span>
 </div>
 
 <div>
