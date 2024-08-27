@@ -28,7 +28,7 @@
 <meta property="og:description" content="1. 上传文件到ECS服务器你可以使用SCP或SFTPxx。配置好公钥后，文件上传到你的ECS服务器路径上。以SCP为例： 1scp &#x2F;path&#x2F;to&#x2F;yourfile.html username@your-ecs-ip:&#x2F;path&#x2F;to&#x2F;server&#x2F;directory  &#x2F;path&#x2F;to&#x2F;yourfile.html 是你本地文件的路径。 username 是你在E">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-07-02T07:32:18.000Z">
-<meta property="article:modified_time" content="2024-08-26T10:55:07.179Z">
+<meta property="article:modified_time" content="2024-08-27T07:28:58.815Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="Linux服务器">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-26 18:55:07" itemprop="dateModified" datetime="2024-08-26T18:55:07+08:00">2024-08-26</time>
+                <time title="修改时间：2024-08-27 15:28:58" itemprop="dateModified" datetime="2024-08-27T15:28:58+08:00">2024-08-27</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,14 +250,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>863</span>
+              <span>1.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -307,13 +307,28 @@
 <p>Certbot会自动设置证书续期任务。可以手动测试下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo certbot renew --dry-run</span><br></pre></td></tr></table></figure>
 <p>证书步骤完成后，到ecs服务控制台，找到网络与安全&gt;安全组&gt;管理规则&gt;快速添加&gt;HTTPS-<code>所有IPv4(0.0.0.0/0)</code>，开放443端口。<br>验证,打开您的浏览器并访问您的域名<a target="_blank" rel="noopener" href="https://cdn.rfcode.top/">https://cdn.rfcode.top</a>。</p>
-<h3 id="允许跨区"><a href="#允许跨区" class="headerlink" title="允许跨区"></a>允许跨区</h3><p>后期启用api请求时，需要开启允许跨域否则会报错:</p>
+<h3 id="允许跨区"><a href="#允许跨区" class="headerlink" title="允许跨区"></a>允许跨区</h3><p>后期启用非同源https请求api时，需要开启允许跨域否则会报错:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access to fetch at &#x27;https://cdn.rfcode.top/getarticles&#x27; from origin &#x27;http://192.168.100.106:6002&#x27; has been blocked by CORS policy: Response to preflight request doesn&#x27;t pass access control check: No &#x27;Access-Control-Allow-Origin&#x27; header is present on the requested resource. If an opaque response serves your needs, set the request&#x27;s mode to &#x27;no-cors&#x27; to fetch the resource with CORS disabled.</span><br></pre></td></tr></table></figure>
+<h4 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h4><p>接口代码添加cors标头并修改nginx配置：</p>
+<p>如果还没有安装 cors，可以通过 npm 或 yarn 安装它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install cors</span><br><span class="line"># yarn add cors</span><br></pre></td></tr></table></figure>
+<p>接口代码引入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const cors = require(&#x27;cors&#x27;); </span><br><span class="line">app.use(cors());</span><br></pre></td></tr></table></figure>
+
 <p>打开nginx配置文件：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
-<p>修改配置server部分代码添加代理设置，其中<code>http://localhost:3000; </code>是你写好的api的接口:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">        ...</span><br><span class="line">        server_name  cdn.rfcode.top;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        # 添加代理设置</span><br><span class="line">        location / &#123;</span><br><span class="line">        proxy_pass http://localhost:3000; </span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
-<p>重新加载 NGINX 配置使更改生效：</p>
+<p>修改配置,找到server代码部分并添加上<code>location /api/ &#123;***&#125;</code>相关代码，如下，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">      ...</span><br><span class="line">      server_name  cdn.rfcode.top;</span><br><span class="line">      ...</span><br><span class="line"></span><br><span class="line">      location / &#123;</span><br><span class="line">        try_files $uri $uri/ =404;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">      # 添加代理设置</span><br><span class="line">      location /api/ &#123;</span><br><span class="line">      proxy_pass http://localhost:3000/;</span><br><span class="line">      proxy_set_header Host $host;</span><br><span class="line">      proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">      proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">   </span><br></pre></td></tr></table></figure>
+<p>其中<code>http://localhost:3000/</code>是你设置的代理路径，例如远端请求<code>https://cdn.rfcode.top/api/deploy</code>，请求链接存在<code>/api/</code>就会把<code>https://cdn.rfcode.top/api/</code>自动转到<code>http://localhost:3000/</code>,最终相当于请求<code>http://localhost:3000/deploy</code>：</p>
+<p>设置请求路径代理就是为了方便提供静态文件服务，开辟某几条通道作为特定api请求入口,因此建议不要改动 <code>location /&#123;&#125;</code>而是重定义<code>location /path/&#123;&#125;</code>,</p>
+<p>最后保存重新加载 NGINX 配置生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<h4 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h4><p>直接修改配置，打开nginx配置文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+<p>找到以下代码并添加上<code>location /api/ &#123;***&#125;</code>部分，其中<code>http://localhost:3000/</code>是你设置的代理路径，例如远端请求<code>https://cdn.rfcode.top/api/deploy</code>，请求链接存在<code>/api/</code>就会把<code>https://cdn.rfcode.top/api/</code>自动转到<code>http://localhost:3000/</code>,最终相当于请求<code>http://localhost:3000/deploy</code>。<br><strong>注意，用该方案脚本代码就不能有方案一的cors标头相关代码了，否则会冲突解决不了跨域问题</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name cdn.rfcode.top;</span><br><span class="line"></span><br><span class="line">    location /api/ &#123;</span><br><span class="line">        proxy_pass http://localhost:3000/;</span><br><span class="line">        proxy_set_header Host $host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header X-Forwarded-Proto $scheme;</span><br><span class="line"></span><br><span class="line">        # 添加 CORS 头部</span><br><span class="line">        add_header &#x27;Access-Control-Allow-Origin&#x27; &#x27;*&#x27;;</span><br><span class="line">        add_header &#x27;Access-Control-Allow-Methods&#x27; &#x27;GET, POST, OPTIONS&#x27;;</span><br><span class="line">        add_header &#x27;Access-Control-Allow-Headers&#x27; &#x27;Authorization, Content-Type&#x27;;</span><br><span class="line">        if ($request_method = &#x27;OPTIONS&#x27;) &#123;</span><br><span class="line">            return 204;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        try_files $uri $uri/ =404;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后保存重新加载 NGINX 配置生效：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl reload nginx</span><br></pre></td></tr></table></figure>
 
 <p><strong>相关文章:<a href="33a90f8b">Linux服务器部署API的方法</a></strong></p>
@@ -454,7 +469,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0ECS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">1. 上传文件到ECS服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">安装和配置Web服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D"><span class="nav-number">2.1.</span> <span class="nav-text">绑定域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEHTTPS"><span class="nav-number">2.2.</span> <span class="nav-text">设置HTTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%81%E8%AE%B8%E8%B7%A8%E5%8C%BA"><span class="nav-number">2.3.</span> <span class="nav-text">允许跨区</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0ECS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">1. 上传文件到ECS服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AEWeb%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">安装和配置Web服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%91%E5%AE%9A%E5%9F%9F%E5%90%8D"><span class="nav-number">2.1.</span> <span class="nav-text">绑定域名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEHTTPS"><span class="nav-number">2.2.</span> <span class="nav-text">设置HTTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%81%E8%AE%B8%E8%B7%A8%E5%8C%BA"><span class="nav-number">2.3.</span> <span class="nav-text">允许跨区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80"><span class="nav-number">2.3.1.</span> <span class="nav-text">方案一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C"><span class="nav-number">2.3.2.</span> <span class="nav-text">方案二</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -591,12 +606,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">21k</span>
+    <span title="站点总字数">22k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:18</span>
+    <span title="站点阅读时长">1:19</span>
 </div>
 
 <div>
