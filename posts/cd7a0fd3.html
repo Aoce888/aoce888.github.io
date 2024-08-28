@@ -28,7 +28,7 @@
 <meta property="og:description" content="在Node.js中，fs模块提供了对文件系统的访问功能，我们可以利用它来实现配置文件的读取和写入操作。正好用到，就记录一下。 准备工作确保你的项目目录已经安装了做了npm或pnpm或yarn等node相关初始化，存在node_modules文件夹，这样就可以使用fs： 1const fs &#x3D; require(&amp;#x27;fs&amp;#x27;);  接下来就是定义路径，我是用到年月来定义路径，并放在当前">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-24T07:05:33.000Z">
-<meta property="article:modified_time" content="2024-05-01T05:08:53.431Z">
+<meta property="article:modified_time" content="2024-08-28T07:26:26.175Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta property="article:tag" content="JavaScript">
 <meta property="article:tag" content="Node.js">
@@ -125,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">28</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">29</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-01 13:08:53" itemprop="dateModified" datetime="2024-05-01T13:08:53+08:00">2024-05-01</time>
+                <time title="修改时间：2024-08-28 15:26:26" itemprop="dateModified" datetime="2024-08-28T15:26:26+08:00">2024-08-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,14 +253,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>684</span>
+              <span>812</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -293,7 +293,8 @@
 <p>之所以在<code>updateHostConfigs(config)</code>和<code>getHostConfigs()</code>里都重新获取日期重构路径，是为了防止长期挂载脚本时，新一天内容写到旧一天文件去，<br>最后导出模块，方便其他脚本使用：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    updateHostConfigs,</span><br><span class="line">    getHostConfigs</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-
+<h2 id="更新日志"><a href="#更新日志" class="headerlink" title="更新日志"></a>更新日志</h2><p>同步写入会出错，使用<code>const fsSync = require(&#39;fs&#39;).promises; </code>进行异步写入操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line">const fs = require(&#x27;fs&#x27;);</span><br><span class="line">const fsSync = require(&#x27;fs&#x27;).promises; </span><br><span class="line"></span><br><span class="line">const fileLocks = new Set();</span><br><span class="line"></span><br><span class="line">async function updateHostConfigs(config) &#123;</span><br><span class="line">    if (fileLocks.has(config.host)) &#123;</span><br><span class="line">        console.log(&#x27;配置正在写入，请稍后再试&#x27;);</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">    fileLocks.add(config.host);</span><br><span class="line">    const date = getDate();</span><br><span class="line">    const folderPath = path.resolve(__dirname, &#x27;storeConfigs&#x27;, `$&#123;date.year&#125;`, `$&#123;date.month&#125;`);</span><br><span class="line">    const aFilePath = path.resolve(folderPath, `$&#123;date.day&#125;`);</span><br><span class="line"></span><br><span class="line">    try &#123;</span><br><span class="line">        let hostConfigs = getHostConfigs(date);</span><br><span class="line">        if (!hostConfigs) &#123;</span><br><span class="line">            hostConfigs = &#123; count: 0 &#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        if (config.host) &#123;</span><br><span class="line">            hostConfigs[config.host] = config;</span><br><span class="line">            hostConfigs.count++;</span><br><span class="line">        &#125;</span><br><span class="line">        await fsSync.writeFile(aFilePath, JSON.stringify(hostConfigs));</span><br><span class="line">        console.log(`ID$&#123;date.day&#125;_$&#123;hostConfigs.count&#125; 配置已写入..`);</span><br><span class="line">        return true;</span><br><span class="line">    &#125; catch (error) &#123;</span><br><span class="line">        console.error(&#x27;写入出错:&#x27;, error);</span><br><span class="line">        return false;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        fileLocks.delete(config.host); // 解锁</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     </div>
 
     <div>
@@ -433,7 +434,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">读取配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">读取配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><span class="nav-number">3.</span> <span class="nav-text">更新日志</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -451,7 +452,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -575,7 +576,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:19</span>
+    <span title="站点阅读时长">1:21</span>
 </div>
 
 <div>
