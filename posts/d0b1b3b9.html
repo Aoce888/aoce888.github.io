@@ -20,15 +20,19 @@
     var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Crf&#39;s Blog">
-<meta property="og:url" content="https://aoce888.github.io/tags/%E5%BF%85%E5%A4%87%E6%8A%80%E8%83%BD/index.html">
+  <meta name="description" content="安装 MySQL 数据库，可以按照以下步骤进行：配置 MySQL 源首先，需要添加 MySQL 的 Yum 源，确保安装的是最新版本的 MySQL。 12sudo wget https:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql80-community-release-el7-3.noarch.rpmsudo rpm -ivh mysql80-community-release-el7-3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux安装配置MySQL">
+<meta property="og:url" content="https://aoce888.github.io/posts/d0b1b3b9.html">
 <meta property="og:site_name" content="Crf&#39;s Blog">
+<meta property="og:description" content="安装 MySQL 数据库，可以按照以下步骤进行：配置 MySQL 源首先，需要添加 MySQL 的 Yum 源，确保安装的是最新版本的 MySQL。 12sudo wget https:&#x2F;&#x2F;dev.mysql.com&#x2F;get&#x2F;mysql80-community-release-el7-3.noarch.rpmsudo rpm -ivh mysql80-community-release-el7-3">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-03-05T10:03:28.000Z">
+<meta property="article:modified_time" content="2025-03-05T10:16:59.758Z">
 <meta property="article:author" content="Crf&#39;s Blog">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://aoce888.github.io/tags/%E5%BF%85%E5%A4%87%E6%8A%80%E8%83%BD/">
+<link rel="canonical" href="https://aoce888.github.io/posts/d0b1b3b9.html">
 
 
 <script id="page-configurations">
@@ -36,12 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: 必备技能 | Crf's Blog</title>
+  <title>Linux安装配置MySQL | Crf's Blog</title>
   
 
 
@@ -183,51 +187,189 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">必备技能
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/d0b1b3b9.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux安装配置MySQL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-03-05 18:03:28 / 修改时间：18:16:59" itemprop="dateCreated datePublished" datetime="2025-03-05T18:03:28+08:00">2025-03-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>348</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
+        <h1 id="安装-MySQL-数据库，可以按照以下步骤进行："><a href="#安装-MySQL-数据库，可以按照以下步骤进行：" class="headerlink" title="安装 MySQL 数据库，可以按照以下步骤进行："></a>安装 MySQL 数据库，可以按照以下步骤进行：</h1><h2 id="配置-MySQL-源"><a href="#配置-MySQL-源" class="headerlink" title="配置 MySQL 源"></a>配置 MySQL 源</h2><p>首先，需要添加 MySQL 的 Yum 源，确保安装的是最新版本的 MySQL。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line">sudo rpm -ivh mysql80-community-release-el7-3.noarch.rpm</span><br></pre></td></tr></table></figure>
+<h2 id="安装-MySQL-Server"><a href="#安装-MySQL-Server" class="headerlink" title="安装 MySQL Server"></a>安装 MySQL Server</h2><p>安装 MySQL Server：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install mysql-community-server</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动-MySQL-服务"><a href="#启动-MySQL-服务" class="headerlink" title="启动 MySQL 服务"></a>启动 MySQL 服务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl start mysqld</span><br><span class="line"></span><br><span class="line"># 开机自启</span><br><span class="line">sudo systemctl enable mysqld</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用方式"><a href="#使用方式" class="headerlink" title="使用方式"></a>使用方式</h2><h3 id="获取-MySQL-临时-root-密码"><a href="#获取-MySQL-临时-root-密码" class="headerlink" title="获取 MySQL 临时 root 密码"></a>获取 MySQL 临时 root 密码</h3><p>在 MySQL 安装过程中，会生成一个临时的 root 密码，查看日志文件来获取它：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grep &#x27;temporary password&#x27; /var/log/mysqld.log</span><br></pre></td></tr></table></figure>
+<p>这将输出类似如下的临时密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2025-03-05T09:40:27.489070Z 1 [Note] A temporary password is generated for root@localhost: abc123xyz</span><br></pre></td></tr></table></figure>
+<p>记下临时密码（例如 abc123xyz）。</p>
+<span id="more"></span>
+
+<h3 id="安全配置-MySQL"><a href="#安全配置-MySQL" class="headerlink" title="安全配置 MySQL"></a>安全配置 MySQL</h3><p>使用临时的 root 密码进行登录并运行 MySQL 安全配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>在此过程中，您将被要求输入临时的 root 密码，之后您可以设置一个新的 root 密码，移除匿名用户，禁用远程 root 登录等。</p>
+<p>如果您已经设置了 root 密码，并且登录成功，您将看到类似如下的信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 7</span><br><span class="line">Server version: 8.0.41 MySQL Community Server - GPL</span><br></pre></td></tr></table></figure>
+
+<h3 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他常用操作"><a href="#其他常用操作" class="headerlink" title="其他常用操作"></a>其他常用操作</h2><p>查看所有数据库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW DATABASES;</span><br></pre></td></tr></table></figure>
+<p>选择一个数据库 db_name：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE db_name;</span><br></pre></td></tr></table></figure>
+
+<p>查看当前数据库中的所有表：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES;</span><br></pre></td></tr></table></figure>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-05-18T19:03:30+08:00"
-              content="2023-05-18">
-          05-18
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/d4c9a351.html" itemprop="url">
-            <span itemprop="name">Hexo写作必备技能</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
     </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Crf's Blog 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/paypal.png" alt="Crf's Blog 微信">
+        <p>微信</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/bitcoin.png" alt="Crf's Blog BTC">
+        <p>BTC</p>
+      </div>
+
   </div>
-  
-  
-  
+</div>
 
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Crf's Blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://aoce888.github.io/posts/d0b1b3b9.html" title="Linux安装配置MySQL">https://aoce888.github.io/posts/d0b1b3b9.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/c241a006.html" rel="prev" title="googletags广告点击的监听方法">
+      <i class="fa fa-chevron-left"></i> googletags广告点击的监听方法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+
+      </footer>
+    
+  </article>
+  
+  
   
 
 
@@ -280,6 +422,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-MySQL-%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%8C%89%E7%85%A7%E4%BB%A5%E4%B8%8B%E6%AD%A5%E9%AA%A4%E8%BF%9B%E8%A1%8C%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">安装 MySQL 数据库，可以按照以下步骤进行：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-MySQL-%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">配置 MySQL 源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-MySQL-Server"><span class="nav-number">1.2.</span> <span class="nav-text">安装 MySQL Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8-MySQL-%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.</span> <span class="nav-text">启动 MySQL 服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">使用方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-MySQL-%E4%B8%B4%E6%97%B6-root-%E5%AF%86%E7%A0%81"><span class="nav-number">1.4.1.</span> <span class="nav-text">获取 MySQL 临时 root 密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE-MySQL"><span class="nav-number">1.4.2.</span> <span class="nav-text">安全配置 MySQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BB%E5%BD%95"><span class="nav-number">1.4.3.</span> <span class="nav-text">登录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.</span> <span class="nav-text">其他常用操作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
