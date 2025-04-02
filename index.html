@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">33</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">10</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -301,6 +301,119 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/79abcea4.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/79abcea4.html" class="post-title-link" itemprop="url">模板多语言升级</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-04-02 11:29:17 / 修改时间：11:39:12" itemprop="dateCreated datePublished" datetime="2025-04-02T11:29:17+08:00">2025-04-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/h5-template/" itemprop="url" rel="index"><span itemprop="name">h5-template</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>386</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="升级思路"><a href="#升级思路" class="headerlink" title="升级思路"></a>升级思路</h2><ul>
+<li><p>针对游戏数据引入多语言json, 以原 id 为索引，存储 <code>name</code>、<code>category</code>、<code>instructions</code> 翻译内容。</p>
+</li>
+<li><p>在每个模板内创建 <code>content.js</code>存放特定词组的多语言数据，统一放<code>common.js</code> 同路径。</p>
+</li>
+</ul>
+<h3 id="json放置路径（暂定不动）"><a href="#json放置路径（暂定不动）" class="headerlink" title="json放置路径（暂定不动）"></a>json放置路径（暂定不动）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">util/</span><br><span class="line">├── language/</span><br><span class="line">│   ├── en.json   # 默认en,仅参照用</span><br><span class="line">│   ├── es.json   # 西班牙语</span><br><span class="line">│   ├── fr.json   # 法语</span><br><span class="line">│   └── de.json   # 德语</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义脚本"><a href="#自定义脚本" class="headerlink" title="自定义脚本"></a>自定义脚本</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//示例</span><br><span class="line">export const ct_recommend = &#123;</span><br><span class="line">  en: `Recommend For You`,</span><br><span class="line">  fr: `Recommandé pour vous`,</span><br><span class="line">  de: `Empfohlen für dich`,</span><br><span class="line">  es: `Recomendado para ti`</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新操作"><a href="#更新操作" class="headerlink" title="更新操作"></a>更新操作</h2><h3 id="获取语言"><a href="#获取语言" class="headerlink" title="获取语言"></a>获取语言</h3><p>通过<code>util.getLanguage()</code> 检索当前是否需要翻译，得到 <code>en</code>、<code>es</code>、<code>de</code> 和 <code>fr</code> 四种语言之一，默认为<code>en</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> language = util.<span class="title function_">getLanguage</span>();  <span class="comment">// 获取到语言分4种: en, es, de, fr</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="加载语言包"><a href="#加载语言包" class="headerlink" title="加载语言包"></a>加载语言包</h3><p>若<code>language</code>为非默认<code>en</code>后，调用<code>GAME_DATA.loadTranslations(language)</code> 加载一次对应语言的 JSON 数据，并在成功后更新页面内容。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> cachedTranslations = &#123;&#125;; <span class="comment">//储载入后的语言内容</span></span><br><span class="line"><span class="keyword">if</span> (language !== <span class="string">&#x27;en&#x27;</span>) &#123;</span><br><span class="line">  <span class="variable constant_">GAME_DATA</span>.<span class="title function_">loadTranslations</span>(language)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">translations</span> =&gt;</span> &#123;</span><br><span class="line">      cachedTranslations = translations;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;读取到数据&#x27;</span>, cachedTranslations);</span><br><span class="line"></span><br><span class="line">      <span class="title function_">updateLanguage</span>(); <span class="comment">//进行更新</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;加载语言包失败:&#x27;</span>, error);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新页面"><a href="#更新页面" class="headerlink" title="更新页面"></a>更新页面</h3><p>在 <code>HTML</code>元素或<code>js</code>定义元素时用类似 <code>language-update-gameItem</code> 等标记需翻译元素，在<code>updateLanguage()</code>找到对应元素更新。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">updateLanguage</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> games = cachedTranslations.<span class="property">games</span>;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.language-update-gameItem&#x27;</span>).<span class="title function_">forEach</span>(<span class="function"><span class="params">gameItem</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> gameId = gameItem.<span class="title function_">getAttribute</span>(<span class="string">&#x27;data-game-id&#x27;</span>); <span class="comment">// 获取游戏ID</span></span><br><span class="line">      <span class="keyword">let</span> translatedGame = games[gameId]; <span class="comment">// 获取该游戏的翻译数据</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (translatedGame) &#123;</span><br><span class="line">        <span class="title function_">safeUpdateText</span>(gameItem.<span class="title function_">querySelector</span>(<span class="string">&#x27;.game-name&#x27;</span>), translatedGame.<span class="property">name</span>);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;更新语言失败:&#x27;</span>, error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="页底文章嵌入路径"><a href="#页底文章嵌入路径" class="headerlink" title="页底文章嵌入路径"></a>页底文章嵌入路径</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;util.getStatementsWithName(`introPage/$&#123;language&#125;/index`)</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h2 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h2><ol>
+<li><strong>获取当前语言</strong> → <code>util.getLanguage()</code></li>
+<li><strong>加载语言包</strong> → <code>GAME_DATA.loadTranslations(language)</code></li>
+<li><strong>更新页面文本</strong> → <code>updateLanguage()</code></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/a974af89.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -326,7 +439,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-03-13 11:45:34 / 修改时间：11:49:38" itemprop="dateCreated datePublished" datetime="2025-03-13T11:45:34+08:00">2025-03-13</time>
+              <time title="创建时间：2025-03-13 11:45:34 / 修改时间：11:49:40" itemprop="dateCreated datePublished" datetime="2025-03-13T11:45:34+08:00">2025-03-13</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1087,110 +1200,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/cd7a0fd3.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.gif">
-      <meta itemprop="name" content="Crf's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Crf's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/cd7a0fd3.html" class="post-title-link" itemprop="url">Node.js中fs模块实现配置文件的读写</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-24 15:05:33" itemprop="dateCreated datePublished" datetime="2024-04-24T15:05:33+08:00">2024-04-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-28 15:26:26" itemprop="dateModified" datetime="2024-08-28T15:26:26+08:00">2024-08-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">数据处理</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>812</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在Node.js中，<code>fs</code>模块提供了对文件系统的访问功能，我们可以利用它来实现配置文件的读取和写入操作。正好用到，就记录一下。</p>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>确保你的项目目录已经安装了做了<code>npm</code>或<code>pnpm</code>或<code>yarn</code>等node相关初始化，存在<code>node_modules</code>文件夹，这样就可以使用<code>fs</code>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const fs = require(&#x27;fs&#x27;);</span><br></pre></td></tr></table></figure>
-
-<p>接下来就是定义路径，我是用到年月来定义路径，并放在当前路径的<code>storeConfigs</code>下:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line">const date = getDate();</span><br><span class="line"></span><br><span class="line">// 文件夹路径 ./storeConfigs/$&#123;date.year&#125;/$&#123;date.month&#125;</span><br><span class="line">const folderPath = path.resolve(__dirname, &#x27;storeConfigs&#x27;, `$&#123;date.year&#125;`, `$&#123;date.month&#125;`);</span><br><span class="line"></span><br><span class="line">// 用date.day来定义文件名  ./storeConfigs/$&#123;date.year&#125;/$&#123;date.month&#125;/$&#123;date.day&#125;</span><br><span class="line">const aFilePath = path.resolve(folderPath, `$&#123;date.day&#125;`);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 获取当前日期</span><br><span class="line">function getDate() &#123;</span><br><span class="line">    const currentDate = new Date();</span><br><span class="line">    const year = currentDate.getFullYear();</span><br><span class="line">    const month = currentDate.getMonth() + 1;</span><br><span class="line">    const day = currentDate.getDate();</span><br><span class="line">    return &#123; year: year, month: month, day: day &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/cd7a0fd3.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1264,14 +1273,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -1391,7 +1400,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:27</span>
+    <span title="站点阅读时长">1:28</span>
 </div>
 
 <div>

@@ -78,6 +78,46 @@
       </tags>
   </entry>
   <entry>
+    <title>模板多语言升级</title>
+    <url>/posts/79abcea4.html</url>
+    <content><![CDATA[<h2 id="升级思路"><a href="#升级思路" class="headerlink" title="升级思路"></a>升级思路</h2><ul>
+<li><p>针对游戏数据引入多语言json, 以原 id 为索引，存储 <code>name</code>、<code>category</code>、<code>instructions</code> 翻译内容。</p>
+</li>
+<li><p>在每个模板内创建 <code>content.js</code>存放特定词组的多语言数据，统一放<code>common.js</code> 同路径。</p>
+</li>
+</ul>
+<h3 id="json放置路径（暂定不动）"><a href="#json放置路径（暂定不动）" class="headerlink" title="json放置路径（暂定不动）"></a>json放置路径（暂定不动）</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">util/</span><br><span class="line">├── language/</span><br><span class="line">│   ├── en.json   # 默认en,仅参照用</span><br><span class="line">│   ├── es.json   # 西班牙语</span><br><span class="line">│   ├── fr.json   # 法语</span><br><span class="line">│   └── de.json   # 德语</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义脚本"><a href="#自定义脚本" class="headerlink" title="自定义脚本"></a>自定义脚本</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//示例</span><br><span class="line">export const ct_recommend = &#123;</span><br><span class="line">  en: `Recommend For You`,</span><br><span class="line">  fr: `Recommandé pour vous`,</span><br><span class="line">  de: `Empfohlen für dich`,</span><br><span class="line">  es: `Recomendado para ti`</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="更新操作"><a href="#更新操作" class="headerlink" title="更新操作"></a>更新操作</h2><h3 id="获取语言"><a href="#获取语言" class="headerlink" title="获取语言"></a>获取语言</h3><p>通过<code>util.getLanguage()</code> 检索当前是否需要翻译，得到 <code>en</code>、<code>es</code>、<code>de</code> 和 <code>fr</code> 四种语言之一，默认为<code>en</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> language = util.<span class="title function_">getLanguage</span>();  <span class="comment">// 获取到语言分4种: en, es, de, fr</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="加载语言包"><a href="#加载语言包" class="headerlink" title="加载语言包"></a>加载语言包</h3><p>若<code>language</code>为非默认<code>en</code>后，调用<code>GAME_DATA.loadTranslations(language)</code> 加载一次对应语言的 JSON 数据，并在成功后更新页面内容。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> cachedTranslations = &#123;&#125;; <span class="comment">//储载入后的语言内容</span></span><br><span class="line"><span class="keyword">if</span> (language !== <span class="string">&#x27;en&#x27;</span>) &#123;</span><br><span class="line">  <span class="variable constant_">GAME_DATA</span>.<span class="title function_">loadTranslations</span>(language)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">translations</span> =&gt;</span> &#123;</span><br><span class="line">      cachedTranslations = translations;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;读取到数据&#x27;</span>, cachedTranslations);</span><br><span class="line"></span><br><span class="line">      <span class="title function_">updateLanguage</span>(); <span class="comment">//进行更新</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function"><span class="params">error</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;加载语言包失败:&#x27;</span>, error);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更新页面"><a href="#更新页面" class="headerlink" title="更新页面"></a>更新页面</h3><p>在 <code>HTML</code>元素或<code>js</code>定义元素时用类似 <code>language-update-gameItem</code> 等标记需翻译元素，在<code>updateLanguage()</code>找到对应元素更新。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">updateLanguage</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> games = cachedTranslations.<span class="property">games</span>;</span><br><span class="line">    <span class="variable language_">document</span>.<span class="title function_">querySelectorAll</span>(<span class="string">&#x27;.language-update-gameItem&#x27;</span>).<span class="title function_">forEach</span>(<span class="function"><span class="params">gameItem</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> gameId = gameItem.<span class="title function_">getAttribute</span>(<span class="string">&#x27;data-game-id&#x27;</span>); <span class="comment">// 获取游戏ID</span></span><br><span class="line">      <span class="keyword">let</span> translatedGame = games[gameId]; <span class="comment">// 获取该游戏的翻译数据</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (translatedGame) &#123;</span><br><span class="line">        <span class="title function_">safeUpdateText</span>(gameItem.<span class="title function_">querySelector</span>(<span class="string">&#x27;.game-name&#x27;</span>), translatedGame.<span class="property">name</span>);</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;更新语言失败:&#x27;</span>, error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="页底文章嵌入路径"><a href="#页底文章嵌入路径" class="headerlink" title="页底文章嵌入路径"></a>页底文章嵌入路径</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$&#123;util.getStatementsWithName(`introPage/$&#123;language&#125;/index`)</span><br></pre></td></tr></table></figure>
+
+<br/>
+
+<h2 id="概括"><a href="#概括" class="headerlink" title="概括"></a>概括</h2><ol>
+<li><strong>获取当前语言</strong> → <code>util.getLanguage()</code></li>
+<li><strong>加载语言包</strong> → <code>GAME_DATA.loadTranslations(language)</code></li>
+<li><strong>更新页面文本</strong> → <code>updateLanguage()</code></li>
+</ol>
+]]></content>
+      <categories>
+        <category>h5-template</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+        <tag>JSON</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>html置入链接请求的多种方法</title>
     <url>/posts/a974af89.html</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
