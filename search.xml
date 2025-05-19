@@ -81,9 +81,7 @@
     <title>H5自建模板版位数</title>
     <url>/posts/cfbf79bc.html</url>
     <content><![CDATA[<style>
-   body {
-    background-color: black; 
-  }
+  
 
   table {
     border-collapse: collapse;
