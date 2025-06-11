@@ -78,6 +78,189 @@
       </tags>
   </entry>
   <entry>
+    <title>H5服务端升级MySQL记录</title>
+    <url>/posts/d0b1b3b9.html</url>
+    <content><![CDATA[<h2 id="模型定义"><a href="#模型定义" class="headerlink" title="模型定义"></a>模型定义</h2><h1 id="DeployTask-表结构"><a href="#DeployTask-表结构" class="headerlink" title="DeployTask 表结构"></a>DeployTask 表结构</h1><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT UNSIGNED</td>
+<td>自增主键，TaskLogs索引ID</td>
+<td>否</td>
+<td>自增</td>
+<td></td>
+</tr>
+<tr>
+<td>host</td>
+<td>VARCHAR(255)</td>
+<td>网站域名</td>
+<td>否</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>template</td>
+<td>VARCHAR(255)</td>
+<td>模板名</td>
+<td>否</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dirpath</td>
+<td>VARCHAR(255)</td>
+<td>路径</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>config</td>
+<td>LONGTEXT</td>
+<td>配置（TEXT LONG）</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>tasktag</td>
+<td>INT</td>
+<td>任务类型</td>
+<td>否</td>
+<td>1</td>
+<td>见 TASK_TAG</td>
+</tr>
+<tr>
+<td>status</td>
+<td>INT</td>
+<td>任务状态</td>
+<td>否</td>
+<td>1111</td>
+<td>见 DEPLOY_STATUS</td>
+</tr>
+<tr>
+<td>requestAt</td>
+<td>DATETIME</td>
+<td>任务请求时间</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const TASK_TAG = &#123;</span><br><span class="line">  NEW: 0, //准备 新建/取消推送</span><br><span class="line">  PUSH: 1, //推送</span><br><span class="line">  ADD_AD: 2, //添加广告</span><br><span class="line">  REMOVE_AD: 3, //移除广告</span><br><span class="line">  DESTROY: 4, //销毁站点</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const DEPLOY_STATUS = &#123;</span><br><span class="line">  PRIORITY: 0,  //优先</span><br><span class="line">  PENDING: 1111, //排队 </span><br><span class="line">  IN_PROGRESS: 8888,  //执行中</span><br><span class="line">  DONE: 9999,  //完成</span><br><span class="line">  FAILED: -1, //失败</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>索引：</strong></p>
+<ul>
+<li>联合索引: <code>host</code>, <code>dirpath</code></li>
+</ul>
+<h2 id="TaskLogs-表结构"><a href="#TaskLogs-表结构" class="headerlink" title="TaskLogs 表结构"></a>TaskLogs 表结构</h2><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>taskid</td>
+<td>STRING</td>
+<td>日志ID</td>
+<td>是</td>
+<td>NULL</td>
+<td>唯一索引</td>
+</tr>
+<tr>
+<td>hostid</td>
+<td>STRING</td>
+<td></td>
+<td>否</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>template</td>
+<td>STRING</td>
+<td></td>
+<td>否</td>
+<td></td>
+<td>记录 task.tasktag</td>
+</tr>
+<tr>
+<td>tasktag</td>
+<td>STRING</td>
+<td>任务请求时间</td>
+<td>是</td>
+<td>NULL</td>
+<td>记录 task.tasktag</td>
+</tr>
+<tr>
+<td>status</td>
+<td>INT</td>
+<td>任务状态</td>
+<td>否</td>
+<td>1111</td>
+<td>见 task.status</td>
+</tr>
+<tr>
+<td>requestAt</td>
+<td>DATETIME</td>
+<td>任务请求时间</td>
+<td>是</td>
+<td>NULL</td>
+<td>记录 task.rerequestAt</td>
+</tr>
+<tr>
+<td>startedAt</td>
+<td>DATETIME</td>
+<td>执行开始时间</td>
+<td>否</td>
+<td>当前时间</td>
+<td></td>
+</tr>
+<tr>
+<td>finishedTimes</td>
+<td>DATETIME</td>
+<td>执行完成时间（统计）</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>result</td>
+<td>INT</td>
+<td>执行结果状态</td>
+<td>是</td>
+<td>NULL</td>
+<td>记录执行结果等</td>
+</tr>
+</tbody></table>
+<p><strong>说明：</strong><br>DeployTask记录请求任务 复制更新状态<br>TaskLogs 每次执行记录TaskLogs 通过 hostid 索引DeployTask最新站点信息配置</p>
+<p><strong>索引：</strong></p>
+<ul>
+<li>联合唯一索引: <code>host</code>, <code>dirpath</code></li>
+</ul>
+<h2 id="项目配置MySQL"><a href="#项目配置MySQL" class="headerlink" title="项目配置MySQL"></a>项目配置MySQL</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add mysql2</span><br><span class="line">yarn add sequelize</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>Linux服务器</tag>
+        <tag>MySQL</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>H5自建模板版位数</title>
     <url>/posts/cfbf79bc.html</url>
     <content><![CDATA[<!-- <style>
@@ -291,7 +474,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td>a41</td>
+<td>a39</td>
 <td>41_morning_DL25311</td>
 <td>4</td>
 <td>2</td>
@@ -312,28 +495,28 @@
 <td>1</td>
 </tr>
 <tr>
-<td>a45</td>
+<td>a42</td>
 <td>41_airport_DL25522</td>
 <td>3</td>
 <td>2</td>
 <td>2</td>
 </tr>
 <tr>
-<td>a42</td>
+<td>a43</td>
 <td>42_TimeTools</td>
 <td>2</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr>
-<td>a43</td>
+<td>a44</td>
 <td>43_problem_250506</td>
 <td>4</td>
 <td>2</td>
 <td>1</td>
 </tr>
 <tr>
-<td>a44</td>
+<td>a45</td>
 <td>44_meeting_250519</td>
 <td>4</td>
 <td>2</td>
@@ -641,31 +824,31 @@
 </tr>
 <tr>
 <td>a42</td>
+<td>41_airport_DL25522</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>a43</td>
 <td>42_TimeTools</td>
 <td>2</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr>
-<td>a43</td>
+<td>a44</td>
 <td>43_problem_250506</td>
 <td>4</td>
 <td>2</td>
 <td>1</td>
 </tr>
 <tr>
-<td>a44</td>
+<td>a45</td>
 <td>44_meeting_250519</td>
 <td>4</td>
 <td>2</td>
 <td>1</td>
-</tr>
-<tr>
-<td>a45</td>
-<td>41_airport_DL25522</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
 </tr>
 </tbody></table>
 ]]></content>

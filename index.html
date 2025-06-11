@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -127,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">36</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">37</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -301,6 +301,268 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/d0b1b3b9.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/d0b1b3b9.html" class="post-title-link" itemprop="url">H5服务端升级MySQL记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-06-06 09:52:35" itemprop="dateCreated datePublished" datetime="2025-06-06T09:52:35+08:00">2025-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-06-11 09:52:57" itemprop="dateModified" datetime="2025-06-11T09:52:57+08:00">2025-06-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>337</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="模型定义"><a href="#模型定义" class="headerlink" title="模型定义"></a>模型定义</h2><h1 id="DeployTask-表结构"><a href="#DeployTask-表结构" class="headerlink" title="DeployTask 表结构"></a>DeployTask 表结构</h1><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>BIGINT UNSIGNED</td>
+<td>自增主键，TaskLogs索引ID</td>
+<td>否</td>
+<td>自增</td>
+<td></td>
+</tr>
+<tr>
+<td>host</td>
+<td>VARCHAR(255)</td>
+<td>网站域名</td>
+<td>否</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>template</td>
+<td>VARCHAR(255)</td>
+<td>模板名</td>
+<td>否</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>dirpath</td>
+<td>VARCHAR(255)</td>
+<td>路径</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>config</td>
+<td>LONGTEXT</td>
+<td>配置（TEXT LONG）</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>tasktag</td>
+<td>INT</td>
+<td>任务类型</td>
+<td>否</td>
+<td>1</td>
+<td>见 TASK_TAG</td>
+</tr>
+<tr>
+<td>status</td>
+<td>INT</td>
+<td>任务状态</td>
+<td>否</td>
+<td>1111</td>
+<td>见 DEPLOY_STATUS</td>
+</tr>
+<tr>
+<td>requestAt</td>
+<td>DATETIME</td>
+<td>任务请求时间</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">const TASK_TAG = &#123;</span><br><span class="line">  NEW: 0, //准备 新建/取消推送</span><br><span class="line">  PUSH: 1, //推送</span><br><span class="line">  ADD_AD: 2, //添加广告</span><br><span class="line">  REMOVE_AD: 3, //移除广告</span><br><span class="line">  DESTROY: 4, //销毁站点</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const DEPLOY_STATUS = &#123;</span><br><span class="line">  PRIORITY: 0,  //优先</span><br><span class="line">  PENDING: 1111, //排队 </span><br><span class="line">  IN_PROGRESS: 8888,  //执行中</span><br><span class="line">  DONE: 9999,  //完成</span><br><span class="line">  FAILED: -1, //失败</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>索引：</strong></p>
+<ul>
+<li>联合索引: <code>host</code>, <code>dirpath</code></li>
+</ul>
+<h2 id="TaskLogs-表结构"><a href="#TaskLogs-表结构" class="headerlink" title="TaskLogs 表结构"></a>TaskLogs 表结构</h2><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>说明</th>
+<th>允许空</th>
+<th>默认值</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>taskid</td>
+<td>STRING</td>
+<td>日志ID</td>
+<td>是</td>
+<td>NULL</td>
+<td>唯一索引</td>
+</tr>
+<tr>
+<td>hostid</td>
+<td>STRING</td>
+<td></td>
+<td>否</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>template</td>
+<td>STRING</td>
+<td></td>
+<td>否</td>
+<td></td>
+<td>记录 task.tasktag</td>
+</tr>
+<tr>
+<td>tasktag</td>
+<td>STRING</td>
+<td>任务请求时间</td>
+<td>是</td>
+<td>NULL</td>
+<td>记录 task.tasktag</td>
+</tr>
+<tr>
+<td>status</td>
+<td>INT</td>
+<td>任务状态</td>
+<td>否</td>
+<td>1111</td>
+<td>见 task.status</td>
+</tr>
+<tr>
+<td>requestAt</td>
+<td>DATETIME</td>
+<td>任务请求时间</td>
+<td>是</td>
+<td>NULL</td>
+<td>记录 task.rerequestAt</td>
+</tr>
+<tr>
+<td>startedAt</td>
+<td>DATETIME</td>
+<td>执行开始时间</td>
+<td>否</td>
+<td>当前时间</td>
+<td></td>
+</tr>
+<tr>
+<td>finishedTimes</td>
+<td>DATETIME</td>
+<td>执行完成时间（统计）</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
+<tr>
+<td>result</td>
+<td>INT</td>
+<td>执行结果状态</td>
+<td>是</td>
+<td>NULL</td>
+<td>记录执行结果等</td>
+</tr>
+</tbody></table>
+<p><strong>说明：</strong><br>DeployTask记录请求任务 复制更新状态<br>TaskLogs 每次执行记录TaskLogs 通过 hostid 索引DeployTask最新站点信息配置</p>
+<p><strong>索引：</strong></p>
+<ul>
+<li>联合唯一索引: <code>host</code>, <code>dirpath</code></li>
+</ul>
+<h2 id="项目配置MySQL"><a href="#项目配置MySQL" class="headerlink" title="项目配置MySQL"></a>项目配置MySQL</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add mysql2</span><br><span class="line">yarn add sequelize</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/cfbf79bc.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -332,7 +594,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-06-04 10:39:04" itemprop="dateModified" datetime="2025-06-04T10:39:04+08:00">2025-06-04</time>
+                <time title="修改时间：2025-06-04 10:42:32" itemprop="dateModified" datetime="2025-06-04T10:42:32+08:00">2025-06-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -580,7 +842,7 @@
 <td>1</td>
 </tr>
 <tr>
-<td>a41</td>
+<td>a39</td>
 <td>41_morning_DL25311</td>
 <td>4</td>
 <td>2</td>
@@ -601,28 +863,28 @@
 <td>1</td>
 </tr>
 <tr>
-<td>a45</td>
+<td>a42</td>
 <td>41_airport_DL25522</td>
 <td>3</td>
 <td>2</td>
 <td>2</td>
 </tr>
 <tr>
-<td>a42</td>
+<td>a43</td>
 <td>42_TimeTools</td>
 <td>2</td>
 <td>0</td>
 <td>0</td>
 </tr>
 <tr>
-<td>a43</td>
+<td>a44</td>
 <td>43_problem_250506</td>
 <td>4</td>
 <td>2</td>
 <td>1</td>
 </tr>
 <tr>
-<td>a44</td>
+<td>a45</td>
 <td>44_meeting_250519</td>
 <td>4</td>
 <td>2</td>
@@ -1358,117 +1620,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/b7eb4310.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.gif">
-      <meta itemprop="name" content="Crf's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Crf's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/b7eb4310.html" class="post-title-link" itemprop="url">ECS服务器成长笔记</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-07-01 14:13:04" itemprop="dateCreated datePublished" datetime="2024-07-01T14:13:04+08:00">2024-07-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-23 14:28:39" itemprop="dateModified" datetime="2024-08-23T14:28:39+08:00">2024-08-23</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>815</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="ECS服务配置"><a href="#ECS服务配置" class="headerlink" title="ECS服务配置"></a>ECS服务配置</h2><p>服务器配置：<br>i-7xvatqiyl3pikzz7pz2t运行中（2核(vCPU) 2GiB） AliyunLinux</p>
-<h3 id="添加私钥"><a href="#添加私钥" class="headerlink" title="添加私钥"></a>添加私钥</h3><p>在本地电脑使用以下命令查看并公钥内容：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-<p>执行以下1或2完成添加公钥操作。<br>1.打开ECS后台远程链接，编辑 authorized_keys 文件：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">编辑 authorized_keys 文件。</span><br></pre></td></tr></table></figure>
-<p>按Esc建输入<code>:wq</code>保存退出。</p>
-<p>附：如果你第一次使用没有正常关闭，执行一下操作</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 尝试使用 ps 命令查看正在运行的 Vim 进程</span><br><span class="line">ps aux | grep vim</span><br></pre></td></tr></table></figure>
-<p>找到相关的 Vim 进程，并使用 kill 命令终止它们。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill -9 &lt;process_id&gt;</span><br></pre></td></tr></table></figure>
-<p>2.登录ECS管理控制台。在左侧导航栏，网络与安全 &gt; 密钥对 &gt; 添加复制出来的公钥内容 命名为test</p>
-<p>在左侧导航栏，选择实例与镜像 &gt; 实例。</p>
-<p>在操作列中，找到购买的ESC实例…&gt; 实例属性 &gt; 绑定密钥对，选择test, 确定重启。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/b7eb4310.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1542,7 +1693,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1555,7 +1706,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1664,12 +1815,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">26k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:33</span>
 </div>
 
 <div>
