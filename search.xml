@@ -155,6 +155,14 @@
 <td>NULL</td>
 <td></td>
 </tr>
+<tr>
+<td>finishedTimes</td>
+<td>DATETIME</td>
+<td>最近更新</td>
+<td>是</td>
+<td>NULL</td>
+<td></td>
+</tr>
 </tbody></table>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const TASK_TAG = &#123;</span><br><span class="line">  NEW: 0, //准备 新建/取消推送</span><br><span class="line">  PUSH: 1, //推送</span><br><span class="line">  ADD_AD: 2, //添加广告</span><br><span class="line">  REMOVE_AD: 3, //移除广告</span><br><span class="line">  DESTROY: 4, //销毁站点</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const DEPLOY_STATUS = &#123;</span><br><span class="line">  PRIORITY: 0,  //优先</span><br><span class="line">  PENDING: 1111, //排队 </span><br><span class="line">  IN_PROGRESS: 8888,  //执行中</span><br><span class="line">  DONE: 9999,  //完成</span><br><span class="line">  FAILED: -1, //失败</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
