@@ -254,7 +254,7 @@
 <td>记录执行结果等</td>
 </tr>
 </tbody></table>
-<p><strong>说明：</strong><br>HostConfigs记录最新请求状态和存储最新配置<br>每次执行时TaskLogs 需要时通过 hostid 索引HostConfigs 获取最新站点信息配置</p>
+<p><strong>说明：</strong><br>HostConfigs记录最新请求状态和存储最新配置<br>每次执行时TaskLogs记录当次推送信息</p>
 <p><strong>索引：</strong></p>
 <ul>
 <li>索引: <code>taskid</code>, 可通过hostid外键索引最新配置</li>
