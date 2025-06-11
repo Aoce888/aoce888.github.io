@@ -332,7 +332,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-06-11 13:55:33" itemprop="dateModified" datetime="2025-06-11T13:55:33+08:00">2025-06-11</time>
+                <time title="修改时间：2025-06-11 13:57:39" itemprop="dateModified" datetime="2025-06-11T13:57:39+08:00">2025-06-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -350,7 +350,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>347</span>
+              <span>354</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -546,7 +546,7 @@
 <p><strong>说明：</strong><br>HostConfigs记录最新请求状态和存储最新配置<br>每次执行时TaskLogs 需要时通过 hostid 索引HostConfigs 获取最新站点信息配置</p>
 <p><strong>索引：</strong></p>
 <ul>
-<li>联合唯一索引: <code>host</code>, <code>dirpath</code></li>
+<li>索引: <code>taskid</code>, 可通过hostid外键索引最新配置</li>
 </ul>
 <!-- ## 项目配置MySQL
 
