@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">36</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -274,6 +274,100 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/8207f50c.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/3d20dc84.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/3d20dc84.html" class="post-title-link" itemprop="url">h5页面集成tiktok事件上报</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-09-05 15:30:44 / 修改时间：15:37:41" itemprop="dateCreated datePublished" datetime="2025-09-05T15:30:44+08:00">2025-09-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>235</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="基础代码"><a href="#基础代码" class="headerlink" title="基础代码"></a>基础代码</h2><p>将<code>&#123;your-pixel-id&#125;</code>替换为实际的TikTok Pixel ID，将以下代码放在网页的<code>&lt;head&gt;&lt;/head&gt;</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- TikTok Pixel Code --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">!<span class="keyword">function</span> (<span class="params">w, d, t</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">  w.<span class="property">TiktokAnalyticsObject</span>=t;<span class="keyword">var</span> ttq=w[t]=w[t]||[];</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="property">methods</span>=[<span class="string">&quot;page&quot;</span>,<span class="string">&quot;track&quot;</span>,<span class="string">&quot;identify&quot;</span>,<span class="string">&quot;instances&quot;</span>,<span class="string">&quot;debug&quot;</span>,<span class="string">&quot;on&quot;</span>,<span class="string">&quot;off&quot;</span>,<span class="string">&quot;once&quot;</span>,<span class="string">&quot;ready&quot;</span>,<span class="string">&quot;alias&quot;</span>,<span class="string">&quot;group&quot;</span>,<span class="string">&quot;enableCookie&quot;</span>];</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="property">setAndDefer</span>=<span class="keyword">function</span>(<span class="params">t,e</span>)&#123;t[e]=<span class="keyword">function</span>(<span class="params"></span>)&#123;t.<span class="title function_">push</span>([e].<span class="title function_">concat</span>(<span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">slice</span>.<span class="title function_">call</span>(<span class="variable language_">arguments</span>,<span class="number">0</span>)))&#125;&#125;; </span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;ttq.<span class="property">methods</span>.<span class="property">length</span>;i++)&#123;ttq.<span class="title function_">setAndDefer</span>(ttq,ttq.<span class="property">methods</span>[i])&#125;</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="property">instance</span>=<span class="keyword">function</span>(<span class="params">t</span>)&#123;<span class="keyword">for</span>(<span class="keyword">var</span> e=ttq.<span class="property">_i</span>[t]||[],n=<span class="number">0</span>;n&lt;ttq.<span class="property">methods</span>.<span class="property">length</span>;n++)ttq.<span class="title function_">setAndDefer</span>(e,ttq.<span class="property">methods</span>[n]);<span class="keyword">return</span> e&#125;;</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="property">load</span>=<span class="keyword">function</span>(<span class="params">e,n</span>)&#123;<span class="keyword">var</span> i=<span class="string">&quot;https://analytics.tiktok.com/i18n/pixel/events.js&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="property">_i</span>=ttq.<span class="property">_i</span>||&#123;&#125;;ttq.<span class="property">_i</span>[e]=[];ttq.<span class="property">_i</span>[e].<span class="property">_u</span>=i;ttq.<span class="property">_t</span>=ttq.<span class="property">_t</span>||&#123;&#125;;ttq.<span class="property">_t</span>[e]=+<span class="keyword">new</span> <span class="title class_">Date</span>;</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="property">_o</span>=ttq.<span class="property">_o</span>||&#123;&#125;;ttq.<span class="property">_o</span>[e]=n||&#123;&#125;;<span class="keyword">var</span> o=<span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;script&quot;</span>);</span></span><br><span class="line"><span class="language-javascript">  o.<span class="property">type</span>=<span class="string">&quot;text/javascript&quot;</span>;o.<span class="property">async</span>=!<span class="number">0</span>;o.<span class="property">src</span>=i;<span class="keyword">var</span> a=<span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&quot;script&quot;</span>)[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript">  a.<span class="property">parentNode</span>.<span class="title function_">insertBefore</span>(o,a)&#125;;</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="title function_">load</span>(<span class="string">&#x27;&#123;your-pixel-id-goes-here&#125;&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  ttq.<span class="title function_">page</span>(); <span class="comment">// 页面浏览事件</span></span></span><br><span class="line"><span class="language-javascript">&#125;(<span class="variable language_">window</span>, <span class="variable language_">document</span>, <span class="string">&#x27;ttq&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- End TikTok Pixel Code --&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/3d20dc84.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1580,101 +1674,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/b044e672.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.gif">
-      <meta itemprop="name" content="Crf's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Crf's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/b044e672.html" class="post-title-link" itemprop="url">h5页面集成fackback事件上报</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-07-11 11:06:49" itemprop="dateCreated datePublished" datetime="2024-07-11T11:06:49+08:00">2024-07-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-08-20 11:37:18" itemprop="dateModified" datetime="2025-08-20T11:37:18+08:00">2025-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>167</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="基础代码"><a href="#基础代码" class="headerlink" title="基础代码"></a>基础代码</h2><p>将<code>&#123;your-pixel-id-goes-here&#125;</code>替换为实际的pixelID,将以下代码放在网页的<code>&lt;head&gt;&lt;/head&gt;</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- Facebook Pixel Code --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  !function(f,b,e,v,n,t,s)</span><br><span class="line">  &#123;if(f.fbq)return;n=f.fbq=function()&#123;n.callMethod?</span><br><span class="line">  n.callMethod.apply(n,arguments):n.queue.push(arguments)&#125;;</span><br><span class="line">  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version=&#x27;2.0&#x27;;</span><br><span class="line">  n.queue=[];t=b.createElement(e);t.async=!0;</span><br><span class="line">  t.src=v;s=b.getElementsByTagName(e)[0];</span><br><span class="line">  s.parentNode.insertBefore(t,s)&#125;(window, document,&#x27;script&#x27;,</span><br><span class="line">  &#x27;https://connect.facebook.net/en_US/fbevents.js&#x27;);</span><br><span class="line">  fbq(&#x27;init&#x27;, &#x27;&#123;your-pixel-id-goes-here&#125;&#x27;);</span><br><span class="line">  fbq(&#x27;track&#x27;, &#x27;PageView&#x27;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;noscript&gt;</span><br><span class="line">  &lt;img height=&quot;1&quot; width=&quot;1&quot; style=&quot;display:none&quot; </span><br><span class="line">       src=&quot;https://www.facebook.com/tr?id=&#123;your-pixel-id-goes-here&#125;&amp;ev=PageView&amp;noscript=1&quot;/&gt;</span><br><span class="line">&lt;/noscript&gt;</span><br><span class="line">&lt;!-- End Facebook Pixel Code --&gt;</span><br></pre></td></tr></table></figure>
-
-<p>如果有其他事件上报，例如<code>ViewContent</code>，在基础代码的<code>fbq(&#39;track&#39;, &#39;PageView&#39;);</code>行后添加该事件上报：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fbq(&#x27;track&#x27;, &#x27;PageView&#x27;);</span><br><span class="line">fbq(&#x27;track&#x27;, &#x27;ViewContent&#x27;); // 新添加的事件</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1748,7 +1747,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">37</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1875,7 +1874,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">1:37</span>
 </div>
 
 <div>
