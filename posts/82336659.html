@@ -20,21 +20,23 @@
     var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前提准备框架地址: Midway-Vue3-SSR 基于 Midway、Vue 3 组装的 SSR 框架简单、易学易用、方便扩展、集成Midway框架，您一直想要的Vue SSR 框架。 使用系统：Windows 安装: 12345678910111213141516171819# 克隆项目git clone https:&#x2F;&#x2F;github.com&#x2F;lqsong&#x2F;midway-vue3-ssr.gi">
+  <meta name="description" content="问题背景记录下在新服务器47.77.199.109遇到的系统版本较低无法安装高版本node的解决方案以及使用指令： 问题报错： 1234# 安装 Node.js 18 时报错error: Failed dependencies:  libstdc++.so.6(GLIBCXX_3.4.20) is needed by nodejs-18.x  GLIBC_2.28 is needed by nod">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Midway-Vue3框架使用笔记">
-<meta property="og:url" content="https://aoce888.github.io/posts/becb1b11.html">
+<meta property="og:title" content="在旧版本服务器上使用 Docker 部署 Node.js">
+<meta property="og:url" content="https://aoce888.github.io/posts/82336659.html">
 <meta property="og:site_name" content="Crf&#39;s Blog">
-<meta property="og:description" content="前提准备框架地址: Midway-Vue3-SSR 基于 Midway、Vue 3 组装的 SSR 框架简单、易学易用、方便扩展、集成Midway框架，您一直想要的Vue SSR 框架。 使用系统：Windows 安装: 12345678910111213141516171819# 克隆项目git clone https:&#x2F;&#x2F;github.com&#x2F;lqsong&#x2F;midway-vue3-ssr.gi">
+<meta property="og:description" content="问题背景记录下在新服务器47.77.199.109遇到的系统版本较低无法安装高版本node的解决方案以及使用指令： 问题报错： 1234# 安装 Node.js 18 时报错error: Failed dependencies:  libstdc++.so.6(GLIBCXX_3.4.20) is needed by nodejs-18.x  GLIBC_2.28 is needed by nod">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-08T10:39:08.000Z">
-<meta property="article:modified_time" content="2025-08-20T03:37:18.686Z">
+<meta property="article:published_time" content="2025-09-28T02:55:43.000Z">
+<meta property="article:modified_time" content="2025-09-28T03:01:30.641Z">
 <meta property="article:author" content="Crf&#39;s Blog">
-<meta property="article:tag" content="Midway">
-<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Linux服务器">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="部署">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://aoce888.github.io/posts/becb1b11.html">
+<link rel="canonical" href="https://aoce888.github.io/posts/82336659.html">
 
 
 <script id="page-configurations">
@@ -47,7 +49,7 @@
   };
 </script>
 
-  <title>Midway-Vue3框架使用笔记 | Crf's Blog</title>
+  <title>在旧版本服务器上使用 Docker 部署 Node.js | Crf's Blog</title>
   
 
 
@@ -196,7 +198,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/becb1b11.html">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/82336659.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/touxiang.gif">
@@ -209,7 +211,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Midway-Vue3框架使用笔记
+          在旧版本服务器上使用 Docker 部署 Node.js
         </h1>
 
         <div class="post-meta">
@@ -218,23 +220,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-03-08 18:39:08" itemprop="dateCreated datePublished" datetime="2024-03-08T18:39:08+08:00">2024-03-08</time>
+              <time title="创建时间：2025-09-28 10:55:43 / 修改时间：11:01:30" itemprop="dateCreated datePublished" datetime="2025-09-28T10:55:43+08:00">2025-09-28</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-08-20 11:37:18" itemprop="dateModified" datetime="2025-08-20T11:37:18+08:00">2025-08-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
                 </span>
             </span>
 
@@ -251,14 +247,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>677</span>
+              <span>787</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -270,42 +266,60 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="前提准备"><a href="#前提准备" class="headerlink" title="前提准备"></a>前提准备</h2><p>框架地址: <a target="_blank" rel="noopener" href="http://midway-vue3-ssr.liqingsong.cc/"><strong>Midway-Vue3-SSR</strong></a></p>
-<p>基于 Midway、Vue 3 组装的 SSR 框架<br>简单、易学易用、方便扩展、集成Midway框架，您一直想要的Vue SSR 框架。</p>
-<p>使用系统：Windows</p>
-<p>安装:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 克隆项目</span><br><span class="line">git clone https://github.com/lqsong/midway-vue3-ssr.git</span><br><span class="line"></span><br><span class="line"># 进入项目目录</span><br><span class="line">cd midway-vue3-ssr</span><br><span class="line"></span><br><span class="line"># 复制文件</span><br><span class="line">copy src/config/config.default.ts  src/config/config.local.ts # 启用或修改里面的参数</span><br><span class="line">copy src/config/config.default.ts  src/config/config.prod.ts # 启用或修改里面的参数</span><br><span class="line">copy web/.env.development  web/.env.development.local # 启用或修改里面的参数</span><br><span class="line"></span><br><span class="line"># 全局安装pnpm：</span><br><span class="line">npm install pnpm -g</span><br><span class="line"></span><br><span class="line"># 安装环境依赖</span><br><span class="line">pnpm i </span><br><span class="line"></span><br><span class="line"># 启动默认项目</span><br><span class="line">pnpm dev</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
+        <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>记录下在新服务器<code>47.77.199.109</code>遇到的系统版本较低无法安装高版本node的解决方案以及使用指令：</p>
+<p><strong>问题报错</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Node.js 18 时报错</span></span><br><span class="line">error: Failed dependencies:</span><br><span class="line">  libstdc++.so.6(GLIBCXX_3.4.20) is needed by nodejs-18.x</span><br><span class="line">  GLIBC_2.28 is needed by nodejs-18.x</span><br></pre></td></tr></table></figure>
 
-<p>设置源:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 查看源</span><br><span class="line">pnpm config get registry </span><br><span class="line"># 切换淘宝源</span><br><span class="line">pnpm config set registry http://registry.npm.taobao.org </span><br></pre></td></tr></table></figure>
+<p>这是由于旧服务器的 <strong>glibc</strong> 和相关依赖过低，导致无法支持高版本 Node.js。</p>
+<hr>
+<h2 id="思路解决"><a href="#思路解决" class="headerlink" title="思路解决"></a>思路解决</h2><p>在不更换或升级操作系统的情况下，解决方法有两个：</p>
+<ol>
+<li><p><strong>手动编译升级依赖</strong><br>但升级 <code>glibc</code> 风险极高，可能导致系统不稳定，生产环境并不推荐。</p>
+</li>
+<li><p><strong>使用 Docker</strong> ✅（推荐）<br>借助 Docker 容器运行高版本 Node.js，避免宿主机依赖问题，同时保持环境隔离与灵活性。</p>
+</li>
+</ol>
+<hr>
+<h2 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h2><p>以 CentOS 为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载旧版本</span></span><br><span class="line">sudo yum remove docker docker-common docker-selinux docker-engine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 Docker 源</span></span><br><span class="line">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Docker</span></span><br><span class="line">sudo yum install -y docker-ce docker-ce-cli containerd.io</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动并设置开机启动</span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
 
-<p>pnpm安装好后，有安装yarn的也可以用yarn，不过有的指令用不了</p>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><p>vscode打开克隆下来的项目，ctrl+tab打开终端，前提准备 进入项目目录里后的操作也可也在这里完成。</p>
-<h3 id="创建总的文件夹"><a href="#创建总的文件夹" class="headerlink" title="创建总的文件夹"></a>创建总的文件夹</h3><p>初始化后，创建projpath_name文件夹来存放多个工程项目</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 创建</span><br><span class="line">mkdir projpath_name</span><br><span class="line"># 进入</span><br><span class="line">cd projpath_name</span><br></pre></td></tr></table></figure>
-<h3 id="创建工程项目"><a href="#创建工程项目" class="headerlink" title="创建工程项目"></a>创建工程项目</h3><p>进入projpath_name创建项目，</p>
+<p>安装完成后，执行以下命令检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker -v</span><br><span class="line"><span class="comment"># Docker version 20.xx.x, build xxxxx</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="使用-Docker-运行-Node-js"><a href="#使用-Docker-运行-Node-js" class="headerlink" title="使用 Docker 运行 Node.js"></a>使用 Docker 运行 Node.js</h2><h3 id="1-直接运行-Node-js-容器"><a href="#1-直接运行-Node-js-容器" class="headerlink" title="1. 直接运行 Node.js 容器"></a>1. 直接运行 Node.js 容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name mynode -v $(<span class="built_in">pwd</span>):/app -w /app node:20 bash</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
 <ul>
-<li>执行<code>pnpm create vite@latest</code>回车，输入项目名称aaa选择对应的框架和模块;</li>
-<li>执行<code>pnpm create vue@latest</code>回车，输入项目名称aaa选择需要的模块;</li>
+<li><code>--name mynode</code> 容器名称  </li>
+<li><code>-v $(pwd):/app</code> 挂载当前目录到容器 <code>/app</code>  </li>
+<li><code>-w /app</code> 设置工作目录  </li>
+<li><code>node:20</code> 使用官方 Node.js 20 镜像</li>
 </ul>
-<p>创建完<code>cd aaa</code>进入工程项目文件夹<code>pnpm i</code>安装项目依赖项，完成后执行<code>pnpm run dev</code>启动项目，</p>
-<p>附：<code>cd projpath_name</code>后如果已经创建好了有多个项目可<code>ls</code>or<code>dir</code>查看。</p>
-<p>报错记录，创建项目<code>pnpm i</code>安装项目依赖项后, <code>vite-env.d.ts</code>和<code>main.ts</code>内容报红，<br>原因:扩展插件<code>ESlint</code>冲突了，我是测试后才发现，在构建项目上有个选项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">√ 是否引入 ESLint 用于代码质量检测？ ... 否 / 是</span><br></pre></td></tr></table></figure>
-<p>而我原来在VsCode中就安装了插件<code>ESlint</code>，操作卸载掉<code>ESlint</code>和<code>Vue - Official</code>后重装<code>Vue - Official</code>再次创建项目就没有问题了。</p>
-<p>单独卸载<code>ESlint</code>，保留<code>Vue - Official</code>，<code>import App from &#39;./App.vue&#39;</code>行依旧会报错。在<code>vite-env.d.ts</code>引入:</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">declare module &quot;*.vue&quot; &#123;</span><br><span class="line">    import &#123;  defineComponent &#125; from &quot;vue&quot;;</span><br><span class="line">    const component: ReturnType&lt;typeof defineComponent&gt; &amp; &#123;</span><br><span class="line">        install(app: App): void;</span><br><span class="line">    &#125;;</span><br><span class="line">    export default component;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>进入容器后即可使用高版本 Node：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line"><span class="comment"># v20.x.x</span></span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="2-使用-Dockerfile-构建自定义镜像"><a href="#2-使用-Dockerfile-构建自定义镜像" class="headerlink" title="2. 使用 Dockerfile 构建自定义镜像"></a>2. 使用 Dockerfile 构建自定义镜像</h3><p>在项目根目录新建 <code>Dockerfile</code>：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方 Node.js 20 镜像</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝项目文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;server.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
 
+<h4 id="第一次构建和运行："><a href="#第一次构建和运行：" class="headerlink" title="第一次构建和运行："></a>第一次构建和运行：</h4><p>打开需要运行node的目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t mynode-app .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d -p 3000:3000 --name myapp mynode-app</span><br></pre></td></tr></table></figure>
+<h4 id="后续启动和停止"><a href="#后续启动和停止" class="headerlink" title="后续启动和停止"></a>后续启动和停止</h4><p>以<code>mynode-app</code>为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">sudo docker start mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">sudo docker stop mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">sudo docker logs -f mynode-app</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="关于vite"><a href="#关于vite" class="headerlink" title="关于vite"></a>关于vite</h3><p>vite与webpack都是前端构建工具，只不过vite类似于项目懒加载，速度更快。</p>
-<p>命令<code>nmp create vite@latest</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#创建项目</span><br><span class="line">&lt;!-- pnpm create vite aaa --template vue-ts 舍弃--&gt;</span><br><span class="line"></span><br><span class="line">PS D:\Bepic_H5\midway-vue3-ssr&gt; pnpm create vite@latest</span><br><span class="line">../../.pnpm-store/v3/tmp/dlx-18316       | Progress: resolved 1, reuse../../.pnpm-store/v3/tmp/dlx-18316       |   +1 +</span><br><span class="line">../../.pnpm-store/v3/tmp/dlx-18316       | Progress: resolved 1, reuse../../.pnpm-store/v3/tmp/dlx-18316       | Progress: resolved 1, reused 1, downloaded 0, added 1, done</span><br><span class="line">√ Project name: ... test0</span><br><span class="line">√ Select a framework: » Vue</span><br><span class="line">√ Select a variant: » JavaScript</span><br><span class="line"></span><br><span class="line">Scaffolding project in D:\Bepic_H5\midway-vue3-ssr\test0...</span><br><span class="line"></span><br><span class="line">Done. Now run:</span><br><span class="line"></span><br><span class="line">  cd test0</span><br><span class="line">  pnpm install</span><br><span class="line">  pnpm run dev</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
+<h4 id="如果更新代码"><a href="#如果更新代码" class="headerlink" title="如果更新代码"></a>如果更新代码</h4><h2 id="容器里的代码是构建镜像时打包进去的，因此要更新："><a href="#容器里的代码是构建镜像时打包进去的，因此要更新：" class="headerlink" title="容器里的代码是构建镜像时打包进去的，因此要更新："></a>容器里的代码是构建镜像时打包进去的，因此要更新：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 停止并删除旧容器</span></span><br><span class="line">sudo docker stop mynode-app</span><br><span class="line">sudo docker <span class="built_in">rm</span> mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. （可选）删除旧镜像</span></span><br><span class="line">sudo docker rmi mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重新构建新镜像</span></span><br><span class="line">docker build -t mynode-app .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 启动新容器</span></span><br><span class="line">docker run -d -p 3000:3000 --name mynode-app mynode-app</span><br></pre></td></tr></table></figure></h2><h2 id="启动方式总结"><a href="#启动方式总结" class="headerlink" title="启动方式总结"></a>启动方式总结</h2><ol>
+<li><strong>一次性运行调试</strong>：<code>docker run -it node:20 bash</code>  </li>
+<li><strong>持久化运行项目</strong>：挂载代码目录，或者用 Dockerfile 构建镜像。  </li>
+<li><strong>后台运行服务</strong>：<code>docker run -d -p 3000:3000 mynode-app</code></li>
+</ol>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>问题</strong>：旧版本服务器无法直接安装高版本 Node.js  </li>
+<li><strong>解决思路</strong>：使用 Docker 容器运行，避免依赖冲突  </li>
+<li><strong>优点</strong>：版本独立、环境一致、快速部署、易于维护</li>
+</ul>
+<p>通过 Docker，我们可以在不升级服务器系统的前提下，轻松运行最新版本的 Node.js 应用。 🚀</p>
 
     </div>
 
@@ -356,7 +370,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://aoce888.github.io/posts/becb1b11.html" title="Midway-Vue3框架使用笔记">https://aoce888.github.io/posts/becb1b11.html</a>
+    <a href="https://aoce888.github.io/posts/82336659.html" title="在旧版本服务器上使用 Docker 部署 Node.js">https://aoce888.github.io/posts/82336659.html</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -368,8 +382,10 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Midway/" rel="tag"># Midway</a>
-              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/Linux%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># Linux服务器</a>
+              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/%E9%83%A8%E7%BD%B2/" rel="tag"># 部署</a>
           </div>
 
         
@@ -378,13 +394,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/971aed10.html" rel="prev" title="报错日志记录">
-      <i class="fa fa-chevron-left"></i> 报错日志记录
+    <a href="/posts/3d20dc84.html" rel="prev" title="h5页面集成tiktok事件上报">
+      <i class="fa fa-chevron-left"></i> h5页面集成tiktok事件上报
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/a8f0cfef.html" rel="next" title="实现图片懒加载的JavaScript函数">
-      实现图片懒加载的JavaScript函数 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
 
       </footer>
@@ -444,7 +457,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%8F%90%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">前提准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%80%BB%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">2.1.</span> <span class="nav-text">创建总的文件夹</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.2.</span> <span class="nav-text">创建工程项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Evite"><span class="nav-number">2.3.</span> <span class="nav-text">关于vite</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">问题背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%E8%A7%A3%E5%86%B3"><span class="nav-number">2.</span> <span class="nav-text">思路解决</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-Docker"><span class="nav-number">3.</span> <span class="nav-text">安装 Docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Docker-%E8%BF%90%E8%A1%8C-Node-js"><span class="nav-number">4.</span> <span class="nav-text">使用 Docker 运行 Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%9B%B4%E6%8E%A5%E8%BF%90%E8%A1%8C-Node-js-%E5%AE%B9%E5%99%A8"><span class="nav-number">4.1.</span> <span class="nav-text">1. 直接运行 Node.js 容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8-Dockerfile-%E6%9E%84%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F"><span class="nav-number">4.2.</span> <span class="nav-text">2. 使用 Dockerfile 构建自定义镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%9E%84%E5%BB%BA%E5%92%8C%E8%BF%90%E8%A1%8C%EF%BC%9A"><span class="nav-number">4.2.1.</span> <span class="nav-text">第一次构建和运行：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD%E5%90%AF%E5%8A%A8%E5%92%8C%E5%81%9C%E6%AD%A2"><span class="nav-number">4.2.2.</span> <span class="nav-text">后续启动和停止</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%9B%B4%E6%96%B0%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.3.</span> <span class="nav-text">如果更新代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%87%8C%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E6%97%B6%E6%89%93%E5%8C%85%E8%BF%9B%E5%8E%BB%E7%9A%84%EF%BC%8C%E5%9B%A0%E6%AD%A4%E8%A6%81%E6%9B%B4%E6%96%B0%EF%BC%9A"><span class="nav-number">5.</span> <span class="nav-text">容器里的代码是构建镜像时打包进去的，因此要更新：123456789101112# 1. 停止并删除旧容器sudo docker stop mynode-appsudo docker rm mynode-app# 2. （可选）删除旧镜像sudo docker rmi mynode-app# 3. 重新构建新镜像docker build -t mynode-app .# 4. 启动新容器docker run -d -p 3000:3000 --name mynode-app mynode-app</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%96%B9%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">启动方式总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

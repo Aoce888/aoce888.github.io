@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">37</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -127,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">38</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -279,6 +279,145 @@
             </div>
           <!--/noindex-->
         
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/82336659.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/82336659.html" class="post-title-link" itemprop="url">在旧版本服务器上使用 Docker 部署 Node.js</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-09-28 10:55:43 / 修改时间：11:01:30" itemprop="dateCreated datePublished" datetime="2025-09-28T10:55:43+08:00">2025-09-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>787</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>记录下在新服务器<code>47.77.199.109</code>遇到的系统版本较低无法安装高版本node的解决方案以及使用指令：</p>
+<p><strong>问题报错</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Node.js 18 时报错</span></span><br><span class="line">error: Failed dependencies:</span><br><span class="line">  libstdc++.so.6(GLIBCXX_3.4.20) is needed by nodejs-18.x</span><br><span class="line">  GLIBC_2.28 is needed by nodejs-18.x</span><br></pre></td></tr></table></figure>
+
+<p>这是由于旧服务器的 <strong>glibc</strong> 和相关依赖过低，导致无法支持高版本 Node.js。</p>
+<hr>
+<h2 id="思路解决"><a href="#思路解决" class="headerlink" title="思路解决"></a>思路解决</h2><p>在不更换或升级操作系统的情况下，解决方法有两个：</p>
+<ol>
+<li><p><strong>手动编译升级依赖</strong><br>但升级 <code>glibc</code> 风险极高，可能导致系统不稳定，生产环境并不推荐。</p>
+</li>
+<li><p><strong>使用 Docker</strong> ✅（推荐）<br>借助 Docker 容器运行高版本 Node.js，避免宿主机依赖问题，同时保持环境隔离与灵活性。</p>
+</li>
+</ol>
+<hr>
+<h2 id="安装-Docker"><a href="#安装-Docker" class="headerlink" title="安装 Docker"></a>安装 Docker</h2><p>以 CentOS 为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载旧版本</span></span><br><span class="line">sudo yum remove docker docker-common docker-selinux docker-engine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 Docker 源</span></span><br><span class="line">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Docker</span></span><br><span class="line">sudo yum install -y docker-ce docker-ce-cli containerd.io</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动并设置开机启动</span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，执行以下命令检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker -v</span><br><span class="line"><span class="comment"># Docker version 20.xx.x, build xxxxx</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="使用-Docker-运行-Node-js"><a href="#使用-Docker-运行-Node-js" class="headerlink" title="使用 Docker 运行 Node.js"></a>使用 Docker 运行 Node.js</h2><h3 id="1-直接运行-Node-js-容器"><a href="#1-直接运行-Node-js-容器" class="headerlink" title="1. 直接运行 Node.js 容器"></a>1. 直接运行 Node.js 容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name mynode -v $(<span class="built_in">pwd</span>):/app -w /app node:20 bash</span><br></pre></td></tr></table></figure>
+
+<p>说明：</p>
+<ul>
+<li><code>--name mynode</code> 容器名称  </li>
+<li><code>-v $(pwd):/app</code> 挂载当前目录到容器 <code>/app</code>  </li>
+<li><code>-w /app</code> 设置工作目录  </li>
+<li><code>node:20</code> 使用官方 Node.js 20 镜像</li>
+</ul>
+<p>进入容器后即可使用高版本 Node：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line"><span class="comment"># v20.x.x</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-使用-Dockerfile-构建自定义镜像"><a href="#2-使用-Dockerfile-构建自定义镜像" class="headerlink" title="2. 使用 Dockerfile 构建自定义镜像"></a>2. 使用 Dockerfile 构建自定义镜像</h3><p>在项目根目录新建 <code>Dockerfile</code>：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方 Node.js 20 镜像</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝项目文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;server.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="第一次构建和运行："><a href="#第一次构建和运行：" class="headerlink" title="第一次构建和运行："></a>第一次构建和运行：</h4><p>打开需要运行node的目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t mynode-app .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d -p 3000:3000 --name myapp mynode-app</span><br></pre></td></tr></table></figure>
+<h4 id="后续启动和停止"><a href="#后续启动和停止" class="headerlink" title="后续启动和停止"></a>后续启动和停止</h4><p>以<code>mynode-app</code>为例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">sudo docker start mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">sudo docker stop mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">sudo docker logs -f mynode-app</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="如果更新代码"><a href="#如果更新代码" class="headerlink" title="如果更新代码"></a>如果更新代码</h4><h2 id="容器里的代码是构建镜像时打包进去的，因此要更新："><a href="#容器里的代码是构建镜像时打包进去的，因此要更新：" class="headerlink" title="容器里的代码是构建镜像时打包进去的，因此要更新："></a>容器里的代码是构建镜像时打包进去的，因此要更新：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 停止并删除旧容器</span></span><br><span class="line">sudo docker stop mynode-app</span><br><span class="line">sudo docker <span class="built_in">rm</span> mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. （可选）删除旧镜像</span></span><br><span class="line">sudo docker rmi mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重新构建新镜像</span></span><br><span class="line">docker build -t mynode-app .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 启动新容器</span></span><br><span class="line">docker run -d -p 3000:3000 --name mynode-app mynode-app</span><br></pre></td></tr></table></figure></h2><h2 id="启动方式总结"><a href="#启动方式总结" class="headerlink" title="启动方式总结"></a>启动方式总结</h2><ol>
+<li><strong>一次性运行调试</strong>：<code>docker run -it node:20 bash</code>  </li>
+<li><strong>持久化运行项目</strong>：挂载代码目录，或者用 Dockerfile 构建镜像。  </li>
+<li><strong>后台运行服务</strong>：<code>docker run -d -p 3000:3000 mynode-app</code></li>
+</ol>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><strong>问题</strong>：旧版本服务器无法直接安装高版本 Node.js  </li>
+<li><strong>解决思路</strong>：使用 Docker 容器运行，避免依赖冲突  </li>
+<li><strong>优点</strong>：版本独立、环境一致、快速部署、易于维护</li>
+</ul>
+<p>通过 Docker，我们可以在不升级服务器系统的前提下，轻松运行最新版本的 Node.js 应用。 🚀</p>
+
       
     </div>
 
@@ -1577,117 +1716,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/d8bf21ac.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.gif">
-      <meta itemprop="name" content="Crf's Blog">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Crf's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/posts/d8bf21ac.html" class="post-title-link" itemprop="url">服务器CPU负载-设定自重启</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-08-28 09:58:28" itemprop="dateCreated datePublished" datetime="2024-08-28T09:58:28+08:00">2024-08-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-08-20 11:37:18" itemprop="dateModified" datetime="2025-08-20T11:37:18+08:00">2025-08-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>293</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>问题描述：在编写系统程序中，出现bug导致系统CPU负载或者跑满了。导致客户端ssh无法链接上来。</p>
-<p><strong>解决办法：优化出问题的程序，设定CPU阔值，超过重启。</strong></p>
-<h2 id="监控与重启："><a href="#监控与重启：" class="headerlink" title="监控与重启："></a>监控与重启：</h2><h3 id="创建监控脚本"><a href="#创建监控脚本" class="headerlink" title="创建监控脚本"></a>创建监控脚本</h3><p>1.创建脚本文件: 在根目录下创建一个新的脚本文件，例如 cpu_monitor.sh。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /cpu_monitor.sh</span><br><span class="line"># 或者</span><br><span class="line">sudo vim /cpu_monitor.sh</span><br></pre></td></tr></table></figure>
-<p>2.编写以下脚本内容，<code>THRESHOLD=90</code>中<code>90</code>代表CPU阔值上限为90%，超过就要重启。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">THRESHOLD=90</span><br><span class="line">CPU_USAGE=$(mpstat 1 1 | awk &#x27;/Average/ &#123;print 100 - $12&#125;&#x27;)</span><br><span class="line"></span><br><span class="line">if (( $(echo &quot;$CPU_USAGE &gt; $THRESHOLD&quot; | bc -l) )); then</span><br><span class="line">    echo &quot;CPU usage is above $THRESHOLD%. Restarting server...&quot;</span><br><span class="line">    sudo reboot</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-<p>3，保存退出后，执行授予权限：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /cpu_monitor.sh</span><br></pre></td></tr></table></figure>
-<!-- ### 编写cron定时检测 -->
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo crontab -e</span><br></pre></td></tr></table></figure>
-<p>添加cron代码内容,每分钟检测一次：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* * * * * /cpu_monitor.sh</span><br></pre></td></tr></table></figure>
-
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>安装 stress-ng</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install epel-release</span><br><span class="line">sudo yum install stress-ng</span><br></pre></td></tr></table></figure>
-<p>查看服务器为几线程：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nproc</span><br></pre></td></tr></table></figure>
-<p>使用 stress-ng 设置 CPU 负载，如下第一个<code>2</code>代表两个线程，<code>96</code>代表是CPU负载接近96%，<code>20s</code>是定时器时长。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress-ng --cpu 2 --cpu-load 96 --timeout 20s</span><br></pre></td></tr></table></figure>
-<p>等待一段时间 服务器重启就是成功了。</p>
-
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1761,7 +1789,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1774,7 +1802,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1883,12 +1911,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">27k</span>
+    <span title="站点总字数">28k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:37</span>
+    <span title="站点阅读时长">1:40</span>
 </div>
 
 <div>
