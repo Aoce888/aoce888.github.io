@@ -127,7 +127,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">39</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -326,7 +326,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-09-28 10:55:43 / 修改时间：11:01:30" itemprop="dateCreated datePublished" datetime="2025-09-28T10:55:43+08:00">2025-09-28</time>
+              <time title="创建时间：2025-09-28 10:55:43 / 修改时间：11:03:50" itemprop="dateCreated datePublished" datetime="2025-09-28T10:55:43+08:00">2025-09-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -344,7 +344,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>787</span>
+              <span>788</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -381,43 +381,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载旧版本</span></span><br><span class="line">sudo yum remove docker docker-common docker-selinux docker-engine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line">sudo yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加 Docker 源</span></span><br><span class="line">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Docker</span></span><br><span class="line">sudo yum install -y docker-ce docker-ce-cli containerd.io</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动并设置开机启动</span></span><br><span class="line">sudo systemctl start docker</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> docker</span><br></pre></td></tr></table></figure>
 
 <p>安装完成后，执行以下命令检查：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker -v</span><br><span class="line"><span class="comment"># Docker version 20.xx.x, build xxxxx</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="使用-Docker-运行-Node-js"><a href="#使用-Docker-运行-Node-js" class="headerlink" title="使用 Docker 运行 Node.js"></a>使用 Docker 运行 Node.js</h2><h3 id="1-直接运行-Node-js-容器"><a href="#1-直接运行-Node-js-容器" class="headerlink" title="1. 直接运行 Node.js 容器"></a>1. 直接运行 Node.js 容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name mynode -v $(<span class="built_in">pwd</span>):/app -w /app node:20 bash</span><br></pre></td></tr></table></figure>
-
-<p>说明：</p>
-<ul>
-<li><code>--name mynode</code> 容器名称  </li>
-<li><code>-v $(pwd):/app</code> 挂载当前目录到容器 <code>/app</code>  </li>
-<li><code>-w /app</code> 设置工作目录  </li>
-<li><code>node:20</code> 使用官方 Node.js 20 镜像</li>
-</ul>
-<p>进入容器后即可使用高版本 Node：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br><span class="line"><span class="comment"># v20.x.x</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="2-使用-Dockerfile-构建自定义镜像"><a href="#2-使用-Dockerfile-构建自定义镜像" class="headerlink" title="2. 使用 Dockerfile 构建自定义镜像"></a>2. 使用 Dockerfile 构建自定义镜像</h3><p>在项目根目录新建 <code>Dockerfile</code>：</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方 Node.js 20 镜像</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">20</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /usr/src/app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝项目文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">3000</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;server.js&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="第一次构建和运行："><a href="#第一次构建和运行：" class="headerlink" title="第一次构建和运行："></a>第一次构建和运行：</h4><p>打开需要运行node的目录，执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建镜像</span></span><br><span class="line">docker build -t mynode-app .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行容器</span></span><br><span class="line">docker run -d -p 3000:3000 --name myapp mynode-app</span><br></pre></td></tr></table></figure>
-<h4 id="后续启动和停止"><a href="#后续启动和停止" class="headerlink" title="后续启动和停止"></a>后续启动和停止</h4><p>以<code>mynode-app</code>为例：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动容器</span></span><br><span class="line">sudo docker start mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止容器</span></span><br><span class="line">sudo docker stop mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line">sudo docker logs -f mynode-app</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h4 id="如果更新代码"><a href="#如果更新代码" class="headerlink" title="如果更新代码"></a>如果更新代码</h4><h2 id="容器里的代码是构建镜像时打包进去的，因此要更新："><a href="#容器里的代码是构建镜像时打包进去的，因此要更新：" class="headerlink" title="容器里的代码是构建镜像时打包进去的，因此要更新："></a>容器里的代码是构建镜像时打包进去的，因此要更新：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 停止并删除旧容器</span></span><br><span class="line">sudo docker stop mynode-app</span><br><span class="line">sudo docker <span class="built_in">rm</span> mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. （可选）删除旧镜像</span></span><br><span class="line">sudo docker rmi mynode-app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 重新构建新镜像</span></span><br><span class="line">docker build -t mynode-app .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 启动新容器</span></span><br><span class="line">docker run -d -p 3000:3000 --name mynode-app mynode-app</span><br></pre></td></tr></table></figure></h2><h2 id="启动方式总结"><a href="#启动方式总结" class="headerlink" title="启动方式总结"></a>启动方式总结</h2><ol>
-<li><strong>一次性运行调试</strong>：<code>docker run -it node:20 bash</code>  </li>
-<li><strong>持久化运行项目</strong>：挂载代码目录，或者用 Dockerfile 构建镜像。  </li>
-<li><strong>后台运行服务</strong>：<code>docker run -d -p 3000:3000 mynode-app</code></li>
-</ol>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li><strong>问题</strong>：旧版本服务器无法直接安装高版本 Node.js  </li>
-<li><strong>解决思路</strong>：使用 Docker 容器运行，避免依赖冲突  </li>
-<li><strong>优点</strong>：版本独立、环境一致、快速部署、易于维护</li>
-</ul>
-<p>通过 Docker，我们可以在不升级服务器系统的前提下，轻松运行最新版本的 Node.js 应用。 🚀</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/82336659.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1802,7 +1773,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
