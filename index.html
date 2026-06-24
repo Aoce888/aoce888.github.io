@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-08-20 11:37:18" itemprop="dateModified" datetime="2025-08-20T11:37:18+08:00">2025-08-20</time>
+                <time title="修改时间：2026-06-24 10:23:26" itemprop="dateModified" datetime="2026-06-24T10:23:26+08:00">2026-06-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -258,11 +258,11 @@
 
       
           <h2 id="1-上传文件到ECS服务器"><a href="#1-上传文件到ECS服务器" class="headerlink" title="1. 上传文件到ECS服务器"></a>1. 上传文件到ECS服务器</h2><p>你可以使用SCP或SFTPxx。配置好公钥后，文件上传到你的ECS服务器路径上。以SCP为例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /path/to/yourfile.html username@your-ecs-ip:/path/to/server/directory</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /path/to/yourfile.html username@server_public_ip:/path/to/server/directory</span><br></pre></td></tr></table></figure>
 <ul>
 <li>&#x2F;path&#x2F;to&#x2F;yourfile.html 是你本地文件的路径。</li>
 <li>username 是你在ECS服务器上的用户名。</li>
-<li>your-ecs-ip 是你的ECS服务器的IP地址。</li>
+<li>server_public_ip 是你的ECS服务器的IP地址。</li>
 <li>&#x2F;path&#x2F;to&#x2F;server&#x2F;directory 是你希望在ECS服务器上存放文件的路径。</li>
 </ul>
 <h2 id="安装和配置Web服务器"><a href="#安装和配置Web服务器" class="headerlink" title="安装和配置Web服务器"></a>安装和配置Web服务器</h2><p>在ECS服务器上使用有sudo权限的用户进行操作，安装一个Web服务器，比如Nginx或Apache。这里我是基于CentOS的Nginx：</p>
@@ -326,7 +326,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2026-06-24 09:50:00 / 修改时间：10:16:23" itemprop="dateCreated datePublished" datetime="2026-06-24T09:50:00+08:00">2026-06-24</time>
+              <time title="创建时间：2026-06-24 09:50:00 / 修改时间：10:23:09" itemprop="dateCreated datePublished" datetime="2026-06-24T09:50:00+08:00">2026-06-24</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -368,7 +368,7 @@
 
       
           <h1 id="Qwen-Code-Web-UI-部署记录-AI生成"><a href="#Qwen-Code-Web-UI-部署记录-AI生成" class="headerlink" title="Qwen Code Web UI 部署记录 - AI生成"></a>Qwen Code Web UI 部署记录 - AI生成</h1><blockquote>
-<p>部署时间：2026-06-23 | 服务器：8.134.102.5</p>
+<p>部署时间：2026-06-23 | 服务器：server_public_ip</p>
 </blockquote>
 <hr>
 <h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><table>
@@ -432,15 +432,15 @@
 <td>允许跨域请求（<strong>必须加</strong>，否则浏览器端只能读不能发 POST，报 403）</td>
 </tr>
 </tbody></table>
-<h2 id="访问方式"><a href="#访问方式" class="headerlink" title="访问方式"></a>访问方式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://8.134.102.5:8080/?token=qwen-********</span><br></pre></td></tr></table></figure>
+<h2 id="访问方式"><a href="#访问方式" class="headerlink" title="访问方式"></a>访问方式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://server_public_ip:8080/?token=qwen-********</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>端口</strong>：8080</li>
 <li><strong>Token</strong>：<code>qwen-********</code></li>
-<li>首次带 token 访问后浏览器会保存 cookie，后续直接访问 <code>http://8.134.102.5:8080</code> 即可</li>
+<li>首次带 token 访问后浏览器会保存 cookie，后续直接访问 <code>http://server_public_ip:8080</code> 即可</li>
 </ul>
 <h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="报-quot-error-quot-quot-Unauthorized-quot"><a href="#报-quot-error-quot-quot-Unauthorized-quot" class="headerlink" title="报 {&quot;error&quot;:&quot;Unauthorized&quot;}"></a>报 <code>&#123;&quot;error&quot;:&quot;Unauthorized&quot;&#125;</code></h3><p>Token 未正确传递。确认 URL 中带查询参数 <code>?token=xxx</code>，格式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://8.134.102.5:8080/?token=qwen-********</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://server_public_ip:8080/?token=qwen-********</span><br></pre></td></tr></table></figure>
 
 <p>注意：token 是<strong>查询参数</strong>，不是 URL 路径（<code>/session/xxx</code> 这种格式是错的）。</p>
 <h3 id="浏览器能打开但无法发消息（POST-403）"><a href="#浏览器能打开但无法发消息（POST-403）" class="headerlink" title="浏览器能打开但无法发消息（POST 403）"></a>浏览器能打开但无法发消息（POST 403）</h3><p>缺少 <code>--allow-origin &quot;*&quot;</code> 参数。非 localhost 绑定模式下，Qwen serve 默认开启 CORS 限制，只能读不能写。重启服务加上该参数即可。</p>
