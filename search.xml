@@ -2531,4 +2531,125 @@ yarn add sequelize
         <category>JavaScript</category>
       </categories>
   </entry>
+  <entry>
+    <title>Qwen Code Web UI 部署记录 - AI生成</title>
+    <url>/posts/ad888d25.html</url>
+    <content><![CDATA[<h1 id="Qwen-Code-Web-UI-部署记录-AI生成"><a href="#Qwen-Code-Web-UI-部署记录-AI生成" class="headerlink" title="Qwen Code Web UI 部署记录 - AI生成"></a>Qwen Code Web UI 部署记录 - AI生成</h1><blockquote>
+<p>部署时间：2026-06-23 | 服务器：8.134.102.5</p>
+</blockquote>
+<hr>
+<h2 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>服务器</td>
+<td>阿里云 ECS（2C2G，CentOS&#x2F;Alinux）</td>
+</tr>
+<tr>
+<td>Node.js</td>
+<td>v22.23.0（通过 nvm 安装，不影响原 v16）</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>qwen-plus（阿里云 DashScope）</td>
+</tr>
+<tr>
+<td>工作目录</td>
+<td><code>~/ai-lab/</code></td>
+</tr>
+</tbody></table>
+<h2 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h2><h3 id="1-配置-DashScope-API-Key"><a href="#1-配置-DashScope-API-Key" class="headerlink" title="1. 配置 DashScope API Key"></a>1. 配置 DashScope API Key</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> OPENAI_API_KEY=<span class="string">&quot;******&quot;</span></span><br><span class="line"><span class="built_in">export</span> OPENAI_BASE_URL=<span class="string">&quot;https://dashscope.aliyuncs.com/compatible-mode/v1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Qwen Code 兼容 OpenAI SDK 格式，通过 <code>OPENAI_API_KEY</code> 和 <code>OPENAI_BASE_URL</code> 即可对接阿里云 DashScope。</p>
+</blockquote>
+<h3 id="2-安装-Qwen-Code"><a href="#2-安装-Qwen-Code" class="headerlink" title="2. 安装 Qwen Code"></a>2. 安装 Qwen Code</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i -g @qwen-code/qwen-code</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-启动-Web-UI"><a href="#3-启动-Web-UI" class="headerlink" title="3. 启动 Web UI"></a>3. 启动 Web UI</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">TOKEN=$(<span class="built_in">cat</span> ~/.qwen/server-token)</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~/ai-lab &amp;&amp; <span class="built_in">nohup</span> qwen serve \</span><br><span class="line">  --port 8080 \</span><br><span class="line">  --hostname 0.0.0.0 \</span><br><span class="line">  --token <span class="string">&quot;<span class="variable">$TOKEN</span>&quot;</span> \</span><br><span class="line">  --enable-session-shell \</span><br><span class="line">  --allow-origin <span class="string">&quot;*&quot;</span> \</span><br><span class="line">  &gt; ~/.qwen/serve.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<h3 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--port 8080</code></td>
+<td>服务端口</td>
+</tr>
+<tr>
+<td><code>--hostname 0.0.0.0</code></td>
+<td>允许外网访问（默认仅 localhost）</td>
+</tr>
+<tr>
+<td><code>--token</code></td>
+<td>访问认证 Token（文件 <code>~/.qwen/server-token</code> 中）</td>
+</tr>
+<tr>
+<td><code>--enable-session-shell</code></td>
+<td>启用多会话 Shell 模式</td>
+</tr>
+<tr>
+<td><code>--allow-origin &quot;*&quot;</code></td>
+<td>允许跨域请求（<strong>必须加</strong>，否则浏览器端只能读不能发 POST，报 403）</td>
+</tr>
+</tbody></table>
+<h2 id="访问方式"><a href="#访问方式" class="headerlink" title="访问方式"></a>访问方式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://8.134.102.5:8080/?token=qwen-********</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>端口</strong>：8080</li>
+<li><strong>Token</strong>：<code>qwen-********</code></li>
+<li>首次带 token 访问后浏览器会保存 cookie，后续直接访问 <code>http://8.134.102.5:8080</code> 即可</li>
+</ul>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="报-quot-error-quot-quot-Unauthorized-quot"><a href="#报-quot-error-quot-quot-Unauthorized-quot" class="headerlink" title="报 {&quot;error&quot;:&quot;Unauthorized&quot;}"></a>报 <code>&#123;&quot;error&quot;:&quot;Unauthorized&quot;&#125;</code></h3><p>Token 未正确传递。确认 URL 中带查询参数 <code>?token=xxx</code>，格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://8.134.102.5:8080/?token=qwen-********</span><br></pre></td></tr></table></figure>
+
+<p>注意：token 是<strong>查询参数</strong>，不是 URL 路径（<code>/session/xxx</code> 这种格式是错的）。</p>
+<h3 id="浏览器能打开但无法发消息（POST-403）"><a href="#浏览器能打开但无法发消息（POST-403）" class="headerlink" title="浏览器能打开但无法发消息（POST 403）"></a>浏览器能打开但无法发消息（POST 403）</h3><p>缺少 <code>--allow-origin &quot;*&quot;</code> 参数。非 localhost 绑定模式下，Qwen serve 默认开启 CORS 限制，只能读不能写。重启服务加上该参数即可。</p>
+<h2 id="管理命令"><a href="#管理命令" class="headerlink" title="管理命令"></a>管理命令</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看运行状态</span></span><br><span class="line">ps aux | grep <span class="string">&quot;qwen serve&quot;</span> | grep -v grep</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看日志</span></span><br><span class="line"><span class="built_in">tail</span> -f ~/.qwen/serve.log</span><br><span class="line"></span><br><span class="line"><span class="comment"># 停止服务</span></span><br><span class="line">pkill -f <span class="string">&quot;qwen serve&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重启服务（先 pkill，再重新执行启动命令）</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="资源占用"><a href="#资源占用" class="headerlink" title="资源占用"></a>资源占用</h2><table>
+<thead>
+<tr>
+<th>进程</th>
+<th>RSS 内存</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>qwen serve</code>（主服务）</td>
+<td>~176 MiB</td>
+<td>Node.js 主守护进程</td>
+</tr>
+<tr>
+<td><code>qwen --acp</code>（Agent）</td>
+<td>~176 MiB</td>
+<td>AI 推理 Agent 进程</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>~350-400 MiB</strong></td>
+<td>单会话模式</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ 服务器总内存 1.8 GiB，Qwen 服务占 ~20%，余量不多。同时只建议跑一个活跃会话。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>AI工具</category>
+        <category>运维部署</category>
+      </categories>
+      <tags>
+        <tag>阿里云</tag>
+        <tag>Qwen</tag>
+        <tag>AI部署</tag>
+        <tag>Web UI</tag>
+      </tags>
+  </entry>
 </search>
