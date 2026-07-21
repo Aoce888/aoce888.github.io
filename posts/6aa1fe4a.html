@@ -44,6 +44,7 @@
     lang   : 'zh-CN'
   };
 </script>
+<script>(function(){var m=localStorage.getItem('crf_mode');if(!m){m=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light'}if(m!=='light'){document.documentElement.setAttribute('data-mode',m)}})();</script>
 
   <title>Adsense和GAM激励广告的触发方法 | Crf's Blog</title>
   
@@ -711,6 +712,122 @@ window.addEventListener('pjax:success', () => {
   
 
   
+<style>
+html[data-mode="dark"] {
+  --mb: #1a1a1a; --ms: #242424;
+  --mt: #ccc; --ml: #ccc; --mh: #eee; --mm: #888;
+}
+html[data-mode="dark"] { background: var(--mb); }
+html[data-mode="dark"] body,
+html[data-mode="dark"] .header-inner,
+html[data-mode="dark"] .main-inner,
+html[data-mode="dark"] .footer-inner,
+html[data-mode="dark"] .content-wrap,
+html[data-mode="dark"] .post-block { background: var(--mb); }
+html[data-mode="dark"] .sidebar,
+html[data-mode="dark"] .sidebar-inner { background: var(--ms); }
+html[data-mode="dark"] body { color: var(--mt); }
+html[data-mode="dark"] a,
+html[data-mode="dark"] .post-title a { color: var(--ml); }
+html[data-mode="dark"] a:hover,
+html[data-mode="dark"] .post-title a:hover { color: var(--mh); }
+html[data-mode="dark"] .post-meta,
+html[data-mode="dark"] .post-meta a { color: var(--mm) !important; }
+html[data-mode="dark"] img { opacity: .75; }
+html[data-mode="dark"] img:hover { opacity: .9; }
+
+html[data-mode="eye"] {
+  --mb: #faf6ef; --ms: #ede5d8;
+  --mt: #5c4a3a; --ml: #5c4a3a; --mh: #3d3226; --mm: #9a8a7a;
+}
+html[data-mode="eye"] { background: var(--mb); }
+html[data-mode="eye"] body,
+html[data-mode="eye"] .header-inner,
+html[data-mode="eye"] .main-inner,
+html[data-mode="eye"] .footer-inner,
+html[data-mode="eye"] .content-wrap,
+html[data-mode="eye"] .post-block { background: var(--mb); }
+html[data-mode="eye"] .sidebar,
+html[data-mode="eye"] .sidebar-inner { background: var(--ms); }
+html[data-mode="eye"] body { color: var(--mt); }
+html[data-mode="eye"] a,
+html[data-mode="eye"] .post-title a { color: var(--ml); }
+html[data-mode="eye"] a:hover { color: var(--mh); }
+html[data-mode="eye"] .post-meta,
+html[data-mode="eye"] .post-meta a { color: var(--mm) !important; }
+html[data-mode="eye"] img { filter: brightness(.95) saturate(.85); }
+
+/* 顶栏细线 */
+.headband { height: 2px; background: #2563eb; }
+
+/* 文章内排版 */
+.post-body {
+  line-height: 1.8;
+  font-family: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+.post-body p { margin: 0 0 1em; }
+.post-body h2 { margin-top: 1.8em; margin-bottom: .5em; }
+.post-body h3 { margin-top: 1.5em; margin-bottom: .4em; }
+
+/* 分类页 - 网格卡片 */
+.category-all-title {
+  font-size: .95em; color: #666; font-weight: 500;
+  padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; margin-bottom: 24px;
+}
+.category-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+.category-list-item { margin: 0 !important; }
+.category-list-link {
+  display: block; padding: 10px 14px;
+  background: #f8f9fa; color: #374151;
+  border: 1px solid #e5e7eb; border-radius: 4px;
+  font-size: .875em; transition: all .15s;
+}
+.category-list-link:hover { background: #f3f4f6; border-color: #2563eb; color: #2563eb !important; }
+.category-list-count { color: #9ca3af; font-size: .8125em; }
+.category-list-count::before { content: " ("; display: inline; }
+.category-list-count::after { content: ")"; display: inline; }
+.category-list-child { list-style: none; padding-left: 0 !important; margin-top: 4px; }
+.category-list-child .category-list-item { margin: 0 !important; }
+
+/* 暗色/护眼适配 */
+html[data-mode="dark"] .category-all-title { color: #9ca3af; border-color: #374151; }
+html[data-mode="dark"] .category-list-link { background: #1f2937; border-color: #374151; color: #d1d5db; }
+html[data-mode="dark"] .category-list-link:hover { border-color: #60a5fa; color: #60a5fa !important; }
+html[data-mode="dark"] .category-list-child .category-list-link { background: #111827; }
+html[data-mode="eye"] .category-all-title { color: #8a7a6a; border-color: #d0c6b7; }
+html[data-mode="eye"] .category-list-link { background: #f0e8dc; border-color: #d0c6b7; color: #5c4a3a; }
+html[data-mode="eye"] .category-list-link:hover { border-color: #2563eb; color: #2563eb !important; }
+html[data-mode="eye"] .category-list-child .category-list-link { background: #e5dccf; }
+
+.crf-mode-btn {
+  position: fixed; top: 22px; right: 72px; z-index: 9999;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.85); backdrop-filter: blur(6px);
+  font-size: 16px; cursor: pointer; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .25s;
+}
+.crf-mode-btn:hover { transform: scale(1.12); }
+</style>
+<button class="crf-mode-btn" id="crfModeBtn" onclick="cycleCrfMode()" title="切换配色">☀️</button>
+<script>
+(function(){
+  var m=localStorage.getItem('crf_mode')||((window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light');
+  var b=document.getElementById('crfModeBtn');
+  if(m==='dark'){document.documentElement.setAttribute('data-mode','dark');b.textContent='🌙';}
+  else if(m==='eye'){document.documentElement.setAttribute('data-mode','eye');b.textContent='🌿';}
+})();
+function cycleCrfMode(){
+  var c=document.documentElement.getAttribute('data-mode')||'light';
+  var n={light:'dark',dark:'eye',eye:'light'}[c];
+  if(n==='light')document.documentElement.removeAttribute('data-mode');
+  else document.documentElement.setAttribute('data-mode',n);
+  document.getElementById('crfModeBtn').textContent={light:'☀️',dark:'🌙',eye:'🌿'}[n];
+  localStorage.setItem('crf_mode',n);
+}
+
+</script>
 
     </div>
 </body>

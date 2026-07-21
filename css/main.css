@@ -1194,7 +1194,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #881422;
+  background: #79206a;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2457,7 +2457,6 @@ embed {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* sidebar social icon */
 .fa-email {
   background-image: url("images/email.svg");
   background-size: 1em 1em;
@@ -2467,7 +2466,6 @@ embed {
   height: 1rem;
   width: 1rem;
   border-radius: 0rem;
-/*鼠标停留在图标上时，图标呈现发光效果*/
 }
 .fa-email:hover {
   opacity: 1;
@@ -2481,7 +2479,6 @@ embed {
   height: 1rem;
   width: 1rem;
   border-radius: 0rem;
-/*鼠标停留在图标上时，图标呈现发光效果*/
 }
 .csdn:hover {
   opacity: 1;
@@ -2495,8 +2492,46 @@ embed {
   height: 1rem;
   width: 1rem;
   border-radius: 0rem;
-/*鼠标停留在图标上时，图标呈现发光效果*/
 }
 .gitee:hover {
   opacity: 1;
+}
+.site-title {
+  font-size: 1.3em;
+}
+.footer .with-love {
+  animation: heartbeat 1.5s ease-in-out infinite;
+  display: inline-block;
+}
+@-moz-keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+@-webkit-keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+@-o-keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
 }
