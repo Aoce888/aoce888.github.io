@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>批量打开网址</title><script defer="defer" src="./openurls/js/27274de6eb93bb71a49803c60cd4a08d.js"></script><link href="./openurls/css/f6239bfc65b78f5a5337.css" rel="stylesheet"></head><body><div class="view"><h2 for="urlInput">输入网址：</h2><textarea id="urlInput" placeholder="https://example1.com&#10;https://example2.com&#10;https://example3.com" oninput="formatURLs()"></textarea> <button onclick="openURLs()" disabled="disabled">Open</button> <button onclick="openURLsForTest()">测试-Open</button><script>function formatURLs() {
+        var urlInput = document.getElementById('urlInput');
+        var formattedValue = urlInput.value.replace(/\s+/g, '\n');
+        urlInput.value = formattedValue;
+      }
+
+      function openURLs() {
+        var urlInput = document.getElementById('urlInput');
+        var urls = urlInput.value.split('\n');
+
+        urls.forEach(function (url) {
+          if (url.trim() !== "") {
+            if (/^https?:\/\//.test(url)) {
+              window.open(url.trim(), '_blank');
+            } else {
+              window.open('https://' + url.trim(), '_blank');
+            }
+          }
+        });
+      }
+
+      function openURLsForTest() {
+        var urlInput = document.getElementById('urlInput');
+        var urls = urlInput.value.split('\n');
+
+        urls.forEach(function (url) {
+          if (url.trim() !== "") {
+            // 如果 URL 没有以 https:// 或 http:// 开头，自动补充
+            if (!/^https?:\/\//.test(url)) {
+              url = 'https://' + url.trim();
+            }
+
+            // 给每个链接添加 ?google_console=1 参数
+            if (url.indexOf('?') === -1) {
+              url += '?google_console=1';
+            } else {
+              url += '&google_console=1';
+            }
+
+            // 打开新标签页
+            window.open(url, '_blank');
+          }
+        });
+      }</script></div></body></html>
