@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"aoce888.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="最近小程序项目上传图片越来越大，用户上传动辄10几MB，全走自己服务器带宽扛不住，决定上七牛云CDN直传。记录下整个配置过程，包括自动续签SSL证书，以后换项目可以直接复用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="七牛云CDN + acme.sh 自动续签SSL证书">
+<meta property="og:url" content="https://aoce888.github.io/posts/a58f2e11.html">
+<meta property="og:site_name" content="Crf&#39;s Blog">
+<meta property="og:description" content="最近小程序项目上传图片越来越大，用户上传动辄10几MB，全走自己服务器带宽扛不住，决定上七牛云CDN直传。记录下整个配置过程，包括自动续签SSL证书，以后换项目可以直接复用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-30T03:45:00.000Z">
+<meta property="article:modified_time" content="2026-07-30T04:00:00.000Z">
+<meta property="article:author" content="Crf&#39;s Blog">
+<meta property="article:tag" content="七牛云">
+<meta property="article:tag" content="CDN">
+<meta property="article:tag" content="SSL证书">
+<meta property="article:tag" content="acme.sh">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://aoce888.github.io/posts/a58f2e11.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+<script>(function(){var m=localStorage.getItem('crf_mode');if(!m){m=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light'}if(m!=='light'){document.documentElement.setAttribute('data-mode',m)}})();</script>
+
+  <title>七牛云CDN + acme.sh 自动续签SSL证书 | Crf's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Crf's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">42</span></a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">46</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">12</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://aoce888.github.io/posts/a58f2e11.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.gif">
+      <meta itemprop="name" content="Crf's Blog">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Crf's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          七牛云CDN + acme.sh 自动续签SSL证书
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-07-30 11:45:00 / 修改时间：12:00:00" itemprop="dateCreated datePublished" datetime="2026-07-30T11:45:00+08:00">2026-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近小程序项目上传图片越来越大，用户上传动辄<strong>10几MB</strong>，全走自己服务器带宽扛不住，决定上七牛云CDN直传。记录下整个配置过程，包括自动续签SSL证书，以后换项目可以直接复用。</p>
+<span id="more"></span>
+
+<h2 id="为什么选七牛云"><a href="#为什么选七牛云" class="headerlink" title="为什么选七牛云"></a>为什么选七牛云</h2><p>对比了阿里云OSS、腾讯云COS和七牛云Kodo：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>七牛云</th>
+<th>阿里云OSS</th>
+<th>腾讯云COS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>上传流量</td>
+<td>免费无上限</td>
+<td>免费</td>
+<td>免费</td>
+</tr>
+<tr>
+<td>存储空间</td>
+<td>10GB&#x2F;月免费</td>
+<td>按量付费</td>
+<td>新户50GB&#x2F;年</td>
+</tr>
+<tr>
+<td>CDN回源流量</td>
+<td>10GB&#x2F;月免费</td>
+<td>0.15元&#x2F;GB</td>
+<td>0.15元&#x2F;GB</td>
+</tr>
+<tr>
+<td>个人项目成本</td>
+<td><strong>约¥0&#x2F;月</strong></td>
+<td>几块钱&#x2F;月</td>
+<td>首年免费</td>
+</tr>
+</tbody></table>
+<p>对于个人项目，七牛的免费额度完全够用，选了它。</p>
+<hr>
+<h2 id="一、七牛云创建存储空间"><a href="#一、七牛云创建存储空间" class="headerlink" title="一、七牛云创建存储空间"></a>一、七牛云创建存储空间</h2><ol>
+<li>登录<a target="_blank" rel="noopener" href="https://portal.qiniu.com/">七牛云控制台</a>，进入<strong>对象存储Kodo</strong></li>
+<li>点击<strong>新建空间</strong></li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>存储区域</td>
+<td><strong>华南-广东</strong>（ECS在深圳，就近）</td>
+</tr>
+<tr>
+<td>访问控制</td>
+<td><strong>公开</strong>（公有读私有写，URL直接访问）</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>创建成功后拿到空间名称，后面会用到</li>
+</ol>
+<hr>
+<h2 id="二、配置CDN加速域名"><a href="#二、配置CDN加速域名" class="headerlink" title="二、配置CDN加速域名"></a>二、配置CDN加速域名</h2><p>进入<strong>CDN → 域名管理 → 添加域名</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加速域名</td>
+<td><code>cdn.rfcode.top</code>（已备案域名）</td>
+</tr>
+<tr>
+<td>通信协议</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>覆盖范围</td>
+<td>中国大陆</td>
+</tr>
+<tr>
+<td>使用场景</td>
+<td>图片小文件</td>
+</tr>
+<tr>
+<td>源站配置</td>
+<td>七牛云存储 → 选择刚创建的空间</td>
+</tr>
+<tr>
+<td>缓存时间</td>
+<td>30天</td>
+</tr>
+<tr>
+<td>缓存参数</td>
+<td>忽略所有参数</td>
+</tr>
+</tbody></table>
+<p>提交后拿到七牛给的CNAME值（类似 <code>cdn-rfcode-top-idvru26.qiniudns.com</code>），下一步用。</p>
+<hr>
+<h2 id="三、DNS添加CNAME记录"><a href="#三、DNS添加CNAME记录" class="headerlink" title="三、DNS添加CNAME记录"></a>三、DNS添加CNAME记录</h2><p>域名在阿里云管理的，去<strong>阿里云控制台 → 域名 → 解析设置</strong>，添加一条记录：</p>
+<table>
+<thead>
+<tr>
+<th>记录类型</th>
+<th>主机记录</th>
+<th>记录值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>CNAME</td>
+<td><code>cdn</code></td>
+<td>粘贴七牛给的CNAME值</td>
+</tr>
+</tbody></table>
+<p>添加后等待几分钟生效，可以在七牛点「刷新检测」，状态变成<strong>已配置</strong>即可。</p>
+<hr>
+<h2 id="四、服务器安装acme-sh并签发证书"><a href="#四、服务器安装acme-sh并签发证书" class="headerlink" title="四、服务器安装acme.sh并签发证书"></a>四、服务器安装acme.sh并签发证书</h2><p>SSH登录到阿里云ECS：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 安装 acme.sh</span></span><br><span class="line">curl https://get.acme.sh | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重新加载环境</span></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+
+<p>安装时会自动添加定时任务，每天检查证书状态，不需要额外配置。</p>
+<p>注册邮箱（用你的真实邮箱）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/myecs/.acme.sh/acme.sh --register-account -m your@email.com</span><br></pre></td></tr></table></figure>
+
+<p>签发证书需要能操作阿里云DNS（用来添加TXT验证记录），在阿里云RAM获取AccessKey：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置阿里云DNS API密钥（用于自动验证域名）</span></span><br><span class="line"><span class="built_in">export</span> Ali_Key=<span class="string">&quot;LTAI5t***************&quot;</span></span><br><span class="line"><span class="built_in">export</span> Ali_Secret=<span class="string">&quot;KDXj******************************&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 签发证书</span></span><br><span class="line">/home/myecs/.acme.sh/acme.sh --issue --dns dns_ali -d cdn.rfcode.top</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ 阿里云的AccessKey建议去RAM访问控制创建子用户，只给<code>AliyunDNSFullAccess</code>权限，不要直接用主账号密钥。</p>
+</blockquote>
+<p>看到 <code>Cert success.</code> 和 <code>Your cert is in: ...</code> 就说明签发成功了。</p>
+<hr>
+<h2 id="五、配置自动部署到七牛CDN"><a href="#五、配置自动部署到七牛CDN" class="headerlink" title="五、配置自动部署到七牛CDN"></a>五、配置自动部署到七牛CDN</h2><h3 id="设置七牛API密钥"><a href="#设置七牛API密钥" class="headerlink" title="设置七牛API密钥"></a>设置七牛API密钥</h3><p>在<a target="_blank" rel="noopener" href="https://portal.qiniu.com/user/key">七牛密钥管理</a>获取AccessKey和SecretKey：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> QINIU_AK=<span class="string">&quot;tNCT7v*********************************&quot;</span></span><br><span class="line"><span class="built_in">export</span> QINIU_SK=<span class="string">&quot;8Vis*********************************&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="部署证书到七牛"><a href="#部署证书到七牛" class="headerlink" title="部署证书到七牛"></a>部署证书到七牛</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/myecs/.acme.sh/acme.sh --deploy -d cdn.rfcode.top --deploy-hook qiniu</span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>Domain cdn.rfcode.top certificate has been deployed successfully</code> 说明部署成功。</p>
+<blockquote>
+<p>注意：如果提示 <code>400302</code> 错误，先去七牛CDN域名管理手动开启HTTPS（选择已有证书），部署后再跑一次就成功了。</p>
+</blockquote>
+<h3 id="关键一步：设置续期后自动部署"><a href="#关键一步：设置续期后自动部署" class="headerlink" title="关键一步：设置续期后自动部署"></a>关键一步：设置续期后自动部署</h3><p>默认续期只更新本地证书文件，<strong>不会自动部署到七牛</strong>。要加一条 renew-hook：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/home/myecs/.acme.sh/acme.sh --set-renew-hook \</span><br><span class="line">  <span class="string">&quot;/home/myecs/.acme.sh/acme.sh --deploy -d cdn.rfcode.top --deploy-hook qiniu&quot;</span> \</span><br><span class="line">  -d cdn.rfcode.top</span><br></pre></td></tr></table></figure>
+
+<p>验证一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/myecs/.acme.sh/acme.sh --info -d cdn.rfcode.top | grep renew_hook</span><br></pre></td></tr></table></figure>
+
+<p>看到输出有 <code>renew_hook</code> 指向 deploy 命令就对了。</p>
+<h3 id="验证自动续期"><a href="#验证自动续期" class="headerlink" title="验证自动续期"></a>验证自动续期</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crontab -l | grep acme</span><br></pre></td></tr></table></figure>
+
+<p>会看到类似这样的定时任务，acme.sh每天自动检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 0 * * * &quot;/home/myecs/.acme.sh&quot;/acme.sh --cron --home &quot;/home/myecs/.acme.sh&quot; &gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<p>以后证书到期前自动续签 → 触发 renew-hook → 自动部署到七牛CDN，全程无人值守。</p>
+<hr>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><ul>
+<li>小程序图片直传七牛，不经过自己服务器</li>
+<li>HTTPS自动配置完成</li>
+<li>证书到期自动续签、自动部署</li>
+<li>目前费用：<strong>¥0</strong></li>
+</ul>
+<h2 id="踩坑记录"><a href="#踩坑记录" class="headerlink" title="踩坑记录"></a>踩坑记录</h2><ol>
+<li><strong>CNAME生效需要等几分钟</strong>，七牛检测不到就多刷新几次</li>
+<li><strong>七牛CDN要先开启HTTPS</strong>再执行deploy，否则会报400302</li>
+<li><strong>acme.sh默认用ZeroSSL</strong>，注册邮箱那一步不能跳过</li>
+<li>记住去七牛CDN域名管理打开<strong>强制HTTPS</strong>，避免用户通过HTTP访问</li>
+<li><strong>renew-hook 需要单独设置</strong>，只安装acme.sh不会自动部署到七牛——装好后一定要跑一遍 <code>--set-renew-hook</code></li>
+</ol>
+<hr>
+<p>以后其他项目要用CDN，这套流程直接复用就行。</p>
+
+    </div>
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div></div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.png" alt="Crf's Blog 支付宝">
+        <p>支付宝</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/paypal.png" alt="Crf's Blog 微信">
+        <p>微信</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/bitcoin.png" alt="Crf's Blog BTC">
+        <p>BTC</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Crf's Blog
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://aoce888.github.io/posts/a58f2e11.html" title="七牛云CDN + acme.sh 自动续签SSL证书">https://aoce888.github.io/posts/a58f2e11.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_self"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E4%B8%83%E7%89%9B%E4%BA%91/" rel="tag"># 七牛云</a>
+              <a href="/tags/CDN/" rel="tag"># CDN</a>
+              <a href="/tags/SSL%E8%AF%81%E4%B9%A6/" rel="tag"># SSL证书</a>
+              <a href="/tags/acme-sh/" rel="tag"># acme.sh</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/ad888d25.html" rel="prev" title="Qwen Code Web UI 部署记录 - AI生成">
+      <i class="fa fa-chevron-left"></i> Qwen Code Web UI 部署记录 - AI生成
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E4%B8%83%E7%89%9B%E4%BA%91"><span class="nav-number">1.</span> <span class="nav-text">为什么选七牛云</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%B8%83%E7%89%9B%E4%BA%91%E5%88%9B%E5%BB%BA%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">2.</span> <span class="nav-text">一、七牛云创建存储空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AECDN%E5%8A%A0%E9%80%9F%E5%9F%9F%E5%90%8D"><span class="nav-number">3.</span> <span class="nav-text">二、配置CDN加速域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81DNS%E6%B7%BB%E5%8A%A0CNAME%E8%AE%B0%E5%BD%95"><span class="nav-number">4.</span> <span class="nav-text">三、DNS添加CNAME记录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85acme-sh%E5%B9%B6%E7%AD%BE%E5%8F%91%E8%AF%81%E4%B9%A6"><span class="nav-number">5.</span> <span class="nav-text">四、服务器安装acme.sh并签发证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E9%85%8D%E7%BD%AE%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%88%B0%E4%B8%83%E7%89%9BCDN"><span class="nav-number">6.</span> <span class="nav-text">五、配置自动部署到七牛CDN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%83%E7%89%9BAPI%E5%AF%86%E9%92%A5"><span class="nav-number">6.1.</span> <span class="nav-text">设置七牛API密钥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%AF%81%E4%B9%A6%E5%88%B0%E4%B8%83%E7%89%9B"><span class="nav-number">6.2.</span> <span class="nav-text">部署证书到七牛</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E4%B8%80%E6%AD%A5%EF%BC%9A%E8%AE%BE%E7%BD%AE%E7%BB%AD%E6%9C%9F%E5%90%8E%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">6.3.</span> <span class="nav-text">关键一步：设置续期后自动部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E8%87%AA%E5%8A%A8%E7%BB%AD%E6%9C%9F"><span class="nav-number">6.4.</span> <span class="nav-text">验证自动续期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E6%95%88%E6%9E%9C"><span class="nav-number">7.</span> <span class="nav-text">最终效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B8%A9%E5%9D%91%E8%AE%B0%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">踩坑记录</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+     
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Crf's Blog"
+      src="/images/touxiang.gif">
+  <p class="site-author-name" itemprop="name">Crf's Blog</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:3303538033@qq.com" title="E-Mail → mailto:3303538033@qq.com" rel="noopener" target="_self"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_44209860?type=blog" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_44209860?type&#x3D;blog" rel="noopener" target="_self"><i class="fa csdn fa-fw"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://gitee.com/Aoce888" title="GITEE → https:&#x2F;&#x2F;gitee.com&#x2F;Aoce888" rel="noopener" target="_self"><i class="fa gitee fa-fw"></i>GITEE</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_self"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      个人作品
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">第一份实习简历</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">Playable</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">独立小游戏</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">Bepic_H5tools</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">Logo生成器</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">指令转换</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">paths自动补全</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://rfcode.top/" title="https:&#x2F;&#x2F;rfcode.top&#x2F;" rel="noopener" target="_self">FB_事件上报</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+    <div>
+
+   <!--网易云音乐插件-->
+    <div>
+    <!-- require APlayer -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <!-- require MetingJS-->
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script> 
+    <!--网易云playlist外链地址-->   
+    <meting-js
+        server="netease"
+        type="playlist" 
+        id="8425659719"
+        mini="false"
+        fixed="false"
+        list-folded="true"
+        autoplay="false"
+        volume="0.4"
+        theme="#FADFA3"
+        order="list"
+        loop="all"
+        preload="auto"
+        mutex="true">
+    </meting-js></div>
+    </div>
+    
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_self">粤ICP备20000717号 </a>
+      <img src="/images/beian.png" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Crf's Blog</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">30k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:49</span>
+</div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("08/10/2020 00:00:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+<style>
+html[data-mode="dark"] {
+  --mb: #1a1a1a; --ms: #242424;
+  --mt: #ccc; --ml: #ccc; --mh: #eee; --mm: #888;
+}
+html[data-mode="dark"] { background: var(--mb); }
+html[data-mode="dark"] body,
+html[data-mode="dark"] .header-inner,
+html[data-mode="dark"] .main-inner,
+html[data-mode="dark"] .footer-inner,
+html[data-mode="dark"] .content-wrap,
+html[data-mode="dark"] .post-block { background: var(--mb); }
+html[data-mode="dark"] .sidebar,
+html[data-mode="dark"] .sidebar-inner { background: var(--ms); }
+html[data-mode="dark"] body { color: var(--mt); }
+html[data-mode="dark"] a,
+html[data-mode="dark"] .post-title a { color: var(--ml); }
+html[data-mode="dark"] a:hover,
+html[data-mode="dark"] .post-title a:hover { color: var(--mh); }
+html[data-mode="dark"] .post-meta,
+html[data-mode="dark"] .post-meta a { color: var(--mm) !important; }
+html[data-mode="dark"] img { opacity: .75; }
+html[data-mode="dark"] img:hover { opacity: .9; }
+
+html[data-mode="eye"] {
+  --mb: #faf6ef; --ms: #ede5d8;
+  --mt: #5c4a3a; --ml: #5c4a3a; --mh: #3d3226; --mm: #9a8a7a;
+}
+html[data-mode="eye"] { background: var(--mb); }
+html[data-mode="eye"] body,
+html[data-mode="eye"] .header-inner,
+html[data-mode="eye"] .main-inner,
+html[data-mode="eye"] .footer-inner,
+html[data-mode="eye"] .content-wrap,
+html[data-mode="eye"] .post-block { background: var(--mb); }
+html[data-mode="eye"] .sidebar,
+html[data-mode="eye"] .sidebar-inner { background: var(--ms); }
+html[data-mode="eye"] body { color: var(--mt); }
+html[data-mode="eye"] a,
+html[data-mode="eye"] .post-title a { color: var(--ml); }
+html[data-mode="eye"] a:hover { color: var(--mh); }
+html[data-mode="eye"] .post-meta,
+html[data-mode="eye"] .post-meta a { color: var(--mm) !important; }
+html[data-mode="eye"] img { filter: brightness(.95) saturate(.85); }
+
+/* 顶栏细线 */
+.headband { height: 2px; background: #2563eb; }
+
+/* 文章内排版 */
+.post-body {
+  line-height: 1.8;
+  font-family: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+.post-body p { margin: 0 0 1em; }
+.post-body h2 { margin-top: 1.8em; margin-bottom: .5em; }
+.post-body h3 { margin-top: 1.5em; margin-bottom: .4em; }
+
+/* 分类页 - 网格卡片 */
+.category-all-title {
+  font-size: .95em; color: #666; font-weight: 500;
+  padding-bottom: 12px; border-bottom: 1px solid #e5e7eb; margin-bottom: 24px;
+}
+.category-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+.category-list-item { margin: 0 !important; }
+.category-list-link {
+  display: block; padding: 10px 14px;
+  background: #f8f9fa; color: #374151;
+  border: 1px solid #e5e7eb; border-radius: 4px;
+  font-size: .875em; transition: all .15s;
+}
+.category-list-link:hover { background: #f3f4f6; border-color: #2563eb; color: #2563eb !important; }
+.category-list-count { color: #9ca3af; font-size: .8125em; }
+.category-list-count::before { content: " ("; display: inline; }
+.category-list-count::after { content: ")"; display: inline; }
+.category-list-child { list-style: none; padding-left: 0 !important; margin-top: 4px; }
+.category-list-child .category-list-item { margin: 0 !important; }
+
+/* 暗色/护眼适配 */
+html[data-mode="dark"] .category-all-title { color: #9ca3af; border-color: #374151; }
+html[data-mode="dark"] .category-list-link { background: #1f2937; border-color: #374151; color: #d1d5db; }
+html[data-mode="dark"] .category-list-link:hover { border-color: #60a5fa; color: #60a5fa !important; }
+html[data-mode="dark"] .category-list-child .category-list-link { background: #111827; }
+html[data-mode="eye"] .category-all-title { color: #8a7a6a; border-color: #d0c6b7; }
+html[data-mode="eye"] .category-list-link { background: #f0e8dc; border-color: #d0c6b7; color: #5c4a3a; }
+html[data-mode="eye"] .category-list-link:hover { border-color: #2563eb; color: #2563eb !important; }
+html[data-mode="eye"] .category-list-child .category-list-link { background: #e5dccf; }
+
+.crf-mode-btn {
+  position: fixed; top: 22px; right: 72px; z-index: 9999;
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 2px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.85); backdrop-filter: blur(6px);
+  font-size: 16px; cursor: pointer; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .25s;
+}
+.crf-mode-btn:hover { transform: scale(1.12); }
+</style>
+<button class="crf-mode-btn" id="crfModeBtn" onclick="cycleCrfMode()" title="切换配色">☀️</button>
+<script>
+(function(){
+  var m=localStorage.getItem('crf_mode')||((window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light');
+  var b=document.getElementById('crfModeBtn');
+  if(m==='dark'){document.documentElement.setAttribute('data-mode','dark');b.textContent='🌙';}
+  else if(m==='eye'){document.documentElement.setAttribute('data-mode','eye');b.textContent='🌿';}
+})();
+function cycleCrfMode(){
+  var c=document.documentElement.getAttribute('data-mode')||'light';
+  var n={light:'dark',dark:'eye',eye:'light'}[c];
+  if(n==='light')document.documentElement.removeAttribute('data-mode');
+  else document.documentElement.setAttribute('data-mode',n);
+  document.getElementById('crfModeBtn').textContent={light:'☀️',dark:'🌙',eye:'🌿'}[n];
+  localStorage.setItem('crf_mode',n);
+}
+
+</script>
+
+    </div>
+</body>
+</html>
