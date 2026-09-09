@@ -48,7 +48,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<script>(function(){var m=localStorage.getItem('crf_mode');if(!m){m=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light'}if(m!=='light'){document.documentElement.setAttribute('data-mode',m)}})();</script>
+<script>(function(){var m=localStorage.getItem('crf_mode')||'light';if(m!=='light'){document.documentElement.setAttribute('data-mode',m)}})();</script>
 
   <title>在旧版本服务器上使用 Docker 部署 Node.js | Crf's Blog</title>
   

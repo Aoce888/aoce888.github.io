@@ -40,7 +40,7 @@
     lang   : 'zh-CN'
   };
 </script>
-<script>(function(){var m=localStorage.getItem('crf_mode');if(!m){m=(window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light'}if(m!=='light'){document.documentElement.setAttribute('data-mode',m)}})();</script>
+<script>(function(){var m=localStorage.getItem('crf_mode')||'light';if(m!=='light'){document.documentElement.setAttribute('data-mode',m)}})();</script>
 
   <title>分类: 开发工具 | Crf's Blog</title>
   
